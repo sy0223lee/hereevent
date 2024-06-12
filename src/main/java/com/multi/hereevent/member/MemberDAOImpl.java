@@ -29,16 +29,27 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public MemberDTO memberDetail(int member_no) {
-        return null;
+        return sqlSession.selectOne("com.multi.hereevent.member.detail", member_no);
     }
 
     @Override
-    public int memberUpdate(int member_no) {
-        return 0;
+    public int memberUpdateNick(MemberDTO member) {
+        return sqlSession.update("com.multi.hereevent.member.updateNick", member);
+    }
+
+    @Override
+    public int memberUpdateBirth(MemberDTO member) {
+        return sqlSession.update("com.multi.hereevent.member.updateBirth", member);
     }
 
     @Override
     public int memberDelete(int member_no) {
         return 0;
+    }
+
+    @Override
+    public boolean memberCheckNick(String nick) {
+        MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkNick", nick);
+        return member == null; // 조회된 회원이 없으면 사용 가능한 닉네임 이므로 true 반환
     }
 }

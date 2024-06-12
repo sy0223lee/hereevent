@@ -56,3 +56,15 @@
     justify-content: space-between;
     align-items: center;
 }
+.profile-text-area li p button {
+    border: 1px solid #767676;
+    background: none;
+    color: #000000;
+    font-size: 15px;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
+.profile-text-area li p button.edit-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+}

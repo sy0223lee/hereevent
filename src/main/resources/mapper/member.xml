@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.hereevent.member">
-	<select id="login" parameterType="member" resultType="member">
-		select *
-		from member
-		where email = #{email} and pass = #{pass}
-	</select>
 	<select id="insert" parameterType="member" >
 		insert into member (email, pass, name, nick, tel, birth,mgr)
 		values(#{email},#{pass},#{name},#{nick},#{tel},#{birth},0)
 	</select>
+  <select id="login" parameterType="member" resultType="member">
+		select *
+		from member
+		where email = #{email} and pass = #{pass}
+	</select>
+	<select id="checkNick" parameterType="String" resultType="member">
+		select *
+		from member
+		where nick = #{nick}
+	</select>
+	<select id="detail" parameterType="Integer" resultType="member">
+		select * from member where member_no = #{member_no}
+	</select>
+	<update id="updateNick" parameterType="member">
+		update member
+		set nick = #{nick}
+		where member_no = #{member_no}
+	</update>
+	<update id="updateBirth" parameterType="member">
+		update member
+		set birth = #{birth}
+		where member_no = #{member_no}
+	</update>
 </mapper>
