@@ -20,7 +20,20 @@ public class MemberController {
         model.addAttribute("member", loginMember);
         return "redirect:/mypage";
     }
-
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login/login";
+    }
+    @GetMapping("/register")
+    public String register() {
+        return "login/register";
+    }
+    @PostMapping("/insert")
+    public String register(MemberDTO member){
+        System.out.println(member);
+        service.memberInsert(member);
+        return "redirect:/login";
+    }
     @GetMapping("/mypage")
     public String mypage() {
         return "mypage/mypage";

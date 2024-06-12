@@ -19,7 +19,7 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public int memberInsert(MemberDTO member) {
-        return 0;
+        return sqlSession.insert("com.multi.hereevent.member.insert",member);
     }
 
     @Override
