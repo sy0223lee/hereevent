@@ -14,7 +14,6 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public MemberDTO memberLogin(MemberDTO member) {
-        System.out.println("[MemberDAO] " + member);
         return sqlSession.selectOne("com.multi.hereevent.member.login", member);
     }
 

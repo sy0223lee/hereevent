@@ -16,9 +16,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(MemberDTO member, Model model) {
-        System.out.println("[MemberController] " + member);
         MemberDTO loginMember = service.memberLogin(member);
-        System.out.println("[loginMember] " + loginMember);
         model.addAttribute("member", loginMember);
         return "redirect:/mypage";
     }
