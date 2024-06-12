@@ -14,14 +14,27 @@ import java.sql.Date;
 @SessionAttributes("member")
 public class MemberController {
     private final MemberService service;
-
+    
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login/login";
+    }
     @PostMapping("/login")
     public String login(MemberDTO member, Model model) {
         MemberDTO loginMember = service.memberLogin(member);
         model.addAttribute("member", loginMember);
         return "redirect:/mypage";
     }
-
+    @GetMapping("/register")
+    public String register() {
+        return "login/register";
+    }
+    @PostMapping("/insert")
+    public String register(MemberDTO member){
+        System.out.println(member);
+        service.memberInsert(member);
+        return "redirect:/login";
+    }
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {
