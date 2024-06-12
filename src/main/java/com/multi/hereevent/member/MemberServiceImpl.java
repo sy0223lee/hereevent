@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public int memberInsert(MemberDTO member) {
-        return 0;
+        return dao.memberInsert(member);
     }
 
     @Override
