@@ -2,7 +2,6 @@ package com.multi.hereevent.member;
 
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +39,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int memberDelete(int member_no) {
         return 0;
+    }
+
+    @Override
+    public boolean memberCheckNick(String nick) {
+        return dao.memberCheckNick(nick);
     }
 }

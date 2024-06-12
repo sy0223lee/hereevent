@@ -41,4 +41,10 @@ public class MemberDAOImpl implements MemberDAO {
     public int memberDelete(int member_no) {
         return 0;
     }
+
+    @Override
+    public boolean memberCheckNick(String nick) {
+        MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkNick", nick);
+        return member == null; // 조회된 회원이 없으면 사용 가능한 닉네임 이므로 true 반환
+    }
 }

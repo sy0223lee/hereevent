@@ -8,7 +8,7 @@
     <!-- CSS File -->
     <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
 
-    <title>HereEvent-MyPage</title>
+    <title>HereEvent-MyEvent</title>
 </head>
 <body>
 <main layout:fragment="main" class="main">
@@ -37,31 +37,20 @@
 
         <div class="container">
             <div class="submenu">
-                <a class="on" href="/hereevent/mypage"><h2>내 정보</h2></a>
+                <a href="/hereevent/mypage"><h2>내 정보</h2></a>
                 <a href="/hereevent/myinterest"><h2>관심 내역</h2></a>
                 <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
-                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
+                <a class="on" href="/hereevent/myevent"><h2>행사 내역</h2></a>
             </div>
             <ul class="profile-text-area">
-                <li><span>이름</span>
-                    <p th:text="${session.member.name}"></p></li>
-                <li><span>닉네임</span>
-                    <p>[[${session.member.nick}]]
-                        <button type="button" class="edit-btn" onclick="location.href='/hereevent/mypage/edit-nick'">수정</button></p></li>
-                <li><span>이메일</span>
-                    <p th:text="${session.member.email}"></p></li>
-                <li><span>연락처</span>
-                    <p th:text="${session.member.tel}"></p></li>
-                <li><span>생일</span>
-                    <p th:if="${session.member.birth != null}">[[${session.member.birth}]]
-                        <button type="button" class="edit-btn">수정</button></p>
-                    <p th:unless="${session.member.birth != null}">&nbsp
-                        <button type="button" class="edit-btn">등록</button></p>
-                </li>
+                <li><span>이름</span><p th:text="${session.member.name}"></p></li>
+                <li><span>닉네임</span><p th:text="${session.member.nick}"></p></li>
+                <li><span>이메일</span><p th:text="${session.member.email}"></p></li>
+                <li><span>연락처</span><p th:text="${session.member.tel}"></p></li>
             </ul>
         </div>
 
-    </section>
+    </section><!-- /Starter Section Section -->
 
 </main>
 </body>

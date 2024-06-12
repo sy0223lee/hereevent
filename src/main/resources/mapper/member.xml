@@ -6,4 +6,9 @@
 		from member
 		where email = #{email} and pass = #{pass}
 	</select>
+	<select id="checkNick" parameterType="String" resultType="member">
+		select *
+		from member
+		where nick = #{nick}
+	</select>
 </mapper>
