@@ -11,4 +11,17 @@
 		from member
 		where nick = #{nick}
 	</select>
+	<select id="detail" parameterType="Integer" resultType="member">
+		select * from member where member_no = #{member_no}
+	</select>
+	<update id="updateNick" parameterType="member">
+		update member
+		set nick = #{nick}
+		where member_no = #{member_no}
+	</update>
+	<update id="updateBirth" parameterType="member">
+		update member
+		set birth = #{birth}
+		where member_no = #{member_no}
+	</update>
 </mapper>

@@ -29,12 +29,17 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public MemberDTO memberDetail(int member_no) {
-        return null;
+        return sqlSession.selectOne("com.multi.hereevent.member.detail", member_no);
     }
 
     @Override
-    public int memberUpdate(int member_no) {
-        return 0;
+    public int memberUpdateNick(MemberDTO member) {
+        return sqlSession.update("com.multi.hereevent.member.updateNick", member);
+    }
+
+    @Override
+    public int memberUpdateBirth(MemberDTO member) {
+        return sqlSession.update("com.multi.hereevent.member.updateBirth", member);
     }
 
     @Override

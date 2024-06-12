@@ -28,12 +28,17 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberDTO memberDetail(int member_no) {
-        return null;
+        return dao.memberDetail(member_no);
     }
 
     @Override
-    public int memberUpdate(int member_no) {
-        return 0;
+    public int memberUpdateNick(MemberDTO member) {
+        return dao.memberUpdateNick(member);
+    }
+
+    @Override
+    public int memberUpdateBirth(MemberDTO member) {
+        return dao.memberUpdateBirth(member);
     }
 
     @Override
