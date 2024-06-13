@@ -33,12 +33,14 @@
         <div class="container section-title">
             <h2>Starter Section</h2>
             <div class="profile-img-area">
-                <img th:if="${session.member.img_path == null}" id="profile-img"
+                <img th:if="${session.member.img_path == null}"
+                     th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
+                <!-- 프로필 이미지 존재하는 경우 경로 수정 필요 -->
+                <img th:unless="${session.member.img_path == null}"
                      th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
             </div>
-            <input type="file" name="img_path"
-                   onchange="document.getElementById('profile-img').src = window.URL.createObjectURL(this.files[0])">
-
+            <button onclick="location.href='/hereevent/mypage/edit-profile-img'"
+                    type="button" class="edit-img-btn">수정</button>
         </div><!-- End Section Title -->
 
         <div class="container">

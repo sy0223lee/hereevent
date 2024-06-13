@@ -29,6 +29,9 @@
     height: 80px;
     border-radius: 50%;
 }
+.edit-img-btn input{
+    display: none;
+}
 .profile-text-area {
     display: flex;
     width: 100%;
@@ -60,15 +63,20 @@
     justify-content: space-between;
     align-items: center;
 }
-.profile-text-area li p button {
+.edit-btn {
     border: 1px solid #767676;
     background: none;
     color: #000000;
     font-size: 15px;
-    padding: 8px 20px;
+    padding: 4px 10px;
     border-radius: 5px;
 }
-.profile-text-area li p button.edit-btn {
-    font-size: 12px;
+.edit-img-btn, .edit-nick-btn, .edit-birth-btn {
+    border: 1px solid #767676;
+    background: none;
+    color: #000000;
+    font-size: 15px;
     padding: 4px 10px;
+    margin: 10px 4px;
+    border-radius: 5px;
 }

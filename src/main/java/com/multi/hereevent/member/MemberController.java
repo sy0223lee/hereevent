@@ -1,11 +1,14 @@
 package com.multi.hereevent.member;
 
 import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.Member;
 import java.sql.Date;
 
@@ -14,6 +17,7 @@ import java.sql.Date;
 @SessionAttributes("member")
 public class MemberController {
     private final MemberService service;
+    private final FileUploadService fileService;
 
     /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
@@ -85,10 +89,20 @@ public class MemberController {
             return "common/error_page";
         }
     }
-    // 프로필 사진 변경
+    // 프로필 사진 수정 페이지 이동
     @GetMapping("/mypage/edit-profile-img")
-    public String editProfileImg(){
-        return null;
+    public String editProfileImgPage(){
+        return "mypage/edit_profile_img";
+    }
+    // 프로필 사진 수정
+    @PostMapping("/mypage/edit-profile-img")
+    public String editProfileImg(MemberDTO member, Model model) throws IOException {
+        MultipartFile profileImg = member.getProfile_img();
+        String storeFilename = fileService.uploadProfileImg(profileImg);
+        member.setImg_path(storeFilename);
+        service.memberUpdateProfileImg(member);
+        model.addAttribute("member", member);
+        return "redirect:/mypage";
     }
 
     /***** 관심 관리 *****/

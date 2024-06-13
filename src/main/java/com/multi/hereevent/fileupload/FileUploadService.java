@@ -20,7 +20,7 @@ public class FileUploadService {
     }
 
     // 프로필 사진 저장
-    public String uploadProfileImg(MultipartFile multipartFile) throws IllegalStateException, IOException {
+    public String uploadProfileImg(MultipartFile multipartFile) throws IOException {
         String storeFilename = "";
 
         if(!multipartFile.isEmpty()) {
