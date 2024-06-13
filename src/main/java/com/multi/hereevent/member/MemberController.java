@@ -14,7 +14,8 @@ import java.sql.Date;
 @SessionAttributes("member")
 public class MemberController {
     private final MemberService service;
-    
+
+    /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
     public String loginPage(){
         return "login/login";
@@ -35,6 +36,7 @@ public class MemberController {
         service.memberInsert(member);
         return "redirect:/login";
     }
+
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {
@@ -82,7 +84,11 @@ public class MemberController {
         }else {
             return "common/error_page";
         }
-
+    }
+    // 프로필 사진 변경
+    @GetMapping("/mypage/edit-profile-img")
+    public String editProfileImg(){
+        return null;
     }
 
     /***** 관심 관리 *****/

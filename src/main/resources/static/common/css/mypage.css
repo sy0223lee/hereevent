@@ -24,7 +24,11 @@
     margin: 0;
     font-weight: 600;
 }
-
+.profile-img-area img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
 .profile-text-area {
     display: flex;
     width: 100%;
