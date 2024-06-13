@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileUploadService {
     // 프로필 이미지 업로드 경로
-    @Value("/static/images/profile")
+    // Naver Cloud 서버 이용하는 경우 해 서버에 저장될 수 있도록 변경하기 !!
+    @Value("C:/hereevent_upload/")
     private String profileImgPath;
 
     // 프로필 이미지 경로

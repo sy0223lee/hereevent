@@ -96,13 +96,20 @@ public class MemberController {
     }
     // 프로필 사진 수정
     @PostMapping("/mypage/edit-profile-img")
-    public String editProfileImg(MemberDTO member, Model model) throws IOException {
+    public String editProfileImg(MemberDTO member, Model model) {
+        System.out.println("[editProfileImg] member = " + member);
         MultipartFile profileImg = member.getProfile_img();
-        String storeFilename = fileService.uploadProfileImg(profileImg);
-        member.setImg_path(storeFilename);
-        service.memberUpdateProfileImg(member);
-        model.addAttribute("member", member);
-        return "redirect:/mypage";
+        String storeFilename = null;
+        try {
+            storeFilename = fileService.uploadProfileImg(profileImg);
+            member.setImg_path(storeFilename);
+            service.memberUpdateProfileImg(member);
+            model.addAttribute("member", service.memberDetail(member.getMember_no()));
+            return "redirect:/mypage";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "common/error_page";
+        }
     }
 
     /***** 관심 관리 *****/

@@ -28,7 +28,7 @@
 
     <!-- Starter Section -->
     <section id="starter-section" class="starter-section section">
-        <form method="post" action="/hereevent/mypage/edit-profile-img">
+        <form method="post" action="/hereevent/mypage/edit-profile-img" enctype="multipart/form-data">
             <!-- Section Title -->
             <div class="container section-title">
                 <h2>프로필 사진 수정</h2>
@@ -37,15 +37,14 @@
                     <div id="profile-img">
                         <img th:if="${session.member.img_path == null}"
                              th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
-                        <!-- 프로필 이미지 존재하는 경우 경로 수정 필요 -->
                         <img th:unless="${session.member.img_path == null}"
-                             th:src="|@{/images/${session.member.img_path}}|" alt="default_profile">
+                             th:src="|@{/download/}${session.member.img_path}|" alt="member_profile">
                     </div>
                 </div>
                 <label class="edit-img-btn" for="select-img">
                     이미지 선택
                     <input type="file" name="profile_img" id="select-img" accept="image/*"
-                           onchange="document.querySelector('#profile-img > img').src = window.URL.createObjectURL(this.files[0])">
+                           onchange="document.querySelector('#profile-img img').src = window.URL.createObjectURL(this.files[0])">
                 </label>
                 <button type="submit" class="edit-img-btn">수정</button>
             </div>
