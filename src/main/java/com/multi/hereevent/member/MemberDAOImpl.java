@@ -43,6 +43,11 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
+    public int memberUpdateProfileImg(MemberDTO member) {
+        return sqlSession.update("com.multi.hereevent.member.updateProfileImg", member);
+    }
+
+    @Override
     public int memberDelete(int member_no) {
         return 0;
     }
