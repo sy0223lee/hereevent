@@ -5,7 +5,7 @@
 		insert into member (email, pass, name, nick, tel, birth,mgr)
 		values(#{email},#{pass},#{name},#{nick},#{tel},#{birth},0)
 	</select>
-  <select id="login" parameterType="member" resultType="member">
+  	<select id="login" parameterType="member" resultType="member">
 		select *
 		from member
 		where email = #{email} and pass = #{pass}
@@ -26,6 +26,11 @@
 	<update id="updateBirth" parameterType="member">
 		update member
 		set birth = #{birth}
+		where member_no = #{member_no}
+	</update>
+	<update id="updateProfileImg" parameterType="member">
+		update member
+		set img_path = #{img_path}
 		where member_no = #{member_no}
 	</update>
 </mapper>

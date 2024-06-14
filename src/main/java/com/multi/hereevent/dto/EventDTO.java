@@ -5,23 +5,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
-import java.util.Date;
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("page")
-
-    public class EventDTO {
-    private int event_no;
-    private int category_no;
-    private String name;
-    private Date start_date;
-    private Date end_date;
-    private String info;
-    private String homepage;
-    private String sns;
-    private String img_path;
-    private int type;
-    private int reserve_limit;
-    private int wait_limit;
-    }
+@Alias("event")
+public class EventDTO {
+    private int event_no; // 이벤트번호
+    private int category_no; // 카테고리
+    private String name; // 이벤트이름
+    private Date start_date; //시작일자
+    private Date end_date; //종료일자
+    private String addr; //위치
+    private String info; //팝업소개
+    private String homepage; //브랜드홈페이지
+    private String sns; // 브랜드 SNS링크
+    private String img_path; //저장한 이미지 경로
+    private int type; //0번 팝업, 1번 전시회
+    private int reserve_limit; //시간당 제한인원(예약)
+    private int wait_limit; //시간당 제한인원(대기)
+}
