@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -22,4 +23,5 @@ public class MemberDTO {
     private Date reg_date; // 등록 날짜
     private String img_path; // 프로필 사진 경로
     private int mgr; // 관리자 여부, 0 = member, 1 = manager
+    private MultipartFile profile_img; // 프로필 이미지 업로드를 위한 멤버변수
 }

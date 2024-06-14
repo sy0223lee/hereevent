@@ -11,6 +11,7 @@ public interface MemberService {
     MemberDTO memberDetail(int member_no);
     int memberUpdateNick(MemberDTO member);
     int memberUpdateBirth(MemberDTO member);
+    int memberUpdateProfileImg(MemberDTO member);
     int memberDelete(int member_no);
     boolean memberCheckNick(String nick);
 }
