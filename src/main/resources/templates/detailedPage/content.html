@@ -1,43 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{detailedPage}">
+      layout:decorate="~{detailedPage/detailedPage}">
 <head>
-    <title>Insert title here</title>
+    <title>이벤트 상세 정보</title>
 </head>
 <body>
-    <div layout:fragment="detailedPage">
+<div layout:fragment="content">
+    <div th:fragment="content">
         <article class="article">
-
-            <h2 class="title">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</h2>
-
-            <div class="meta-top">
-                <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John Doe</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li>
-                </ul>
-            </div><!-- End meta top -->
-
-
-
-            <div class="meta-bottom">
-                <i class="bi bi-folder"></i>
-                <ul class="cats">
-                    <li><a href="#">Business</a></li>
-                </ul>
-
-                <i class="bi bi-tags"></i>
-                <ul class="tags">
-                    <li><a href="#">Creative</a></li>
-                    <li><a href="#">Tips</a></li>
-                    <li><a href="#">Marketing</a></li>
-                </ul>
-            </div><!-- End meta bottom -->
-
+            <h2 class="title">이벤트 상세페이지</h2>
+            <div>
+                <p>이벤트명: <span th:text="${event.name}"></span></p>
+                <p>장소: <span th:text="${event.location}"></span></p>
+                <p>시작 날짜: <span th:text="${event.start_date}"></span></p>
+                <p>종료 날짜: <span th:text="${event.end_date}"></span></p>
+                <p>설명: <span th:text="${event.info}"></span></p>
+                <p>홈페이지: <a th:href="${event.homepage}" th:text="${event.homepage}"></a></p>
+                <p>SNS: <a th:href="${event.sns}" th:text="${event.sns}"></a></p>
+            </div>
         </article>
-
-
     </div>
+</div>
 </body>
 </html>
