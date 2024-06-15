@@ -22,7 +22,7 @@ public class EventDTO {
     private String homepage; //브랜드홈페이지
     private String sns; // 브랜드 SNS링크
     private String img_path; //저장한 이미지 경로
-    private int type; //0번 팝업, 1번 전시회
+    private String type; //사전, 대기, 전체
     private int reserve_limit; //시간당 제한인원(예약)
     private int wait_limit; //시간당 제한인원(대기)
 }

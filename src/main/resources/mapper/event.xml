@@ -29,4 +29,15 @@
         select * from event
         where type = 1
     </select>
+    <select id="getEventDetails" resultType="event">
+        SELECT event_no, category_no, name, start_date, end_date,addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
+        FROM event
+        WHERE event_no = #{event_no}
+    </select>
+<!--  event photo 가져오기  -->
+    <select id="getEventImage" resultType="com.multi.hereevent.dto.EventDTO">
+        SELECT event_no, image_path
+        FROM events
+        WHERE event_no = #{eventNo}
+    </select>
 </mapper>
