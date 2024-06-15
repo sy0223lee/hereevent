@@ -8,10 +8,13 @@ public interface EventDAO {
     public int insert(EventDTO event);//행사 등록
     public int update(EventDTO event);//행사 수정
     public int delete(int event_no);//행사 삭제
+
     public EventDTO read(int event_no);// 행사 상세보기
     public List<EventDTO> search(String keyword);//행사이름 검색
-    public List<EventDTO> eventList();//전체 행사 조회
-    //public List<EventDTO> popularList();//인기10순위 리스트,, 관심갯수 그룹바이로 이벤트번호가져오고
+    public List<EventDTO> popList();//전체 팝업 조회
+    public List<EventDTO> showList();//전체 전시회 조회-> 수정필요
+    //public List<EventDTO> starList();//별점 높은순 10순위 리스트
+    //public List<EventDTO> popularList();//예약,대기 높은순 10순위 리스트
     //public List<EventDTO> categoryList();//카테고리별 조회
     //public List<EventDTO> newList(); //오픈예정 행사
 
