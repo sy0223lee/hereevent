@@ -20,6 +20,7 @@ public class FileUploadService {
         return profileImgPath + filename;
     }
 
+
     // 프로필 사진 저장
     public String uploadProfileImg(MultipartFile multipartFile) throws IOException {
         String storeFilename = "";

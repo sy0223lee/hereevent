@@ -39,13 +39,15 @@ public class EventServiceImpl implements EventService{
         return dao.search(keyword);
     }
 
+    //세부페이지
     @Override
-    public List<EventDTO> popList() {
-        return dao.popList();
+    public EventDTO getEventDetails(int event_no) {
+        return dao.getEventDetails(event_no);
     }
 
+    //사진 가져오기
     @Override
-    public List<EventDTO> showList() {
-        return dao.showList();
+    public EventDTO getEventImage(int event_no) {
+        return dao.getEventImage(event_no);
     }
 }
