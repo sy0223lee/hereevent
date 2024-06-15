@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.hereevent.event">
     <select id="insert" parameterType="event">
-        insert into event
-        value(event_seq.nextcal,#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
+        insert into event(name,start_date,end_date,addr,info,homepage,sns,type,reserve_limit,wait_limit)
+        value(event_seq.nextval,#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
     </select>
     <select id="delete" parameterType="String">
         delete from event where event_no = #{event_no}

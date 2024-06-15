@@ -39,7 +39,6 @@ public class EventServiceImpl implements EventService{
         return dao.search(keyword);
     }
 
-
     //세부페이지
     @Override
     public EventDTO getEventDetails(int event_no) {
@@ -51,6 +50,4 @@ public class EventServiceImpl implements EventService{
     public EventDTO getEventImage(int event_no) {
         return dao.getEventImage(event_no);
     }
-
-
 }

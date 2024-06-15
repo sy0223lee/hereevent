@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+
+import java.util.List;
+
 @Controller
 @RequestMapping("/event")
 public class EventController {
@@ -18,6 +21,18 @@ public class EventController {
         this.service = service;
     }
 
+    @GetMapping("/main")
+    public String main() {
+        return "main/mainPage";
+    }
+    @GetMapping("/test")
+    public String test() {
+        return "main/Test";
+    }
+    @GetMapping("/write")
+    public String write() {
+        return "event/event_write";
+    }
 
 //   세부페이지
     @GetMapping("/{event_no}")
