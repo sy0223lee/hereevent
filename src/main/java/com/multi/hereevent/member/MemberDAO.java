@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.InterestCategoryDTO;
 import com.multi.hereevent.dto.MemberDTO;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface MemberDAO {
     int memberUpdateProfileImg(MemberDTO member);
     int memberDelete(int member_no);
     boolean memberCheckNick(String nick);
+    boolean memberCheckEmail(String email);
+    int memberSetCategory(InterestCategoryDTO ic);
 }

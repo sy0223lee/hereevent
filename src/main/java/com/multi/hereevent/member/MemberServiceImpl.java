@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.InterestCategoryDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,15 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public boolean memberCheckNick(String nick) {
         return dao.memberCheckNick(nick);
+    }
+
+    @Override
+    public boolean memberCheckEmail(String email) {
+        return dao.memberCheckEmail(email);
+    }
+
+    @Override
+    public int memberSetCategory(InterestCategoryDTO ic) {
+        return dao.memberSetCategory(ic);
     }
 }

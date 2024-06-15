@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.InterestCategoryDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class MemberController {
     private final FileUploadService fileService;
 
     /***** 로그인, 회원가입 *****/
+    //로그인
     @GetMapping("/login")
     public String loginPage(){
         return "login/login";
@@ -30,15 +32,42 @@ public class MemberController {
         model.addAttribute("member", loginMember);
         return "redirect:/mypage";
     }
+    //회원가입
     @GetMapping("/register")
     public String register() {
         return "login/register";
     }
     @PostMapping("/insert")
-    public String register(MemberDTO member){
-        System.out.println(member);
+    public String register(MemberDTO member, Model model){
         service.memberInsert(member);
+        MemberDTO regiMember = service.memberLogin(member);
+        System.out.println(regiMember);
+        model.addAttribute("member", regiMember);
+        return "redirect:/setCategory";
+    }
+    //관심 카테고리 등록
+    @GetMapping("/setCategory")
+    public String setCategoryPage(MemberDTO member,Model model){
+        MemberDTO regiMember = service.memberLogin(member);
+        model.addAttribute("member", regiMember);
+        System.out.println("카테고리설정================================"+regiMember);
+        return "login/set_category";
+    }
+    @PostMapping("/setCategory")
+    public String setCategory(InterestCategoryDTO ic){
+        service.memberSetCategory(ic);
         return "redirect:/login";
+    }
+    // 이메일 중복 확인
+    @PostMapping(value = "/mypage/check-email", produces = "application/text; charset=utf-8")
+    @ResponseBody
+    public String checkEmail(@RequestParam("email") String email) {
+        boolean available = service.memberCheckEmail(email);
+        if (available) {
+            return "사용 가능한 이메일";
+        }else {
+            return "이메일이 중복됩니다";
+        }
     }
 
     /***** 마이페이지 *****/

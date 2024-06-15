@@ -1,0 +1,51 @@
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .category-container {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #555555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        select:focus {
+            border-color: #3333ff;
+            outline: none;
+        }
+        #selected-values {
+            text-align: center;
+            font-size: 18px;
+            color: #666666;
+            margin-top: 20px;
+        }
+    </style>

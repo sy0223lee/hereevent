@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.InterestCategoryDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -56,5 +57,16 @@ public class MemberDAOImpl implements MemberDAO {
     public boolean memberCheckNick(String nick) {
         MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkNick", nick);
         return member == null; // 조회된 회원이 없으면 사용 가능한 닉네임 이므로 true 반환
+    }
+
+    @Override
+    public boolean memberCheckEmail(String email) {
+        MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkEmail", email);
+        return member == null;
+    }
+
+    @Override
+    public int memberSetCategory(InterestCategoryDTO ic) {
+        return sqlSession.insert("com.multi.hereevent.member.insertCate",ic);
     }
 }

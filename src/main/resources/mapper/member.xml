@@ -5,6 +5,10 @@
 		insert into member (email, pass, name, nick, tel, birth,mgr)
 		values(#{email},#{pass},#{name},#{nick},#{tel},#{birth},0)
 	</select>
+	<select id="insertCate" parameterType="ic">
+		insert into category_interest (category_no,member_no)
+		values(#{category_no.value},#{member_no})
+	</select>
   	<select id="login" parameterType="member" resultType="member">
 		select *
 		from member
@@ -14,6 +18,11 @@
 		select *
 		from member
 		where nick = #{nick}
+	</select>
+	<select id="checkEmail" parameterType="String" resultType="member">
+		select *
+		from member
+		where email = #{email}
 	</select>
 	<select id="detail" parameterType="Integer" resultType="member">
 		select * from member where member_no = #{member_no}
