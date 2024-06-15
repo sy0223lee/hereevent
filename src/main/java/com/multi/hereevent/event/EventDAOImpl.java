@@ -43,7 +43,11 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
-    public List<EventDTO> eventList() {
-        return List.of();
+    public List<EventDTO> popList() {
+        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectPop");
+    }
+    @Override
+    public List<EventDTO> showList() {
+        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectShow");
     }
 }

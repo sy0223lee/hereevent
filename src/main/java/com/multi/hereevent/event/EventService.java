@@ -10,7 +10,8 @@ public interface EventService {
     public int delete(int event_no);
     public EventDTO read(int event_no);
     public List<EventDTO> search(String keyword);
-    //public List<EventDTO> eventList();//전체 행사 조회
+    public List<EventDTO> popList();//전체 행사 조회
+    public List<EventDTO> showList();//전체 행사 조회
     //public List<EventDTO> popularList();//인기10순위 리스트,, 관심갯수 그룹바이로 이벤트번호가져오고
     //public List<EventDTO> categoryList();//카테고리별 조회
     //public List<EventDTO> newList(); //오픈예정 행사

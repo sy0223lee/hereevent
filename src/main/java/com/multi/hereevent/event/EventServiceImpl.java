@@ -38,4 +38,14 @@ public class EventServiceImpl implements EventService{
     public List<EventDTO> search(String keyword) {
         return dao.search(keyword);
     }
+
+    @Override
+    public List<EventDTO> popList() {
+        return dao.popList();
+    }
+
+    @Override
+    public List<EventDTO> showList() {
+        return dao.showList();
+    }
 }
