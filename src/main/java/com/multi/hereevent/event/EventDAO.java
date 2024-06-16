@@ -18,6 +18,10 @@ public interface EventDAO {
     //public List<EventDTO> categoryList();//카테고리별 조회
     //public List<EventDTO> newList(); //오픈예정 행사
 
+    //세부페이지
+    public EventDTO getEventDetails(int event_no);  // 전체 데이터 조회
+    //사진 가져오기
+    public EventDTO getEventImage(int event_no);
 
 
 }

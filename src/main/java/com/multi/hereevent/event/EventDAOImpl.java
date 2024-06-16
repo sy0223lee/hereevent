@@ -50,4 +50,19 @@ public class EventDAOImpl implements EventDAO{
     public List<EventDTO> showList() {
         return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectShow");
     }
+
+
+    //세부페이지
+    @Override
+    public EventDTO getEventDetails(int event_no) {
+
+        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
+
+    }
+
+    @Override
+    public EventDTO getEventImage(int event_no) {
+        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventImage", event_no);
+    }
+
 }
