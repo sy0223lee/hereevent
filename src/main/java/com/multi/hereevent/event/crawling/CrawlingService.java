@@ -110,14 +110,11 @@ public class CrawlingService {
                     int eventNo = eventService.selectEventNoByEventName(name); // select event 한 결과값
 
                     List<WebElement> timeList = element.findElements(By.tagName("li"));
-                    for(WebElement e : timeList){
-                        String text = e.getText();
-                        if(text.isEmpty()) { // li 태그에 텍스트가 없는 경우 continue
-                            continue;
-                        }
-
+                    for(int j=1; j<8; j++){
+                        String text = timeList.get(j).getText();
                         String[] dayTime = text.split(" : ");
-                        if(dayTime[1].equals("휴뮤")){
+
+                        if(dayTime[1].equals("휴무")){
                             eventTimeList.add(new EventTimeDTO(eventNo, dayTime[0], null, null));
                         }else{
                             String[] times = dayTime[1].split(" ~ ");
