@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>시작날짜</th>
+            <th>종료날짜</th>
+            <th>위치</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="open:${openlist}">
+            <td><span th:text="${open.name }"></span></td>
+            <td><span th:text="${open.start_date }"></span></td>
+            <td><span th:text="${open.end_date }"></span></td>
+            <td><span th:text="${open.addr }"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

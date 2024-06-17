@@ -27,7 +27,7 @@ public interface EventDAO {
     //오픈예정 행사
     public List<EventDTO> getOpenEvent(String today);
     //예약,대기 높은순 10순위 리스트
-    //public List<EventDTO> getPopularEvent();
+    public List<EventDTO> getPopularEvent();
 
     //인스타그램 태그
 
