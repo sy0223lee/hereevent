@@ -1,18 +1,14 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class EventServiceImpl implements EventService{
-    private EventDAO dao;
-
-    @Autowired
-    public EventServiceImpl(EventDAO dao) {
-        this.dao = dao;
-    }
+@RequiredArgsConstructor
+public class EventServiceImpl implements EventService {
+    private final EventDAO dao;
 
     @Override
     public int insert(EventDTO event) {
@@ -59,5 +55,16 @@ public class EventServiceImpl implements EventService{
     @Override
     public EventDTO getEventImage(int event_no) {
         return dao.getEventImage(event_no);
+    }
+  
+    // 크롤링
+    @Override
+    public int insertCrawlingEvent(EventDTO event) {
+        return dao.insertCrawlingEvent(event);
+    }
+
+    @Override
+    public int selectEventNoByEventName(String eventName) {
+        return Integer.parseInt(dao.selectEventNoByEventName(eventName));
     }
 }

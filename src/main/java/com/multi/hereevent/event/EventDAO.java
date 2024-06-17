@@ -23,5 +23,7 @@ public interface EventDAO {
     //사진 가져오기
     public EventDTO getEventImage(int event_no);
 
-
+    // 
+    public int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
+    public String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
 }
