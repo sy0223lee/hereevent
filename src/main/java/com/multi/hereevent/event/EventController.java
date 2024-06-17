@@ -23,7 +23,7 @@ public class EventController {
 
     @GetMapping("/main")
     public String main() {
-        return "main/mainPage";
+        return "main/main";
     }
     @GetMapping("/test")
     public String test() {
