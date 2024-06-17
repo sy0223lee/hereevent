@@ -32,7 +32,9 @@ public class EventController {
     @GetMapping("/write")
     public String write() {
         return "event/event_write";
+
     }
+
 
 //   세부페이지
     @GetMapping("/{event_no}")
