@@ -10,7 +10,8 @@ public class CrawlingController {
     private final CrawlingService service;
 
     @GetMapping("/crawling")
-    public void crawling(){
+    public String crawling(){
         service.insertEventInfo();
+        return "redirect:/";
     }
 }
