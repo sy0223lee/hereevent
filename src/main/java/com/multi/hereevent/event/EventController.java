@@ -25,6 +25,15 @@ public class EventController {
     public String main() {
         return "main/main";
     }
+    @GetMapping("/test")
+    public String test() {
+        return "main/Test";
+    }
+    @GetMapping("/write")
+    public String write() {
+        return "event/event_write";
+
+    }
 
 
 //   세부페이지
@@ -43,17 +52,24 @@ public class EventController {
     }
     //길찾기
     @GetMapping("/navigation/{event_no}")
-    public String showNavigation() {
+    public String showNavigation(@PathVariable("event_no") int event_no, Model model) {
+        EventDTO eventDetails = service.getEventDetails(event_no);
+        model.addAttribute("event", eventDetails);
         return "detailedPage/navigation";
     }
     //예약
     @GetMapping("/reservation/{event_no}")
-    public String showReservation() {
+    public String showReservation(@PathVariable("event_no") int event_no, Model model) {
+        EventDTO eventDetails = service.getEventDetails(event_no);
+        model.addAttribute("event", eventDetails);
+
         return "detailedPage/reservation";
     }
     //후기
     @GetMapping("/review/{event_no}")
-    public String showReview() {
+    public String showReview(@PathVariable("event_no") int event_no, Model model) {
+        EventDTO eventDetails = service.getEventDetails(event_no);
+        model.addAttribute("event", eventDetails);
         return "detailedPage/review";
     }
 

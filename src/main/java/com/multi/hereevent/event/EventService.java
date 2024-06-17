@@ -33,5 +33,8 @@ public interface EventService {
     public EventDTO getEventDetails(int event_no);
     //eventimage
     EventDTO getEventImage(int event_no);
+  
+    // 크롤링
+    public int insertCrawlingEvent(EventDTO event);
+    public int selectEventNoByEventName(String eventName);
 }
-

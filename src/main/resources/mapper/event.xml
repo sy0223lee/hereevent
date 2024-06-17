@@ -36,8 +36,6 @@
         ORDER BY event_no desc
     </select>
 
-
-
     <select id="getEventDetails" resultType="event">
         SELECT event_no, category_no, name, start_date, end_date,addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
         FROM event
@@ -49,4 +47,19 @@
         FROM events
         WHERE event_no = #{eventNo}
     </select>
+
+	<insert id="insertCrawlingEvent" parameterType="event">
+		insert into event  (name, start_date, end_date, addr, info, homepage, sns, img_path)
+		select #{name}, #{start_date}, #{end_date}, #{addr}, #{info}, #{homepage}, #{sns}, #{img_path}
+		from dual where not exists (
+			select event_no
+			from event
+			where name=#{name} and start_date=#{start_date} and end_date=#{end_date} and addr=#{addr})
+	</insert>
+	<select id="selectEventNoByEventName" parameterType="String" resultType="String">
+		select event_no
+		from event
+		where name=#{name}
+	</select>
+  
 </mapper>

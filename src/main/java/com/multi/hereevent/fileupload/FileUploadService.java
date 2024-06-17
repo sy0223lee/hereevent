@@ -1,25 +1,28 @@
 package com.multi.hereevent.fileupload;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+
 @Service
 public class FileUploadService {
-    // 프로필 이미지 업로드 경로
+    // 파일 업로드 경로
     // Naver Cloud 서버 이용하는 경우 해 서버에 저장될 수 있도록 변경하기 !!
     @Value("C:/hereevent_upload/")
-    private String profileImgPath;
+    private String filePath;
 
-    // 프로필 이미지 경로
-    public String getProfileImgPath(String filename){
-        return profileImgPath + filename;
+    // 파일 경로
+    public String getFilePath(String filename){
+        return filePath + filename;
     }
-
 
     // 프로필 사진 저장
     public String uploadProfileImg(MultipartFile multipartFile) throws IOException {
@@ -29,8 +32,24 @@ public class FileUploadService {
             String originalFilename = multipartFile.getOriginalFilename();
             if(originalFilename != null) {
                 storeFilename = createStoreFilename(originalFilename);
-                multipartFile.transferTo(new File(getProfileImgPath(storeFilename)));
+                multipartFile.transferTo(new File(getFilePath(storeFilename)));
             }
+        }
+        return storeFilename;
+    }
+
+    // 이벤트 사진 저장
+    public String uploadEventImg(String imgUrl) throws IOException {
+        URL url = new URL(imgUrl);
+        int position = imgUrl.lastIndexOf('/');
+        String originalFilename = imgUrl.substring(position + 1) + ".png";
+        String storeFilename = createStoreFilename(originalFilename);
+
+        BufferedImage img = ImageIO.read(url);
+        try {
+            ImageIO.write(img, "png", new File(getFilePath(storeFilename)));
+        } catch (IllegalArgumentException ignored) {
+            storeFilename = null;
         }
         return storeFilename;
     }
