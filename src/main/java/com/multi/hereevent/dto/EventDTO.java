@@ -25,4 +25,16 @@ public class EventDTO {
     private String type; //사전, 대기, 전체
     private int reserve_limit; //시간당 제한인원(예약)
     private int wait_limit; //시간당 제한인원(대기)
+
+    // 이벤트 크롤링 결과 insert 하기 위한 생성자
+    public EventDTO(String name, Date start_date, Date end_date, String addr, String info, String homepage, String sns, String img_path) {
+        this.name = name;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.addr = addr;
+        this.info = info;
+        this.homepage = homepage;
+        this.sns = sns;
+        this.img_path = img_path;
+    }
 }
