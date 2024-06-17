@@ -18,39 +18,34 @@ public class EventDAOImpl implements EventDAO{
 
 
     @Override
-    public int insert(EventDTO event) {
-        return sqlSessionTemplate.insert("com.multi.hereevent.event.insert",event);
+    public int insertEvent(EventDTO event) {
+        return sqlSessionTemplate.insert("com.multi.hereevent.event.insertEvent",event);
     }
 
     @Override
-    public int update(EventDTO event) {
-        return sqlSessionTemplate.update("com.multi.hereevent.event.update", event);
+    public int updateEvent(EventDTO event) {
+        return sqlSessionTemplate.update("com.multi.hereevent.event.updateEvent", event);
     }
 
     @Override
-    public int delete(int event_no) {
-        return sqlSessionTemplate.delete("com.multi.hereevent.event.delete", event_no);
+    public int deleteEvent(int event_no) {
+        return sqlSessionTemplate.delete("com.multi.hereevent.event.deleteEvent", event_no);
     }
 
     @Override
-    public EventDTO read(int event_no) {
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.read", event_no);
+    public List<EventDTO> searchEvent(String keyword) {
+        return sqlSessionTemplate.selectList("com.multi.hereevent.event.searchEvent", keyword);
     }
 
     @Override
-    public List<EventDTO> search(String keyword) {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.search", keyword);
+    public List<EventDTO> getAllEvent() {
+        return sqlSessionTemplate.selectList("com.multi.hereevent.event.getAllEvent");
     }
 
     @Override
-    public List<EventDTO> popList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectPop");
+    public List<EventDTO> getOpenEvent(String today) {
+        return sqlSessionTemplate.selectList("com.multi.hereevent.event.getOpenEvent");
     }
-    @Override
-    public List<EventDTO> showList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectShow");
-    }
-
 
     //세부페이지
     @Override

@@ -15,39 +15,31 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public int insert(EventDTO event) {
-        return dao.insert(event);
+    public int insertEvent(EventDTO event) {
+        return dao.insertEvent(event);
     }
 
     @Override
-    public int update(EventDTO event) {
-        return dao.update(event);
+    public int updateEvent(EventDTO event) {
+        return dao.updateEvent(event);
     }
 
     @Override
-    public int delete(int event_no) {
-        return dao.delete(event_no);
+    public int deleteEvent(int event_no) {
+        return dao.deleteEvent(event_no);
     }
 
     @Override
-    public EventDTO read(int event_no) {
-        return dao.read(event_no);
+    public List<EventDTO> searchEvent(String keyword) {
+        return dao.searchEvent(keyword);
     }
 
     @Override
-    public List<EventDTO> search(String keyword) {
-        return dao.search(keyword);
+    public List<EventDTO> getAllEvent() {
+        return dao.getAllEvent();
     }
 
-    @Override
-    public List<EventDTO> popList() {
-        return List.of();
-    }
 
-    @Override
-    public List<EventDTO> showList() {
-        return List.of();
-    }
 
     //세부페이지
     @Override

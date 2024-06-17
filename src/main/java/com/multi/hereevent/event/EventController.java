@@ -23,16 +23,9 @@ public class EventController {
 
     @GetMapping("/main")
     public String main() {
-        return "main/mainPage";
+        return "main/main";
     }
-    @GetMapping("/test")
-    public String test() {
-        return "main/Test";
-    }
-    @GetMapping("/write")
-    public String write() {
-        return "event/event_write";
-    }
+
 
 //   세부페이지
     @GetMapping("/{event_no}")
