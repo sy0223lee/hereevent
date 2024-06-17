@@ -14,36 +14,36 @@ public class EventDAOImpl implements EventDAO{
 
     @Override
     public int insert(EventDTO event) {
-        return sqlSessionTemplate.insert("com.multi.hereevent.event.insert",event);
+        return sqlSession.insert("com.multi.hereevent.event.insert",event);
     }
 
     @Override
     public int update(EventDTO event) {
-        return sqlSessionTemplate.update("com.multi.hereevent.event.update", event);
+        return sqlSession.update("com.multi.hereevent.event.update", event);
     }
 
     @Override
     public int delete(int event_no) {
-        return sqlSessionTemplate.delete("com.multi.hereevent.event.delete", event_no);
+        return sqlSession.delete("com.multi.hereevent.event.delete", event_no);
     }
 
     @Override
     public EventDTO read(int event_no) {
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.read", event_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.read", event_no);
     }
 
     @Override
     public List<EventDTO> search(String keyword) {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.search", keyword);
+        return sqlSession.selectList("com.multi.hereevent.event.search", keyword);
     }
 
     @Override
     public List<EventDTO> popList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectPop");
+        return sqlSession.selectList("com.multi.hereevent.event.selectPop");
     }
     @Override
     public List<EventDTO> showList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectShow");
+        return sqlSession.selectList("com.multi.hereevent.event.selectShow");
     }
 
 
@@ -51,13 +51,13 @@ public class EventDAOImpl implements EventDAO{
     @Override
     public EventDTO getEventDetails(int event_no) {
 
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
 
     }
 
     @Override
     public EventDTO getEventImage(int event_no) {
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventImage", event_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventImage", event_no);
     }
   
     // 크롤링
