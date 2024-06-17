@@ -14,4 +14,43 @@
 		from event
 		where name=#{name}
 	</select>
+  <select id="insert" parameterType="event">
+      insert into event(name,start_date,end_date,addr,info,homepage,sns,type,reserve_limit,wait_limit)
+      value(event_seq.nextval,#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
+  </select>
+  <select id="delete" parameterType="String">
+      delete from event where event_no = #{event_no}
+  </select>
+  <select id="update" parameterType="event">
+      update event
+      set name = #{name}, start_date = #{start_date}, end_date = #{end_date},
+      addr = #{addr}, info = #{info}, reserve_limit = #{reserve_limit},wait_limit = #{wait_limit}
+      where event_no = #{event_no}
+  </select>
+  <select id="read" parameterType="String" resultType="event">
+      select * from event where board_no = #{board_no}
+  </select>
+  <select id="search" parameterType="String" resultType="event">
+      select * from event
+      where name like '%' || #{name} || '%'
+  </select>
+  <select id="selectPop" resultType="event">
+      select * from event
+      where type = 0
+  </select>
+  <select id="selectShow" resultType="event">
+      select * from event
+      where type = 1
+  </select>
+  <select id="getEventDetails" resultType="event">
+      SELECT event_no, category_no, name, start_date, end_date,addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
+      FROM event
+      WHERE event_no = #{event_no}
+  </select>
+  <!--  event photo 가져오기  -->
+  <select id="getEventImage" resultType="com.multi.hereevent.dto.EventDTO">
+      SELECT event_no, image_path
+      FROM events
+      WHERE event_no = #{eventNo}
+  </select>
 </mapper>

@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS File -->
     <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>HereEvent-MyPage</title>
 
     <script type="text/javascript" th:inline="javascript">
@@ -59,7 +57,7 @@
                     <input type="hidden" th:name="member_no" th:value="${session.member.member_no}">
                     <input type="text" id="edit-nick" class="edit-input" th:name="nick"
                            placeholder="변경할 닉네임을 입력해주세요." maxlength="10" minlength="2">
-                    <button type="submit" class="edit-btn">수정</button>
+                    <button type="submit" class="edit-nick-btn">수정</button>
                 </form>
             </div>
             <span id="check-duplicate"></span>

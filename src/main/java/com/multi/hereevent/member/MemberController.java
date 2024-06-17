@@ -1,11 +1,14 @@
 package com.multi.hereevent.member;
 
 import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.Member;
 import java.sql.Date;
 
@@ -14,7 +17,9 @@ import java.sql.Date;
 @SessionAttributes("member")
 public class MemberController {
     private final MemberService service;
-    
+    private final FileUploadService fileService;
+
+    /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
     public String loginPage(){
         return "login/login";
@@ -35,6 +40,7 @@ public class MemberController {
         service.memberInsert(member);
         return "redirect:/login";
     }
+
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {
@@ -82,7 +88,28 @@ public class MemberController {
         }else {
             return "common/error_page";
         }
-
+    }
+    // 프로필 사진 수정 페이지 이동
+    @GetMapping("/mypage/edit-profile-img")
+    public String editProfileImgPage(){
+        return "mypage/edit_profile_img";
+    }
+    // 프로필 사진 수정
+    @PostMapping("/mypage/edit-profile-img")
+    public String editProfileImg(MemberDTO member, Model model) {
+        System.out.println("[editProfileImg] member = " + member);
+        MultipartFile profileImg = member.getProfile_img();
+        String storeFilename = null;
+        try {
+            storeFilename = fileService.uploadProfileImg(profileImg);
+            member.setImg_path(storeFilename);
+            service.memberUpdateProfileImg(member);
+            model.addAttribute("member", service.memberDetail(member.getMember_no()));
+            return "redirect:/mypage";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "common/error_page";
+        }
     }
 
     /***** 관심 관리 *****/
