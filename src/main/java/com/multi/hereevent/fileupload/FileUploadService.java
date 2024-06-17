@@ -14,16 +14,15 @@ import javax.imageio.ImageIO;
 
 @Service
 public class FileUploadService {
-    // 프로필 이미지 업로드 경로
+    // 파일 업로드 경로
     // Naver Cloud 서버 이용하는 경우 해 서버에 저장될 수 있도록 변경하기 !!
     @Value("C:/hereevent_upload/")
     private String filePath;
 
-    // 프로필 이미지 경로
+    // 파일 경로
     public String getFilePath(String filename){
         return filePath + filename;
     }
-
 
     // 프로필 사진 저장
     public String uploadProfileImg(MultipartFile multipartFile) throws IOException {
@@ -43,7 +42,8 @@ public class FileUploadService {
     public String uploadEventImg(String imgUrl) throws IOException {
         URL url = new URL(imgUrl);
         int position = imgUrl.lastIndexOf('/');
-        String storeFilename = imgUrl.substring(position + 1) + ".png";
+        String originalFilename = imgUrl.substring(position + 1) + ".png";
+        String storeFilename = createStoreFilename(originalFilename);
 
         BufferedImage img = ImageIO.read(url);
         try {
