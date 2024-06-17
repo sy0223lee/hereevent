@@ -46,7 +46,11 @@ public class FileUploadService {
         String storeFilename = imgUrl.substring(position + 1) + ".png";
 
         BufferedImage img = ImageIO.read(url);
-        ImageIO.write(img, "png", new File(getProfileImgPath(storeFilename)));
+        try {
+            ImageIO.write(img, "png", new File(getProfileImgPath(storeFilename)));
+        } catch (IllegalArgumentException ignored) {
+            storeFilename = null;
+        }
 
         return storeFilename;
     }
