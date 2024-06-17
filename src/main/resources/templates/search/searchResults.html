@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>검색 결과</h1>
+    <p>"[[${query}]]"에 대한 검색 결과:</p>
+    <ul>
+        <!--검색결과리스트-->
+        <li th:each="result:${results}" th:text="${result}"></li>
+    </ul>
+    <a href="/search">검색</a>
+</body>
+</html>
