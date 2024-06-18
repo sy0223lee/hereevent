@@ -13,46 +13,44 @@ public class EventDAOImpl implements EventDAO{
     private final SqlSession sqlSession;
 
     @Override
-    public int insert(EventDTO event) {
-        return sqlSession.insert("com.multi.hereevent.event.insert",event);
+    public int insertEvent(EventDTO event) {
+        return sqlSession.insert("com.multi.hereevent.event.insertEvent",event);
     }
 
     @Override
-    public int update(EventDTO event) {
-        return sqlSession.update("com.multi.hereevent.event.update", event);
+    public int updateEvent(EventDTO event) {
+        return sqlSession.update("com.multi.hereevent.event.updateEvent", event);
     }
 
     @Override
-    public int delete(int event_no) {
-        return sqlSession.delete("com.multi.hereevent.event.delete", event_no);
+    public int deleteEvent(int event_no) {
+        return sqlSession.delete("com.multi.hereevent.event.deleteEvent", event_no);
     }
 
     @Override
-    public EventDTO read(int event_no) {
-        return sqlSession.selectOne("com.multi.hereevent.event.read", event_no);
+    public List<EventDTO> searchEvent(String keyword) {
+        return sqlSession.selectList("com.multi.hereevent.event.searchEvent", keyword);
     }
 
     @Override
-    public List<EventDTO> search(String keyword) {
-        return sqlSession.selectList("com.multi.hereevent.event.search", keyword);
+    public List<EventDTO> getAllEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getAllEvent");
     }
 
     @Override
-    public List<EventDTO> popList() {
-        return sqlSession.selectList("com.multi.hereevent.event.selectPop");
-    }
-    @Override
-    public List<EventDTO> showList() {
-        return sqlSession.selectList("com.multi.hereevent.event.selectShow");
+    public List<EventDTO> getOpenEvent(String today) {
+        return sqlSession.selectList("com.multi.hereevent.event.getOpenEvent");
     }
 
+    @Override
+    public List<EventDTO> getPopularEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getPopularEvent");
+    }
 
     //세부페이지
     @Override
     public EventDTO getEventDetails(int event_no) {
-
         return sqlSession.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
-
     }
 
     @Override
