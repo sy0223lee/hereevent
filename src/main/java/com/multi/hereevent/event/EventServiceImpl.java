@@ -36,6 +36,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        return dao.selectEventByCategoryNo(category_no);
+    }
+
+    @Override
     public List<EventDTO> getOpenEvent(String today) {
         return dao.getOpenEvent(today);
     }
@@ -68,4 +73,6 @@ public class EventServiceImpl implements EventService {
     public int selectEventNoByEventName(String eventName) {
         return Integer.parseInt(dao.selectEventNoByEventName(eventName));
     }
+
+
 }

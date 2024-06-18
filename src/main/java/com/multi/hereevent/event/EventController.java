@@ -11,14 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/event")
 public class EventController {
     private EventService service;
+    private int categoryNo;
 
     public EventController(EventService service) {
         this.service = service;
@@ -32,8 +31,6 @@ public class EventController {
     public String test() {
         return "main/Test";
     }
-
-
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
     public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
@@ -72,6 +69,7 @@ public class EventController {
         mav.addObject("popularlist",popularlist);
         return mav;
     }
+
 
 //   세부페이지
     @GetMapping("/{event_no}")
@@ -118,6 +116,19 @@ public class EventController {
         EventDTO eventDetails = service.getEventDetails(event_no);
         model.addAttribute("event", eventDetails);
         return service.getEventImage(event_no);
+    }
+
+    //카테고리별 리스트
+    @GetMapping("/list")
+    public String listCategory(@RequestParam("category_no") int category_no, Model model){
+
+
+        //System.out.println("NO==>>"+ category_no);
+        List<EventDTO> eventlist = service.selectEventByCategoryNo(category_no);
+       // System.out.println("eventlist=>>>>"+eventlist);
+        model.addAttribute("eventlist",eventlist);
+        return "event/eventCategoryList";
+
     }
 }
 

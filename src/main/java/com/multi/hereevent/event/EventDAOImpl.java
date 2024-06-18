@@ -38,6 +38,12 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        //System.out.println("DAONO===>>>"+category_no);
+        return sqlSession.selectList("com.multi.hereevent.event.selectEventByCategory", category_no);
+    }
+
+    @Override
     public List<EventDTO> getOpenEvent(String today) {
         return sqlSession.selectList("com.multi.hereevent.event.getOpenEvent");
     }
