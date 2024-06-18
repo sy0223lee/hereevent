@@ -116,11 +116,6 @@ public class MemberController {
         return "mypage/myinterest";
     }
 
-    /***** 후기 관리 *****/
-    @GetMapping("/myreview")
-    public String myreview() {
-        return "mypage/myreview";
-    }
 
     /***** 행사 내역 *****/
     @GetMapping("/myevent")
