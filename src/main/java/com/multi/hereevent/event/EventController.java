@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/event")
 public class EventController {
-    private EventService service;
+    private final EventService service;
     
     @GetMapping("/main")
     public String mainPage() {
@@ -110,8 +110,6 @@ public class EventController {
     //카테고리별 리스트
     @GetMapping("/list")
     public String listCategory(@RequestParam("category_no") int category_no, Model model){
-
-
         //System.out.println("NO==>>"+ category_no);
         List<EventDTO> eventlist = service.selectEventByCategoryNo(category_no);
        // System.out.println("eventlist=>>>>"+eventlist);
