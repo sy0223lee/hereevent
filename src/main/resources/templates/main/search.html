@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <input>
+    <form action="/hereevent/event/searchlist" method="post">
+        <input type=text name="keyword"/> <input type="submit" value="검색">
+    </form>
     <table class="table">
         <thead>
         <tr>
@@ -16,11 +18,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="open:${openlist}">
-            <td><span th:text="${open.name }"></span></td>
-            <td><span th:text="${open.start_date }"></span></td>
-            <td><span th:text="${open.end_date }"></span></td>
-            <td><span th:text="${open.addr }"></span></td>
+        <tr th:each="search:${searchlist}">
+            <td><span th:text="${search.name }"></span></td>
+            <td><span th:text="${search.start_date }"></span></td>
+            <td><span th:text="${search.end_date }"></span></td>
+            <td><span th:text="${search.addr }"></span></td>
         </tr>
         </tbody>
     </table>

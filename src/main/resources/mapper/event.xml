@@ -17,7 +17,7 @@
     <select id="searchEvent" parameterType="String" resultType="event">
         SELECT *
         FROM event
-        WHERE name like '%' || #{name} || '%'
+        WHERE name Like CONCAT('%' , #{name} , '%')
     </select>
     <select id="getAllEvent" resultType="event">
         SELECT *
@@ -30,7 +30,7 @@
         ORDER BY start_date
     </select>
     <select id="getPopularEvent" resultType="event">
-        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr,
+        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr, e.img_path
         COUNT(DISTINCT r.member_no) + COUNT(DISTINCT w.email) AS total_count
         FROM event e
         LEFT JOIN reserve r ON e.event_no = r.event_no

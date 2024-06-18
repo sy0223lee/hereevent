@@ -26,23 +26,23 @@ public class EventController {
 
     @GetMapping("/main")
     public String mainPage() {
-        return "main/test";
+        return "main/mainPage";
     }
-    @GetMapping("/test")
-    public String test() {
-        return "main/Test";
-    }
+
 
 
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
+    public String searchPage() {
+        return "main/search";
+    }
+    @PostMapping("/searchlist")
     public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
         ModelAndView mav = new ModelAndView("main/search");
         List<EventDTO> searchlist = service.searchEvent(keyword);
         mav.addObject("searchlist",searchlist);
         return mav;
     }
-
     //전체행사조회(프론트 아직)
     @GetMapping("/alleventlist")
     public ModelAndView getAllEvent(){
@@ -55,12 +55,11 @@ public class EventController {
     //오픈예정행사(프론트 아직)
     @GetMapping("/openlist")
     public ModelAndView getOpenEvent(){
-        ModelAndView mav = new ModelAndView("main/listTest");
+        ModelAndView mav = new ModelAndView("main/mainPage");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String today = sdf.format(new Date());
         List<EventDTO> openlist = service.getOpenEvent(today);
         mav.addObject("openlist",openlist);
-        mav.addObject("today", today);
         return mav;
     }
 
