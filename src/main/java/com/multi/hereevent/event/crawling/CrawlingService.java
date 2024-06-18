@@ -96,7 +96,7 @@ public class CrawlingService {
                 // 이벤트 이미지 저장 후 경로 가져오기
                 String imgUrl = eventImgList.get(i);
                 String imgPath = null;
-                if(!imgUrl.startsWith("data:")){
+                if(imgUrl.startsWith("https")){
                     imgPath = fileUploadService.uploadEventImg(imgUrl);
                 }
 
