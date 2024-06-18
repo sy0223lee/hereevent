@@ -1,20 +1,31 @@
 package com.multi.hereevent.member;
 
-import org.json.JSONObject;
+import com.multi.hereevent.dto.MemberDTO;
+import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
 @Controller
+@RequiredArgsConstructor
 public class NaverLoginController {
+    private final MemberService service;
+
     @GetMapping("/login/naver")
     public String naverConnect(){
-        // state용 난수 생성
+        // state 용 난수 생성
         SecureRandom random = new SecureRandom();
         String state = new BigInteger(130, random).toString(32);
 
@@ -27,42 +38,73 @@ public class NaverLoginController {
         return "redirect:" + url;
     }
 
-    @GetMapping(value = "/login/naver/callback", produces = "application/json")
-    @ResponseBody
-    public void naverLogin(@RequestParam("code") String code, @RequestParam("state") String state){
+    @GetMapping("/login/naver/callback")
+    public String naverLogin(@RequestParam("code") String code, @RequestParam("state") String state) throws ParseException {
         System.out.println("===== 네이버 로그인 접근 토큰 요청 =====");
-        // POST 요청 보내고 응답 JSON 객체로 저장
-        WebClient client = WebClient.builder()
-                .baseUrl("https://nid.naver.com")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-        JSONObject response = client.post()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/oauth2.0/token")
-                        .queryParam("grant_type", "authorization_code")
-                        .queryParam("client_id", "08J45Bf5olDzizmNsIcJ")
-                        .queryParam("client_secret", "53JS4ixZ2M")
-                        .queryParam("code", code)
-                        .queryParam("state", state)
-                        .build())
-                .retrieve().bodyToMono(JSONObject.class).block();
+        String url = "https://nid.naver.com/oauth2.0/token";
+        RestTemplate restTemplate = new RestTemplate();
 
-        System.out.println("===== 네이버 로그인 접근 토큰 응답 =====");
-        // response가 아무것도 안넘어와...!
-        System.out.println("[토큰] "+ response);
-        // JSON 에서 접근 토큰 추출
-        String token = response.getString("access_token");
-        System.out.println("===== 네이버 로그인 사용자 정보 요청 =====");
-        getUserInfo(token);
+        // HttpHeader Object
+        HttpHeaders headers = new HttpHeaders();
+        // HttpBody Object
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", "08J45Bf5olDzizmNsIcJ");
+        params.add("client_secret", "53JS4ixZ2M");
+        params.add("code", code);
+        params.add("state", state);
+        // Http Header 와 Http Body params 를 가진 엔티티
+        HttpEntity<MultiValueMap<String, String>> naverTokenRequest = new HttpEntity<>(params, headers);
+
+        // url 로 Http 요청, POST 방식
+        ResponseEntity<String> response = restTemplate.exchange(url,
+                HttpMethod.POST, naverTokenRequest, String.class);
+
+        // 출력
+        String responseBody = response.getBody();
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(responseBody);
+        String accessToken = (String) object.get("access_token");
+        System.out.println("[accessToken]: " + accessToken);
+
+        getUserInfo(accessToken);
+
+
+        return "redirect:/";
     }
 
-    public void getUserInfo(String accessToken){
-        // 사용자 정보 요청
-        WebClient client = WebClient.create("https://openapi.naver.com/v1/nid/me");
-        JSONObject response = client.get()
-                                    .header("Authorization", "Bearer " + accessToken)
-                                    .retrieve().bodyToMono(JSONObject.class).block();
+    public void getUserInfo(String accessToken) throws ParseException {
+        String url = "https://openapi.naver.com/v1/nid/me";
+        RestTemplate restTemplate = new RestTemplate();
 
-        System.out.println("[사용자 정보] " + response);
+        // HttpHeader Object
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+        // Http Header 와 Http Body params 를 가진 엔티티
+        HttpEntity<MultiValueMap<String, String>> naverInfoRequest = new HttpEntity<>(headers);
+
+        // url 로 Http 요청, POST 방식
+        ResponseEntity<String> response = restTemplate.exchange(url,
+                HttpMethod.POST, naverInfoRequest, String.class);
+
+        // 출력
+        String responseBody = response.getBody();
+        System.out.println(responseBody);
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(responseBody);
+
+        // {"id":"FSZPR2GWa_330BHMOma5NTLlo42jTLedEfkUgAOhia4","nickname":"sy0****","email":"email@naver.com","mobile":"010-1234-1234","mobile_e164":"+821012341234","name":"\uc774\uc2b9\uc724"}
+        String email = (String) object.get("email");
+        String pass = (String) object.get("naver"); // 소셜 로그인의 경우 패스워드를 따로 저장하지 않으므로 어느 사이트 로그인인지 저장
+        String name = (String) object.get("name");
+        String nick = (String) object.get("nickname");
+        String tel = (String) object.get("mobile");
+
+        MemberDTO member = service.memberFindByEmail(email);
+        if(member != null){
+            System.out.println("회원 정보 조회");
+        }else{
+            System.out.println("회원 정보 없으므로 insert 필요");
+        }
     }
 }

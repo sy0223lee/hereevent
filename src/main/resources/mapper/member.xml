@@ -33,4 +33,9 @@
 		set img_path = #{img_path}
 		where member_no = #{member_no}
 	</update>
+	<select id="findByEmail" parameterType="String" resultType="member">
+		select *
+		from member
+		where email = #{email}
+	</select>
 </mapper>

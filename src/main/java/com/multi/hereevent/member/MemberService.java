@@ -14,4 +14,5 @@ public interface MemberService {
     int memberUpdateProfileImg(MemberDTO member);
     int memberDelete(int member_no);
     boolean memberCheckNick(String nick);
+    MemberDTO memberFindByEmail(String email);
 }
