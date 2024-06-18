@@ -1,28 +1,19 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.fileupload.FileUploadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
-
 
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/event")
 public class EventController {
     private EventService service;
-    private int categoryNo;
-
-    public EventController(EventService service) {
-        this.service = service;
-    }
-
+    
     @GetMapping("/main")
     public String mainPage() {
         return "main/test";
@@ -31,43 +22,41 @@ public class EventController {
     public String test() {
         return "main/Test";
     }
+    @GetMapping("/test2")
+    public String test2() {
+        return "main/mainPage2";
+    }
+
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
-    public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
-        ModelAndView mav = new ModelAndView("main/search");
+    public String searchlist(@RequestParam("keyword") String keyword, Model model) {
         List<EventDTO> searchlist = service.searchEvent(keyword);
-        mav.addObject("searchlist",searchlist);
-        return mav;
+        model.addAttribute("searchlist",searchlist);
+        return "main/search";
     }
 
     //전체행사조회(프론트 아직)
     @GetMapping("/alleventlist")
-    public ModelAndView getAllEvent(){
-        ModelAndView mav = new ModelAndView("main/alllistTest");
+    public String getAllEvent(Model model){
         List<EventDTO> alleventlist = service.getAllEvent();
-        mav.addObject("alleventlist",alleventlist);
-        return mav;
+        model.addAttribute("alleventlist",alleventlist);
+        return "main/alllistTest";
     }
 
     //오픈예정행사(프론트 아직)
     @GetMapping("/openlist")
-    public ModelAndView getOpenEvent(){
-        ModelAndView mav = new ModelAndView("main/listTest");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String today = sdf.format(new Date());
-        List<EventDTO> openlist = service.getOpenEvent(today);
-        mav.addObject("openlist",openlist);
-        mav.addObject("today", today);
-        return mav;
+    public String getOpenEvent(Model model){
+        List<EventDTO> openlist = service.getOpenEvent();
+        model.addAttribute("openlist",openlist);
+        return "main/listTest";
     }
 
     //예약/대기많은행사 top10(프론트 아직)
     @GetMapping("/popularlist")
-    public ModelAndView getPopularEvent(){
-        ModelAndView mav = new ModelAndView("main/popularlistTest");
+    public String getPopularEvent(Model model){
         List<EventDTO> popularlist = service.getPopularEvent();
-        mav.addObject("popularlist",popularlist);
-        return mav;
+        model.addAttribute("popularlist",popularlist);
+        return "main/popularlistTest";
     }
 
 

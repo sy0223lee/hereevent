@@ -44,7 +44,7 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
-    public List<EventDTO> getOpenEvent(String today) {
+    public List<EventDTO> getOpenEvent() {
         return sqlSession.selectList("com.multi.hereevent.event.getOpenEvent");
     }
 
