@@ -32,7 +32,7 @@ public class CrawlingService {
 
         // WebDriver option 설정
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless"); // 브라우저 띄우지 않기
+//        options.addArguments("headless"); // 브라우저 띄우지 않기
         options.addArguments("--disable-popup-blocking"); // 팝업창 무시
 
         WebDriver driver = new ChromeDriver(options);
@@ -95,7 +95,10 @@ public class CrawlingService {
 
                 // 이벤트 이미지 저장 후 경로 가져오기
                 String imgUrl = eventImgList.get(i);
-                String imgPath = fileUploadService.uploadEventImg(imgUrl);
+                String imgPath = null;
+                if(!imgUrl.startsWith("data:")){
+                    imgPath = fileUploadService.uploadEventImg(imgUrl);
+                }
 
                 // 가져온 정보로 EventDTO 객체 생성
                 EventDTO event = new EventDTO(name, new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()), addr, info, homepage, sns, imgPath);

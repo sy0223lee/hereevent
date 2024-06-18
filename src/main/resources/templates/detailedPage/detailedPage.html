@@ -51,7 +51,7 @@
                     <article class="article">
                         <div class="post-img">
                             <div th:each="imgPath : ${event.img_path}">
-                            <img th:src="|@{/download/}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />
+                            <img th:src="|@{/download/event/}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />
                             </div>
                         </div>
 
@@ -60,7 +60,7 @@
 <!--                            <div th:each="imgPath : ${event.img_path}">-->
 <!--                                <div class="slider s1">-->
 
-<!--                                    <img th:src="|@{/download/}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />-->
+<!--                                    <img th:src="|@{/download/event}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />-->
 <!--                                </div>-->
 <!--                            </div>-->
 
