@@ -37,7 +37,7 @@
                     <img th:if="${session.member.img_path == null}"
                          th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
                     <img th:unless="${session.member.img_path == null}"
-                         th:src="|@{/download/}${session.member.img_path}|" alt="member_profile">
+                         th:src="|@{/download/profile/}${session.member.img_path}|" alt="member_profile">
                 </div>
             </div>
             <button onclick="location.href='/hereevent/mypage/edit-profile-img'"
