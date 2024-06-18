@@ -23,6 +23,15 @@ public class FileUploadService {
     public String getFilePath(String filename){
         return filePath + filename;
     }
+    public String getProfileFilePath(String filename) {
+        return filePath + "profile/" + filename;
+    }
+    public String getEventFilePath(String filename) {
+        return filePath + "event/" + filename;
+    }
+    public String getReviewFilePath(String filename) {
+        return filePath + "review/" + filename;
+    }
 
     // 프로필 사진 저장
     public String uploadProfileImg(MultipartFile multipartFile) throws IOException {
@@ -32,7 +41,7 @@ public class FileUploadService {
             String originalFilename = multipartFile.getOriginalFilename();
             if(originalFilename != null) {
                 storeFilename = createStoreFilename(originalFilename);
-                multipartFile.transferTo(new File(getFilePath(storeFilename)));
+                multipartFile.transferTo(new File(getProfileFilePath(storeFilename)));
             }
         }
         return storeFilename;
@@ -47,7 +56,7 @@ public class FileUploadService {
 
         BufferedImage img = ImageIO.read(url);
         try {
-            ImageIO.write(img, "png", new File(getFilePath(storeFilename)));
+            ImageIO.write(img, "png", new File(getEventFilePath(storeFilename)));
         } catch (IllegalArgumentException ignored) {
             storeFilename = null;
         }
