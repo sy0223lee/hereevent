@@ -64,5 +64,10 @@
 		from event
 		where name=#{name}
 	</select>
+    <select id="selectEventByCategory" parameterType="java.lang.Integer" resultType="com.multi.hereevent.dto.EventDTO">
+        select *
+        from event
+        where category_no=#{category_no}
+    </select>
   
 </mapper>

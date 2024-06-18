@@ -11,67 +11,36 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/event")
 public class EventController {
     private EventService service;
+    private int categoryNo;
 
     public EventController(EventService service) {
         this.service = service;
     }
 
     @GetMapping("/main")
-    public String mainPage() {
-        return "main/test";
+    public String main() {
+        return "main/main";
     }
     @GetMapping("/test")
     public String test() {
         return "main/Test";
     }
+    @GetMapping("/test2")
+    public String test2() {
+        return "main/mainPage2";
+    }
+    @GetMapping("/write")
+    public String write() {
+        return "event/event_write";
 
-
-    //행사검색(프론트 아직)
-    @GetMapping("/searchlist")
-    public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
-        ModelAndView mav = new ModelAndView("main/search");
-        List<EventDTO> searchlist = service.searchEvent(keyword);
-        mav.addObject("searchlist",searchlist);
-        return mav;
     }
 
-    //전체행사조회(프론트 아직)
-    @GetMapping("/alleventlist")
-    public ModelAndView getAllEvent(){
-        ModelAndView mav = new ModelAndView("main/alllistTest");
-        List<EventDTO> alleventlist = service.getAllEvent();
-        mav.addObject("alleventlist",alleventlist);
-        return mav;
-    }
-
-    //오픈예정행사(프론트 아직)
-    @GetMapping("/openlist")
-    public ModelAndView getOpenEvent(){
-        ModelAndView mav = new ModelAndView("main/listTest");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String today = sdf.format(new Date());
-        List<EventDTO> openlist = service.getOpenEvent(today);
-        mav.addObject("openlist",openlist);
-        mav.addObject("today", today);
-        return mav;
-    }
-
-    //예약/대기많은행사 top10(프론트 아직)
-    @GetMapping("/popularlist")
-    public ModelAndView getPopularEvent(){
-        ModelAndView mav = new ModelAndView("main/popularlistTest");
-        List<EventDTO> popularlist = service.getPopularEvent();
-        mav.addObject("popularlist",popularlist);
-        return mav;
-    }
 
 //   세부페이지
     @GetMapping("/{event_no}")
@@ -118,6 +87,19 @@ public class EventController {
         EventDTO eventDetails = service.getEventDetails(event_no);
         model.addAttribute("event", eventDetails);
         return service.getEventImage(event_no);
+    }
+
+    //카테고리별 리스트
+    @GetMapping("/list")
+    public String listCategory(@RequestParam("category_no") int category_no, Model model){
+
+
+        //System.out.println("NO==>>"+ category_no);
+        List<EventDTO> eventlist = service.selectEventByCategoryNo(category_no);
+       // System.out.println("eventlist=>>>>"+eventlist);
+        model.addAttribute("eventlist",eventlist);
+        return "event/eventCategoryList";
+
     }
 }
 
