@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>시작날짜</th>
+        <th>종료날짜</th>
+        <th>위치</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="popular:${popularlist}">
+        <td><span th:text="${popular.name }"></span></td>
+        <td><span th:text="${popular.start_date }"></span></td>
+        <td><span th:text="${popular.end_date }"></span></td>
+        <td><span th:text="${popular.addr }"></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

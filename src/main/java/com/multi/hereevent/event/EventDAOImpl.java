@@ -42,6 +42,11 @@ public class EventDAOImpl implements EventDAO{
         return sqlSession.selectList("com.multi.hereevent.event.getOpenEvent");
     }
 
+    @Override
+    public List<EventDTO> getPopularEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getPopularEvent");
+    }
+
     //세부페이지
     @Override
     public EventDTO getEventDetails(int event_no) {

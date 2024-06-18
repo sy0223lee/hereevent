@@ -3,37 +3,40 @@
 <mapper namespace="com.multi.hereevent.event">
     <select id="insertEvent" parameterType="event">
         insert into event(name,start_date,end_date,addr,info,homepage,sns,type,reserve_limit,wait_limit)
-        value(event_seq.nextval,#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
+        value(#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
     </select>
     <select id="deleteEvent" parameterType="String">
         delete from event where event_no = #{event_no}
     </select>
     <select id="updateEvent" parameterType="event">
-        update event
+        UPDATE event
         set name = #{name}, start_date = #{start_date}, end_date = #{end_date},
         addr = #{addr}, info = #{info}, reserve_limit = #{reserve_limit},wait_limit = #{wait_limit}
-        where event_no = #{event_no}
+        WHERE event_no = #{event_no}
     </select>
     <select id="searchEvent" parameterType="String" resultType="event">
-        select * from event
-        where name like '%' || #{name} || '%'
+        SELECT *
+        FROM event
+        WHERE name like '%' || #{name} || '%'
     </select>
     <select id="getAllEvent" resultType="event">
-        select * from event
-        where type = 0
+        SELECT *
+        FROM event
     </select>
     <select id="getOpenEvent" resultType="event">
         SELECT event_no, category_no, name, start_date, end_date, addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
         FROM event
-        WHERE start_date > sysdate
+        WHERE start_date > now()
+        ORDER BY start_date
     </select>
     <select id="getPopularEvent" resultType="event">
-        SELECT e.event_no, count(r.member_no)+count(w.email)
-        FROM event e, reserve r, wait w
-        WHERE e.event_no = r.event_no and
-        e.event_no = w.event_no
-        GROUP BY event_no
-        ORDER BY event_no desc
+        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr,
+        COUNT(DISTINCT r.member_no) + COUNT(DISTINCT w.email) AS total_count
+        FROM event e
+        LEFT JOIN reserve r ON e.event_no = r.event_no
+        LEFT JOIN wait w ON e.event_no = w.event_no
+        GROUP BY e.event_no
+        ORDER BY total_count desc limit 10;
     </select>
 
     <select id="getEventDetails" resultType="event">

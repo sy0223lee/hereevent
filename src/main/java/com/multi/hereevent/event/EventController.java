@@ -6,10 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,19 +25,53 @@ public class EventController {
     }
 
     @GetMapping("/main")
-    public String main() {
-        return "main/main";
+    public String mainPage() {
+        return "main/test";
     }
     @GetMapping("/test")
     public String test() {
         return "main/Test";
     }
-    @GetMapping("/write")
-    public String write() {
-        return "event/event_write";
 
+
+    //행사검색(프론트 아직)
+    @GetMapping("/searchlist")
+    public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
+        ModelAndView mav = new ModelAndView("main/search");
+        List<EventDTO> searchlist = service.searchEvent(keyword);
+        mav.addObject("searchlist",searchlist);
+        return mav;
     }
 
+    //전체행사조회(프론트 아직)
+    @GetMapping("/alleventlist")
+    public ModelAndView getAllEvent(){
+        ModelAndView mav = new ModelAndView("main/alllistTest");
+        List<EventDTO> alleventlist = service.getAllEvent();
+        mav.addObject("alleventlist",alleventlist);
+        return mav;
+    }
+
+    //오픈예정행사(프론트 아직)
+    @GetMapping("/openlist")
+    public ModelAndView getOpenEvent(){
+        ModelAndView mav = new ModelAndView("main/listTest");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(new Date());
+        List<EventDTO> openlist = service.getOpenEvent(today);
+        mav.addObject("openlist",openlist);
+        mav.addObject("today", today);
+        return mav;
+    }
+
+    //예약/대기많은행사 top10(프론트 아직)
+    @GetMapping("/popularlist")
+    public ModelAndView getPopularEvent(){
+        ModelAndView mav = new ModelAndView("main/popularlistTest");
+        List<EventDTO> popularlist = service.getPopularEvent();
+        mav.addObject("popularlist",popularlist);
+        return mav;
+    }
 
 //   세부페이지
     @GetMapping("/{event_no}")

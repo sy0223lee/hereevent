@@ -35,6 +35,15 @@ public class EventServiceImpl implements EventService {
         return dao.getAllEvent();
     }
 
+    @Override
+    public List<EventDTO> getOpenEvent(String today) {
+        return dao.getOpenEvent(today);
+    }
+
+    @Override
+    public List<EventDTO> getPopularEvent() {
+        return dao.getPopularEvent();
+    }
 
 
     //세부페이지
