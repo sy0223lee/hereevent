@@ -9,11 +9,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
-    private ReviewDAO dao;
+    private final ReviewDAO dao;
 
     @Override
     public int insertReview(ReviewDTO review) {
-        return 0;
+        return dao.insertReview(review);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<ReviewDTO> selectReviewByEventNo(int event_no) {
-        return List.of();
+        return dao.selectReviewByEventNo(event_no);
     }
 
     @Override

@@ -20,9 +20,10 @@ public class ReviewController {
     private final ReviewService service;
 
     // 이벤트 상세페이지에서 리뷰 조회
+    // EventController에 작성
 
     // 리뷰 작성은 이벤트 상세페이지에서
-    @PostMapping("/event/review/insert")
+    @PostMapping("/review/insert")
     public String insertReview(ReviewDTO review){
         int result = service.insertReview(review);
         if(result > 0){

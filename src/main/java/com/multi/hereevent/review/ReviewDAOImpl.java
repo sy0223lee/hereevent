@@ -14,7 +14,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     public int insertReview(ReviewDTO review) {
-        return 0;
+        return sqlSession.insert("com.multi.hereevent.review.insertReview", review);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     public List<ReviewDTO> selectReviewByEventNo(int event_no) {
-        return List.of();
+        return sqlSession.selectList("com.multi.hereevent.review.selectReviewByEventNo", event_no);
     }
 
     @Override

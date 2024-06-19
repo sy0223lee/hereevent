@@ -110,7 +110,7 @@ public class EventController {
     }
 
     //이벤트 사진 가져오기
-    @GetMapping("/image/{eventNo}")
+    @GetMapping("/image/{event_no}")
     @ResponseBody
     public EventDTO getEventImage(@PathVariable("event_no") int event_no, Model model) {
         EventDTO eventDetails = eventService.getEventDetails(event_no);

@@ -3,7 +3,7 @@
 <mapper namespace="com.multi.hereevent.review">
 	<insert id="insertReview" parameterType="review">
 		insert into review (event_no, member_no, write_date, content, star) value
-		#{event_no}, #{member_no}, now(), #{content}, #{star}
+		(#{event_no}, #{member_no}, now(), #{content}, #{star})
 	</insert>
 	<update id="updateReview" parameterType="review">
 		update review
@@ -14,11 +14,12 @@
 		delete from member
 		where review_no = #{review_no}
 	</delete>
-	<select id="selectReviewByEventNo" resultType="List">
-		select * from review
+	<select id="selectReviewByEventNo" resultType="review">
+		select r.*, m.nick, m.img_path
+		from review r inner join member m on r.member_no = m.member_no
 		where event_no = #{event_no}
 	</select>
-	<select id="selectReviewByMemberNo" resultType="List">
+	<select id="selectReviewByMemberNo" resultType="review">
 		select * from review
 		where member_no = #{member_no}
 	</select>

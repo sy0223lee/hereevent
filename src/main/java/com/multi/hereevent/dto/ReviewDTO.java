@@ -19,4 +19,8 @@ public class ReviewDTO {
     private Date update_date;
     private String content;
     private float star;
+
+    // 리뷰 작성자 정보 저장할 멤버변수
+    private String nick;
+    private String img_path;
 }
