@@ -9,14 +9,6 @@
     <link href="/hereevent/common/css/detailedPage.css" rel="stylesheet">
 
     <title>HereEvent-EventDetail</title>
-      <script>
-        function scrollToSection(sectionId) {
-            var element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    </script>
 </head>
 <body class="blog-details-page">
 <main layout:fragment="main" class="main">
@@ -69,38 +61,23 @@
                             <h2 class="title"><span th:text="${event.name}"></span></h2>
                             <div class="container">
                                 <div class="submenu">
-                                    <a href="javascript:void(0);" onclick="scrollToSection('content-section')" class="nav-item" th:classappend="${tab == 'content'} ? 'active' : ''" data-tab="content">상세정보</a>
-                                    <a href="javascript:void(0);" onclick="scrollToSection('navigation-section')" class="nav-item" th:classappend="${tab == 'map'} ? 'active' : ''" data-tab="map">길찾기</a>
-                                    <a href="javascript:void(0);" onclick="scrollToSection('reservation-section')" class="nav-item" th:classappend="${tab == 'reservation'} ? 'active' : ''" data-tab="reservation">예약</a>
-                                    <a href="javascript:void(0);" onclick="scrollToSection('reviews-section')" class="nav-item" th:classappend="${tab == 'reviews'} ? 'active' : ''" data-tab="reviews">후기</a>
+                                    <a th:href="@{/event/content/{event_no}(event_no=${event.event_no})}"
+                                       th:classappend="${tab == 'content'} ? 'active' : ''" class="nav-item"
+                                       data-tab="content">상세정보</a>
+                                    <a th:href="@{/event/navigation/{event_no}(event_no=${event.event_no})}"
+                                       th:classappend="${tab == 'map'} ? 'active' : ''" class="nav-item" data-tab="map">길찾기</a>
+                                    <a th:href="@{/event/reservation/{event_no}(event_no=${event.event_no})}"
+                                       th:classappend="${tab == 'reservation'} ? 'active' : ''" class="nav-item"
+                                       data-tab="reservation">예약</a>
+                                    <a th:href="@{/event/review/{event_no}(event_no=${event.event_no})}"
+                                       th:classappend="${tab == 'reviews'} ? 'active' : ''" class="nav-item"
+                                       data-tab="reviews">후기</a>
+                                </div>
+                                <div class="content" th:fragment="content">
+                                    <th:block layout:fragment="content"></th:block>
                                 </div>
                             </div>
-                              <article id="content-section" class="article">
-                                    <h2 class="title">상세정보</h2>
-                                    <div>
-                                        <p>장소: <span th:text="${event.addr}"></span></p>
-                                        <p>시작 날짜: <span th:text="${event.start_date}"></span></p>
-                                        <p>종료 날짜: <span th:text="${event.end_date}"></span></p>
-                                        <p>설명: <span th:text="${event.info}"></span></p>
-                                        <p>홈페이지: <a th:href="${event.homepage}" th:text="${event.homepage}"></a></p>
-                                        <p>SNS: <a th:href="${event.sns}" th:text="${event.sns}"></a></p>
-                                    </div>
-                                </article>
 
-                                <article id="navigation-section" class="article">
-                                    <h2 class="title">길찾기</h2>
-                                    <!-- 길찾기 내용 -->
-                                </article>
-
-                                <article id="reservation-section" class="article">
-                                    <h2 class="title">예약</h2>
-                                    <!-- 예약 내용 -->
-                                </article>
-
-                                <article id="reviews-section" class="article">
-                                    <h2 class="title">후기</h2>
-                                    <!-- 후기 내용 -->
-                                </article>
 
                         </article>
                     </div>
