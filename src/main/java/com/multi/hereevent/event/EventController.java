@@ -16,25 +16,25 @@ public class EventController {
     
     @GetMapping("/main")
     public String mainPage() {
-        return "main/test";
-    }
-    @GetMapping("/test")
-    public String test() {
-        return "main/Test";
+        return "main/mainPage";
     }
     @GetMapping("/test2")
     public String test2() {
         return "main/mainPage2";
     }
 
+
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
+    public String searchPage() {
+        return "main/search";
+    }
+    @PostMapping("/searchlist")
     public String searchlist(@RequestParam("keyword") String keyword, Model model) {
         List<EventDTO> searchlist = service.searchEvent(keyword);
         model.addAttribute("searchlist",searchlist);
         return "main/search";
     }
-
     //전체행사조회(프론트 아직)
     @GetMapping("/alleventlist")
     public String getAllEvent(Model model){
