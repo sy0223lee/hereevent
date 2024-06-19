@@ -14,12 +14,22 @@ import java.util.List;
 public class EventController {
     private final EventService service;
     
+    @GetMapping("/test")
+    public String test() {
+        return "main/bootTest";
+    }
     @GetMapping("/main")
     public String mainPage() {
         return "main/mainPage";
     }
     @GetMapping("/test2")
-    public String test2() {
+    public String test2(Model model) {
+        List<EventDTO> alleventlist = service.getAllEvent();
+        model.addAttribute("alleventlist",alleventlist);
+        List<EventDTO> openlist = service.getOpenEvent();
+        model.addAttribute("openlist",openlist);
+        List<EventDTO> popularlist = service.getPopularEvent();
+        model.addAttribute("popularlist",popularlist);
         return "main/mainPage2";
     }
 
@@ -36,28 +46,30 @@ public class EventController {
         return "main/search";
     }
     //전체행사조회(프론트 아직)
-    @GetMapping("/alleventlist")
+  /*  @GetMapping("/alleventlist")
     public String getAllEvent(Model model){
         List<EventDTO> alleventlist = service.getAllEvent();
         model.addAttribute("alleventlist",alleventlist);
         return "main/alllistTest";
-    }
+    }*/
 
     //오픈예정행사(프론트 아직)
-    @GetMapping("/openlist")
+  /*  @GetMapping("/openlist")
     public String getOpenEvent(Model model){
         List<EventDTO> openlist = service.getOpenEvent();
         model.addAttribute("openlist",openlist);
-        return "main/listTest";
-    }
+        return "main/mainPage2";
+    }*/
 
     //예약/대기많은행사 top10(프론트 아직)
-    @GetMapping("/popularlist")
+    /*@GetMapping("/popularlist")
     public String getPopularEvent(Model model){
+        System.out.println("_____________________________________________________");
         List<EventDTO> popularlist = service.getPopularEvent();
+        System.out.println(popularlist);
         model.addAttribute("popularlist",popularlist);
-        return "main/popularlistTest";
-    }
+        return "main/mainPage2";
+    }*/
 
 
 //   세부페이지
