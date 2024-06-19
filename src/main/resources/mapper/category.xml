@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.hereevent.category">
+	<select id="selectCategoryInterestByMemberNo" resultType="categoryInterest">
+		with
+		c as (select * from category where value is null),
+		i as (select * from category_interest where member_no = 1)
+		select i.category_interest_no, c.category_no, i.member_no, c.name
+		from c left join i on c.category_no = i.category_no
+	</select>
+	<insert id="insertCategoryInterest" parameterType="Map">
+		insert into category_interest (category_no, member_no) value
+		(#{category_no}, #{member_no})
+	</insert>
+	<delete id="deleteCategoryInterest" parameterType="Map">
+		delete from category_interest
+		where category_no = #{category_no} and member_no = #{member_no}
+	</delete>
+</mapper>

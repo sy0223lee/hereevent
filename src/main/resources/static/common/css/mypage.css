@@ -83,4 +83,37 @@
     border-radius: 5px;
 }
 
-/* 리뷰 */
+/* myinterest */
+.interest-category h3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.category-select {
+    width: 100%;
+    flex-direction: row !important;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+.category-select button {
+    width: fit-content;
+    border: 1px solid #2c2c2c;
+    border-radius: 25px;
+    background: none;
+    color: #000000;
+    padding: 8px 15px;
+    white-space: nowrap;
+    margin: 8px 5px;
+    font-size: 13px;
+}
+.category-select button.picked {
+    background: #f0002e;
+    color: #fff;
+    border-color: #f0002e;
+    font-weight: 700;
+}
+

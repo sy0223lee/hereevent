@@ -9,6 +9,18 @@
     <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
 
     <title>HereEvent-MyInterest</title>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+            $(".default").click(function () {
+                let category_no = $(this).val();
+                location.href = "/hereevent/myinterest/category/insert?category_no=" + $(this).val();
+            });
+            $(".picked").click(function () {
+                let category_no = $(this).val();
+                location.href = "/hereevent/myinterest/category/delete?category_no=" + $(this).val();
+            });
+        });
+    </script>
 </head>
 <body>
 <main layout:fragment="main" class="main">
@@ -42,12 +54,18 @@
                 <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
                 <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
             </div>
-            <ul class="profile-text-area">
-                <li><span>이름</span><p th:text="${session.member.name}"></p></li>
-                <li><span>닉네임</span><p th:text="${session.member.nick}"></p></li>
-                <li><span>이메일</span><p th:text="${session.member.email}"></p></li>
-                <li><span>연락처</span><p th:text="${session.member.tel}"></p></li>
-            </ul>
+            <!-- 카테고리 수정 하기 !!! th:each로 가져와서 뿌려야함 -->
+            <div class="interest-category">
+                <h3>관심 카테고리</h3>
+                <div class="MuiStack-root category-select css-13mr7ti-MuiStack-root">
+                    <button type="button" class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0"
+                            th:each="category, i : ${categoryList}" th:value="${category.category_no}"
+                            th:classappend="${category.member_no == 0} ? 'default' : 'picked'">
+                        <span class="MuiButton-label" th:text="${category.name}"></span>
+                        <span class="MuiTouchRipple-root"></span>
+                    </button>
+                </div>
+            </div>
         </div>
 
     </section><!-- /Starter Section Section -->
