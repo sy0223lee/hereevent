@@ -1886,9 +1886,16 @@ section,
 }
 
 .blog-details .post-img {
-    margin: -30px auto 20px auto;
+    margin: 0px auto 20px auto; /* 상단 마진 10px 추가 */
     overflow: hidden;
     display: block;
+    max-width: 100%;
+}
+
+.blog-details .post-img img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 .blog-details .title {
@@ -2655,4 +2662,8 @@ section,
     font-size: 16px;
     margin: 0;
     font-weight: 600;
+}
+.active {
+    font-weight: bold;
+    text-decoration: underline;
 }

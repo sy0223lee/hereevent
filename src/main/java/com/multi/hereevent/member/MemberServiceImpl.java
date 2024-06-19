@@ -55,4 +55,6 @@ public class MemberServiceImpl implements MemberService{
     public boolean memberCheckNick(String nick) {
         return dao.memberCheckNick(nick);
     }
+
+
 }
