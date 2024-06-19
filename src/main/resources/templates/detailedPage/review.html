@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{detailedPage/detailedPage}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +8,7 @@
 </head>
 
 <body>
-<div layout:fragment="content">
+<div th:fragment="review">
     <h2 class="title">이벤트 후기</h2>
     <!-- Blog Comments Section -->
     <section id="blog-comments" class="blog-comments section">
