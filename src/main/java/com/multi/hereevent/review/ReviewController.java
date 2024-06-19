@@ -44,20 +44,20 @@ public class ReviewController {
     }
 
     // 리뷰 수정과 삭제는 마이페이지에서
-    @GetMapping("/mypage/review/update")
+    @GetMapping("/myreview/update")
     public String updateReview(ReviewDTO review){
         int result = service.updateReview(review);
         if(result > 0){
-            return "redirect:/mypage/review";
+            return "redirect:/myreview";
         }else {
             return "common/errorPage";
         }
     }
-    @GetMapping("/mypage/review/delete")
+    @GetMapping("/myreview/delete")
     public String deleteReview(String event_no){
         int result = service.deleteReview(Integer.parseInt(event_no));
         if(result > 0){
-            return "redirect:/mypage/review";
+            return "redirect:/myreview";
         }else {
             return "common/errorPage";
         }

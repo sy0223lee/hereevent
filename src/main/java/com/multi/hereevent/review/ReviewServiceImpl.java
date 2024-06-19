@@ -18,7 +18,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public int updateReview(ReviewDTO review) {
-        return 0;
+        return dao.updateReview(review);
     }
 
     @Override
@@ -33,6 +33,6 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<ReviewDTO> selectReviewByMemberNo(int member_no) {
-        return List.of();
+        return dao.selectReviewByMemberNo(member_no);
     }
 }

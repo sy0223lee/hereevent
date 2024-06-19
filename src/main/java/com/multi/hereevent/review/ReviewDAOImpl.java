@@ -34,6 +34,6 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     public List<ReviewDTO> selectReviewByMemberNo(int member_no) {
-        return List.of();
+        return sqlSession.selectList("com.multi.hereevent.review.selectReviewByMemberNo", member_no);
     }
 }

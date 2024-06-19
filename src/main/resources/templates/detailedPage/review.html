@@ -28,8 +28,7 @@
                              th:src="|@{/download/profile/}${review.img_path}|" alt="member_profile">
                     </div>
                     <div>
-                        <h5>[[${review.nick}]]<a href="#" class="reply"><i class="bi bi-reply-fill"></i>
-                            Reply</a></h5>
+                        <h5 th:text="${review.nick}"></h5>
                         <!-- 별점 추가해야 함!! -->
                         <sapn>★★★★★</sapn>
                         <span th:text="${review.write_date}"></span>
@@ -41,7 +40,7 @@
             <div class="reply-form" th:if="${session.member != null}">
 
                 <h4>Leave a Review</h4>
-                <p>Your email address will not be published. Required fields are marked * </p>
+                <p>Required fields are marked * </p>
                 <form action="/hereevent/review/insert" method="post">
                     <input type="hidden" th:name="event_no" th:value="${event.event_no}">
                     <input type="hidden" th:name="member_no" th:value="${session.member.member_no}">
