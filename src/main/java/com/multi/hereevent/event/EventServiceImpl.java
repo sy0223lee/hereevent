@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
@@ -36,8 +37,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDTO> getOpenEvent(String today) {
-        return dao.getOpenEvent(today);
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        return dao.selectEventByCategoryNo(category_no);
+    }
+
+    @Override
+    public List<EventDTO> getOpenEvent() {
+        return dao.getOpenEvent();
     }
 
     @Override
@@ -68,4 +74,6 @@ public class EventServiceImpl implements EventService {
     public int selectEventNoByEventName(String eventName) {
         return Integer.parseInt(dao.selectEventNoByEventName(eventName));
     }
+
+
 }

@@ -12,47 +12,47 @@ public class MemberServiceImpl implements MemberService{
     private final MemberDAO dao;
 
     @Override
-    public MemberDTO memberLogin(MemberDTO member) {
-        return dao.memberLogin(member);
+    public MemberDTO loginMember(MemberDTO member) {
+        return dao.loginMember(member);
     }
 
     @Override
-    public int memberInsert(MemberDTO member) {
-        return dao.memberInsert(member);
+    public int insertMember(MemberDTO member) {
+        return dao.insertMember(member);
     }
 
     @Override
-    public List<MemberDTO> memberList() {
+    public List<MemberDTO> selectAllMember() {
         return List.of();
     }
 
     @Override
-    public MemberDTO memberDetail(int member_no) {
-        return dao.memberDetail(member_no);
+    public MemberDTO selectMemberDetail(int member_no) {
+        return dao.selectMemberDetail(member_no);
     }
 
     @Override
-    public int memberUpdateNick(MemberDTO member) {
-        return dao.memberUpdateNick(member);
+    public int updateMemberNick(MemberDTO member) {
+        return dao.updateMemberNick(member);
     }
 
     @Override
-    public int memberUpdateBirth(MemberDTO member) {
-        return dao.memberUpdateBirth(member);
+    public int updateMemberBirth(MemberDTO member) {
+        return dao.updateMemberBirth(member);
     }
 
     @Override
-    public int memberUpdateProfileImg(MemberDTO member) {
-        return dao.memberUpdateProfileImg(member);
+    public int updateMemberProfileImg(MemberDTO member) {
+        return dao.updateMemberProfileImg(member);
     }
 
     @Override
-    public int memberDelete(int member_no) {
+    public int deleteMember(int member_no) {
         return 0;
     }
 
     @Override
-    public boolean memberCheckNick(String nick) {
-        return dao.memberCheckNick(nick);
+    public boolean checkMemberNick(String nick) {
+        return dao.checkMemberNick(nick);
     }
 }

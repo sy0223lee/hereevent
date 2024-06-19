@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <main layout:fragment="main" class="main">
+        <h1>카테고리별 조회</h1>
+        <hr/>
+        <table style="border" >
+            <tr>
+               <th>행사번호</th>
+                <th>행사이름</th>
+                <th>행사시작일자</th>
+                <th>행사종료일자</th>
+            </tr>
+            <tr th:each="event:${eventlist}">
+                <td>[[${event.event_no}]]</td>
+                <td><a th:href="@{/event/{eventNo}(eventNo=${event.event_no})}">[[${event.name}]]</a></td>
+                <td>[[${event.start_date}]]</td>
+                <td>[[${event.end_date}]]</td>
+            </tr>
+        </table>
+    </main>
+</body>
+
+</html>
