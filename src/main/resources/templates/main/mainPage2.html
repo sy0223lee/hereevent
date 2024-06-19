@@ -87,28 +87,18 @@
         </div>
     </div>
 
-    <!-- 별점 순 이미지 -->
-    <div class="section">
-        <h2>별점 순 이미지</h2>
-        <div class="slider">
-            <button class="arrow left" onclick="moveLeft('rating')">
-                <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
-            </button>
-            <div class="images" id="rating">
-                <a href="#"><img src="/hereevent/images/rating1.jpg" alt="Rating 1"></a>
-                <a href="#"><img src="/hereevent/images/rating2.jpg" alt="Rating 2"></a>
-                <a href="#"><img src="/hereevent/images/rating3.jpg" alt="Rating 3"></a>
-                <a href="#"><img src="/hereevent/images/rating4.jpg" alt="Rating 4"></a>
-                <a href="#"><img src="/hereevent/images/rating5.jpg" alt="Rating 5"></a>
-                <a href="#"><img src="/hereevent/images/rating6.jpg" alt="Rating 6"></a>
-                <a href="#"><img src="/hereevent/images/rating7.jpg" alt="Rating 7"></a>
-                <a href="#"><img src="/hereevent/images/rating8.jpg" alt="Rating 8"></a>
-                <a href="#"><img src="/hereevent/images/rating9.jpg" alt="Rating 9"></a>
-                <a href="#"><img src="/hereevent/images/rating10.jpg" alt="Rating 10"></a>
-            </div>
-            <button class="arrow right" onclick="moveRight('rating')">
-                <img src="/hereevent/images/main/rightarrow.png" alt="오른쪽 화살표">
-            </button>
+
+<!-- 별점 순 이미지 -->
+<div class="section">
+    <h2>별점 순 이미지</h2>
+    <div class="slider">
+        <button class="arrow left" onclick="moveLeft('rating')">
+            <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
+        </button>
+        <div class="images" id="rating" th:each="star:${starlist}">
+            <a th:href="@{/event/{eventNo}(eventNo=${star.event_no})}">
+                <img src="/hereevent/images/main/팝업예시1.png" alt="캐릭터">
+            </a>
         </div>
     </div>
 
