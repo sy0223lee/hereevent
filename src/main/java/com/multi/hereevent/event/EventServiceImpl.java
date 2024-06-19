@@ -1,10 +1,12 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
@@ -36,8 +38,18 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDTO> getOpenEvent(String today) {
-        return dao.getOpenEvent(today);
+    public List<EventDTO> getListByStarRank() {
+        return dao.getListStarRank();
+    }
+
+    @Override
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        return dao.selectEventByCategoryNo(category_no);
+    }
+
+    @Override
+    public List<EventDTO> getOpenEvent() {
+        return dao.getOpenEvent();
     }
 
     @Override
@@ -57,7 +69,12 @@ public class EventServiceImpl implements EventService {
     public EventDTO getEventImage(int event_no) {
         return dao.getEventImage(event_no);
     }
-  
+
+    @Override
+    public int insertReserve(ReservationDTO reservation) {
+        return dao.insertReserve(reservation);
+    }
+
     // 크롤링
     @Override
     public int insertCrawlingEvent(EventDTO event) {
@@ -68,4 +85,6 @@ public class EventServiceImpl implements EventService {
     public int selectEventNoByEventName(String eventName) {
         return Integer.parseInt(dao.selectEventNoByEventName(eventName));
     }
+
+
 }

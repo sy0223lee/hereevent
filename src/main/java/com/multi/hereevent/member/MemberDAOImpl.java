@@ -13,47 +13,47 @@ public class MemberDAOImpl implements MemberDAO {
     private final SqlSession sqlSession;
 
     @Override
-    public MemberDTO memberLogin(MemberDTO member) {
+    public MemberDTO loginMember(MemberDTO member) {
         return sqlSession.selectOne("com.multi.hereevent.member.login", member);
     }
 
     @Override
-    public int memberInsert(MemberDTO member) {
+    public int insertMember(MemberDTO member) {
         return sqlSession.insert("com.multi.hereevent.member.insert",member);
     }
 
     @Override
-    public List<MemberDTO> memberList() {
+    public List<MemberDTO> selectAllMember() {
         return List.of();
     }
 
     @Override
-    public MemberDTO memberDetail(int member_no) {
+    public MemberDTO selectMemberDetail(int member_no) {
         return sqlSession.selectOne("com.multi.hereevent.member.detail", member_no);
     }
 
     @Override
-    public int memberUpdateNick(MemberDTO member) {
+    public int updateMemberNick(MemberDTO member) {
         return sqlSession.update("com.multi.hereevent.member.updateNick", member);
     }
 
     @Override
-    public int memberUpdateBirth(MemberDTO member) {
+    public int updateMemberBirth(MemberDTO member) {
         return sqlSession.update("com.multi.hereevent.member.updateBirth", member);
     }
 
     @Override
-    public int memberUpdateProfileImg(MemberDTO member) {
+    public int updateMemberProfileImg(MemberDTO member) {
         return sqlSession.update("com.multi.hereevent.member.updateProfileImg", member);
     }
 
     @Override
-    public int memberDelete(int member_no) {
+    public int deleteMember(int member_no) {
         return 0;
     }
 
     @Override
-    public boolean memberCheckNick(String nick) {
+    public boolean checkMemberNick(String nick) {
         MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkNick", nick);
         return member == null; // 조회된 회원이 없으면 사용 가능한 닉네임 이므로 true 반환
     }

@@ -2,79 +2,52 @@ package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.fileupload.FileUploadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.multi.hereevent.dto.ReservationDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/event")
 public class EventController {
-    private EventService service;
-    @Autowired
-    public EventController(EventService service) {
-        this.service = service;
+    private final EventService service;
+    
+    @GetMapping("/test")
+    public String test() {
+        return "main/bootTest";
     }
-
 
     @GetMapping("/main")
     public String mainPage() {
-        return "main/test";
+        return "main/mainPage";
     }
-    @GetMapping("/test")
-    public String test() {
-        return "main/Test";
+    @GetMapping("/test2")
+    public String test2(Model model) {
+        List<EventDTO> alleventlist = service.getAllEvent();
+        model.addAttribute("alleventlist",alleventlist);
+        List<EventDTO> openlist = service.getOpenEvent();
+        model.addAttribute("openlist",openlist);
+        List<EventDTO> popularlist = service.getPopularEvent();
+        model.addAttribute("popularlist",popularlist);
+        return "main/mainPage2";
     }
-
 
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
-    public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
-        ModelAndView mav = new ModelAndView("main/search");
+    public String searchPage() {
+        return "main/search";
+    }
+    @PostMapping("/searchlist")
+    public String searchlist(@RequestParam("keyword") String keyword, Model model) {
         List<EventDTO> searchlist = service.searchEvent(keyword);
-        mav.addObject("searchlist",searchlist);
-        return mav;
+        model.addAttribute("searchlist",searchlist);
+        return "main/search";
     }
-
-    //전체행사조회(프론트 아직)
-    @GetMapping("/alleventlist")
-    public ModelAndView getAllEvent(){
-        ModelAndView mav = new ModelAndView("main/alllistTest");
-        List<EventDTO> alleventlist = service.getAllEvent();
-        mav.addObject("alleventlist",alleventlist);
-        return mav;
-    }
-
-    //오픈예정행사(프론트 아직)
-    @GetMapping("/openlist")
-    public ModelAndView getOpenEvent(){
-        ModelAndView mav = new ModelAndView("main/listTest");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String today = sdf.format(new Date());
-        List<EventDTO> openlist = service.getOpenEvent(today);
-        mav.addObject("openlist",openlist);
-        mav.addObject("today", today);
-        return mav;
-    }
-
-    //예약/대기많은행사 top10(프론트 아직)
-    @GetMapping("/popularlist")
-    public ModelAndView getPopularEvent(){
-        ModelAndView mav = new ModelAndView("main/popularlistTest");
-        List<EventDTO> popularlist = service.getPopularEvent();
-        mav.addObject("popularlist",popularlist);
-        return mav;
-    }
-
+   
 //   세부페이지
     @GetMapping("/{event_no}")
     public String getEventDetails(@PathVariable("event_no") int event_no, Model model) {
@@ -82,6 +55,7 @@ public class EventController {
         model.addAttribute("event", eventDetails);
         return "detailedPage/detailedPage";
     }
+
 //    //상세정보 (*스크롤형식으로 바꿔 필요 없어져 주석처리*)
 //    @GetMapping("/content/{event_no}")
 //    public String showContent(@PathVariable("event_no") int event_no, Model model) {
@@ -114,6 +88,7 @@ public class EventController {
 //        return "detailedPage/review";
 //    }
 
+
     //이벤트 사진 가져오기
 
     @GetMapping("/image/{eventNo}")
@@ -123,5 +98,17 @@ public class EventController {
         model.addAttribute("event", eventDetails);
         return service.getEventImage(event_no);
     }
+
+    //카테고리별 리스트
+    @GetMapping("/list")
+    public String listCategory(@RequestParam("category_no") int category_no, Model model){
+        //System.out.println("NO==>>"+ category_no);
+        List<EventDTO> eventlist = service.selectEventByCategoryNo(category_no);
+       // System.out.println("eventlist=>>>>"+eventlist);
+        model.addAttribute("eventlist",eventlist);
+        return "event/eventCategoryList";
+    }
+
+
 }
 

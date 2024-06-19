@@ -5,13 +5,13 @@ import com.multi.hereevent.dto.MemberDTO;
 import java.util.List;
 
 public interface MemberService {
-    MemberDTO memberLogin(MemberDTO member);
-    int memberInsert(MemberDTO member);
-    List<MemberDTO> memberList();
-    MemberDTO memberDetail(int member_no);
-    int memberUpdateNick(MemberDTO member);
-    int memberUpdateBirth(MemberDTO member);
-    int memberUpdateProfileImg(MemberDTO member);
-    int memberDelete(int member_no);
-    boolean memberCheckNick(String nick);
+    MemberDTO loginMember(MemberDTO member);
+    int insertMember(MemberDTO member);
+    List<MemberDTO> selectAllMember();
+    MemberDTO selectMemberDetail(int member_no);
+    int updateMemberNick(MemberDTO member);
+    int updateMemberBirth(MemberDTO member);
+    int updateMemberProfileImg(MemberDTO member);
+    int deleteMember(int member_no);
+    boolean checkMemberNick(String nick);
 }
