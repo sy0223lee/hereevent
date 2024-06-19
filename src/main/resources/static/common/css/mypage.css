@@ -1,0 +1,86 @@
+.submenu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 15px 0 20px;
+    padding-bottom: 10px;
+}
+.submenu > a {
+    display: block;
+    width: 20%;
+    text-align: center;
+    border-bottom: 1px solid #2c2c2c;
+    padding: 10px 0;
+    flex: 1 1 auto;
+}
+.submenu > a.on {
+    color: #f0002e;
+    border-bottom: 2px solid #f0002e;
+    font-weight: 900;
+}
+.submenu > a h2 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* 내 정보 */
+.profile-img-area img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.edit-img-btn input{
+    display: none;
+}
+.profile-text-area {
+    display: flex;
+    width: 100%;
+    margin: 10px auto 50px;
+    padding: 0 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.profile-text-area li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px 0;
+}
+.profile-text-area li span {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 4px;
+}
+.profile-text-area li p {
+    width: 100%;
+    padding: 5px 0 8px;
+    border-bottom: 2px solid #2c2c2c;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.edit-btn {
+    border: 1px solid #767676;
+    background: none;
+    color: #000000;
+    font-size: 15px;
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+.edit-img-btn, .edit-nick-btn, .edit-birth-btn {
+    border: 1px solid #767676;
+    background: none;
+    color: #000000;
+    font-size: 15px;
+    padding: 4px 10px;
+    margin: 10px 4px;
+    border-radius: 5px;
+}
+
+/* 리뷰 */
