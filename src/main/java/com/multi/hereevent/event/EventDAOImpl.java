@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,11 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
+    public List<EventDTO> getListStarRank() {
+        return sqlSession.selectList("com.multi.hereevent.event.getEventByStarRank");
+    }
+
+    @Override
     public List<EventDTO> selectEventByCategoryNo(int category_no) {
         //System.out.println("DAONO===>>>"+category_no);
         return sqlSession.selectList("com.multi.hereevent.event.selectEventByCategory", category_no);
@@ -63,7 +69,12 @@ public class EventDAOImpl implements EventDAO{
     public EventDTO getEventImage(int event_no) {
         return sqlSession.selectOne("com.multi.hereevent.event.getEventImage", event_no);
     }
-  
+    //예약하기
+    @Override
+    public int insertReserve(ReservationDTO reservation) {
+        return sqlSession.insert("com.multi.hereevent.event.insertReserve", reservation);
+    }
+
     // 크롤링
     @Override
     public int insertCrawlingEvent(EventDTO event) {

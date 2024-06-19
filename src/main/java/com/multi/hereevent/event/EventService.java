@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReservationDTO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface EventService {
     public List<EventDTO> getAllEvent();
 
     //별점 높은순 10순위 리스트
-    //public List<EventDTO> starList();
+    public List<EventDTO> getListByStarRank();
     //카테고리별 조회
     public List<EventDTO> selectEventByCategoryNo(int category_no);
 
@@ -33,7 +34,8 @@ public interface EventService {
     public EventDTO getEventDetails(int event_no);
     //event image
     EventDTO getEventImage(int event_no);
-  
+    //예약하기
+    public int insertReserve(ReservationDTO reservation);
     // 크롤링
     public int insertCrawlingEvent(EventDTO event);
     public int selectEventNoByEventName(String eventName);

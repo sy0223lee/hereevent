@@ -64,10 +64,26 @@
 		from event
 		where name=#{name}
 	</select>
+
+    <!--카테고리별 이벤트 조회-->
     <select id="selectEventByCategory" parameterType="java.lang.Integer" resultType="com.multi.hereevent.dto.EventDTO">
         select *
         from event
         where category_no=#{category_no}
     </select>
-  
+    <!--별점순 이벤트 조회-->
+    <select id="getEventByStarRank" resultType="event">
+        SELECT e.event_no, e.name, e.img_path, AVG(r.star) AS avg_star
+        FROM event AS e
+        JOIN review AS r
+        ON e.event_no = r.event_no
+        GROUP BY e.event_no
+        ORDER BY avg_star DESC limit 10
+    </select>
+    <!--예약하기-->
+    <insert id="insertReserve" parameterType="reservation">
+        insert into reserve (event_no,member_no, reserve_date, reserve_time,state)
+        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료")
+    </insert>
+
 </mapper>
