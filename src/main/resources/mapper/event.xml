@@ -30,13 +30,13 @@
         ORDER BY start_date
     </select>
     <select id="getPopularEvent" resultType="event">
-        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr, e.img_path
+        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr, e.img_path,
         COUNT(DISTINCT r.member_no) + COUNT(DISTINCT w.email) AS total_count
         FROM event e
         LEFT JOIN reserve r ON e.event_no = r.event_no
         LEFT JOIN wait w ON e.event_no = w.event_no
         GROUP BY e.event_no
-        ORDER BY total_count desc limit 10;
+        ORDER BY total_count desc limit 10
     </select>
 
     <select id="getEventDetails" resultType="event">
