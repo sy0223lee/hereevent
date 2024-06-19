@@ -30,11 +30,11 @@ public class EventController {
     }
     @GetMapping("/test2")
     public String test2(Model model) {
-        List<EventDTO> alleventlist = service.getAllEvent();
+        List<EventDTO> alleventlist = eventService.getAllEvent();
         model.addAttribute("alleventlist",alleventlist);
-        List<EventDTO> openlist = service.getOpenEvent();
+        List<EventDTO> openlist = eventService.getOpenEvent();
         model.addAttribute("openlist",openlist);
-        List<EventDTO> popularlist = service.getPopularEvent();
+        List<EventDTO> popularlist = eventService.getPopularEvent();
         model.addAttribute("popularlist",popularlist);
         return "main/mainPage2";
     }
@@ -42,14 +42,17 @@ public class EventController {
 
     //행사검색(프론트 아직)
     @GetMapping("/searchlist")
-    public ModelAndView searchlist(@RequestParam("keyword") String keyword) {
-        ModelAndView mav = new ModelAndView("main/search");
-        List<EventDTO> searchlist = eventService.searchEvent(keyword);
-        mav.addObject("searchlist",searchlist);
-        return mav;
+    public String searchPage() {
+        return "main/search";
     }
-
-//   세부페이지
+    @PostMapping("/searchlist")
+    public String searchlist(@RequestParam("keyword") String keyword, Model model) {
+        List<EventDTO> searchlist = service.searchEvent(keyword);
+        model.addAttribute("searchlist",searchlist);
+        return "main/search";
+    }
+   
+    // 세부페이지
     @GetMapping("/{event_no}")
     public String getEventDetails(@PathVariable("event_no") int event_no, Model model) {
         EventDTO eventDetails = service.getEventDetails(event_no);
@@ -94,19 +97,9 @@ public class EventController {
     @GetMapping("/image/{eventNo}")
     @ResponseBody
     public EventDTO getEventImage(@PathVariable("event_no") int event_no, Model model) {
-        EventDTO eventDetails = service.getEventDetails(event_no);
+        EventDTO eventDetails = eventService.getEventDetails(event_no);
         model.addAttribute("event", eventDetails);
         return service.getEventImage(event_no);
-    }
-
-    //카테고리별 리스트
-    @GetMapping("/list")
-    public String listCategory(@RequestParam("category_no") int category_no, Model model){
-        //System.out.println("NO==>>"+ category_no);
-        List<EventDTO> eventlist = service.selectEventByCategoryNo(category_no);
-       // System.out.println("eventlist=>>>>"+eventlist);
-        model.addAttribute("eventlist",eventlist);
-        return "event/eventCategoryList";
     }
 }
 
