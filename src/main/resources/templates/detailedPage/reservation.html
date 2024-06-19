@@ -25,7 +25,23 @@
     <div th:fragment="content">
         <article class="article">
             <h2 class="title">이벤트 예약페이지</h2>
+            <h3>[[${event.event_no}]]</h3>
+            <hr/>
+            <div>
+                <form action="/hereevent/event/reservation" method="post">
+                    <h3>event_no</h3>
+                    <input type="hidden" name="event_no" th:value="${event.event_no}" >
+                    <h3>member_no</h3>
 
+                    <input type="text" name="member_no" id="member_no" placeholder="insert member_no">
+                    <input type="date" id="reserve_date" name="reserve_date" placeholder="예약날짜를 입력하세요">
+                    <input type="radio" name="reserve_time" value="10:00:00">10:00
+                    <input type="radio" name="reserve_time" value="10:00:00">11:00
+                    <input type="radio" name="reserve_time" value="10:00:00">12:00
+                    <button type="submit">예약</button>
+                    <button type="button">대기</button>
+                </form>
+            </div>
         </article>
     </div>
 </div>

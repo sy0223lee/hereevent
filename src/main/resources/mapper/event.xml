@@ -17,7 +17,7 @@
     <select id="searchEvent" parameterType="String" resultType="event">
         SELECT *
         FROM event
-        WHERE name like '%' || #{name} || '%'
+        WHERE name Like CONCAT('%' , #{name} , '%')
     </select>
     <select id="getAllEvent" resultType="event">
         SELECT *
@@ -30,13 +30,13 @@
         ORDER BY start_date
     </select>
     <select id="getPopularEvent" resultType="event">
-        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr,
+        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr, e.img_path,
         COUNT(DISTINCT r.member_no) + COUNT(DISTINCT w.email) AS total_count
         FROM event e
         LEFT JOIN reserve r ON e.event_no = r.event_no
         LEFT JOIN wait w ON e.event_no = w.event_no
         GROUP BY e.event_no
-        ORDER BY total_count desc limit 10;
+        ORDER BY total_count desc limit 10
     </select>
 
     <select id="getEventDetails" resultType="event">
@@ -64,10 +64,26 @@
 		from event
 		where name=#{name}
 	</select>
+
+    <!--카테고리별 이벤트 조회-->
     <select id="selectEventByCategory" parameterType="java.lang.Integer" resultType="com.multi.hereevent.dto.EventDTO">
         select *
         from event
         where category_no=#{category_no}
     </select>
-  
+    <!--별점순 이벤트 조회-->
+    <select id="getEventByStarRank" resultType="event">
+        SELECT e.event_no, e.name, e.img_path, AVG(r.star) AS avg_star
+        FROM event AS e
+        JOIN review AS r
+        ON e.event_no = r.event_no
+        GROUP BY e.event_no
+        ORDER BY avg_star DESC limit 10
+    </select>
+    <!--예약하기-->
+    <insert id="insertReserve" parameterType="reservation">
+        insert into reserve (event_no,member_no, reserve_date, reserve_time,state)
+        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료")
+    </insert>
+
 </mapper>
