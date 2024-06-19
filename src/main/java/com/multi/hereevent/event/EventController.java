@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,9 @@ public class EventController {
         return "main/mainPage";
     }
     @GetMapping("/test2")
-    public String test2() {
+    public String test2(Model model) {
+        List<EventDTO> starlist = service.getListByStarRank();
+        model.addAttribute("starlist",starlist);
         return "main/mainPage2";
     }
 
@@ -86,8 +89,13 @@ public class EventController {
     public String showReservation(@PathVariable("event_no") int event_no, Model model) {
         EventDTO eventDetails = service.getEventDetails(event_no);
         model.addAttribute("event", eventDetails);
-
         return "detailedPage/reservation";
+    }
+    @PostMapping("/reservation")
+    public String Reservation(ReservationDTO reservation){
+        System.out.println(reservation);
+        service.insertReserve(reservation);
+        return "redirect:/event/test2";
     }
     //후기
     @GetMapping("/review/{event_no}")
@@ -115,7 +123,8 @@ public class EventController {
        // System.out.println("eventlist=>>>>"+eventlist);
         model.addAttribute("eventlist",eventlist);
         return "event/eventCategoryList";
-
     }
+
+
 }
 
