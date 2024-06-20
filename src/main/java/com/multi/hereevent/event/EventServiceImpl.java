@@ -66,6 +66,11 @@ public class EventServiceImpl implements EventService {
         return dao.getEventDetails(event_no);
     }
 
+    @Override
+    public EventDTO getEventDetails(int event_no, int category_no) {
+        return dao.getEventDetails(event_no, category_no);
+    }
+
     //사진 가져오기
     @Override
     public EventDTO getEventImage(int event_no) {

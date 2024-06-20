@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.Time;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,14 @@ public class EventDAOImpl implements EventDAO{
     @Override
     public EventDTO getEventDetails(int event_no) {
         return sqlSession.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
+    }
+
+    @Override
+    public EventDTO getEventDetails(int event_no, int member_no) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("event_no", event_no);
+        param.put("member_no", member_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventDetailsWithInterest", param);
     }
 
     @Override

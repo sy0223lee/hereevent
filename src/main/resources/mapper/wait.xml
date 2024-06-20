@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.hereevent.wait">
+    <select id="insert" parameterType="wait" >
+        insert into wait (wait_no,event_no, wait_tel, email)
+        values(#{wait_no}, #{event_no}, #{wait_tel},#{email})
+    </select>
+
+    <select id="login" parameterType="wait" resultType="wait">
+        select *
+        from wait
+        where email = #{wait_tel}
+    </select>
+
+    <select id="detail" parameterType="Integer" resultType="wait">
+        select * from wait where wait_no = #{wait_no}
+    </select>
+    <select id="getEventDetails" resultType="event">
+        SELECT event_no, category_no, name, start_date, end_date,addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
+        FROM event
+        WHERE event_no = #{event_no}
+    </select>
+    <!--  event photo 가져오기  -->
+    <select id="getEventImage" resultType="com.multi.hereevent.dto.EventDTO">
+        SELECT event_no, image_path
+        FROM events
+        WHERE event_no = #{eventNo}
+    </select>
+</mapper>

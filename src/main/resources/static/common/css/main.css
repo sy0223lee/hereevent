@@ -637,7 +637,7 @@ h6 {
 --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
   [data-aos-delay] {
-    transition-delay: 0 !important;
+    transition-delay: 0s !important;
   }
 }
 
@@ -2085,7 +2085,7 @@ section,
   margin-right: 14px;
 }
 
-.blog-comments .comment .comment-img img {
+.comment-img img {
   width: 60px;
 }
 

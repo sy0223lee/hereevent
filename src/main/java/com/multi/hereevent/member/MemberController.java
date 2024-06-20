@@ -132,18 +132,6 @@ public class MemberController {
         }
     }
 
-    /***** 관심 관리 *****/
-    @GetMapping("/myinterest")
-    public String myinterest() {
-        return "mypage/myinterest";
-    }
-
-    /***** 후기 관리 *****/
-    @GetMapping("/myreview")
-    public String myreview() {
-        return "mypage/myreview";
-    }
-
     /***** 행사 내역 *****/
     @GetMapping("/myevent")
     public String myevent() {
