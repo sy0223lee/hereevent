@@ -110,13 +110,6 @@ public class MemberController {
         }
     }
 
-    /***** 관심 관리 *****/
-    @GetMapping("/myinterest")
-    public String myinterest() {
-        return "mypage/myinterest";
-    }
-
-
     /***** 행사 내역 *****/
     @GetMapping("/myevent")
     public String myevent() {

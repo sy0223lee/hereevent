@@ -29,6 +29,15 @@
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section">
 
+        <div class="container">
+            <div class="submenu">
+                <a class="on" href="/hereevent/mypage"><h2>내 정보</h2></a>
+                <a href="/hereevent/myinterest"><h2>관심 내역</h2></a>
+                <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
+                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
+            </div>
+        </div>
+
         <!-- Section Title -->
         <div class="container section-title">
             <h2>Starter Section</h2>
@@ -45,12 +54,7 @@
         </div><!-- End Section Title -->
 
         <div class="container">
-            <div class="submenu">
-                <a class="on" href="/hereevent/mypage"><h2>내 정보</h2></a>
-                <a href="/hereevent/myinterest"><h2>관심 내역</h2></a>
-                <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
-                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
-            </div>
+
             <ul class="profile-text-area">
                 <li><span>이름</span>
                     <p th:text="${session.member.name}"></p></li>

@@ -44,13 +44,21 @@
         FROM event
         WHERE event_no = #{event_no}
     </select>
-<!--  event photo 가져오기  -->
-    <select id="getEventImage" resultType="com.multi.hereevent.dto.EventDTO">
+    <select id="getEventDetailsWithInterest" parameterType="Map" resultType="event">
+        with
+        e as (select * from event where event_no = #{event_no}),
+        i as (select * from event_interest where member_no = #{member_no})
+        select e.*, i.event_interest_no
+        from e left join i on e.event_no = i.event_no
+    </select>
+    <!--  event photo 가져오기  -->
+    <select id="getEventImage" resultType="event">
         SELECT event_no, image_path
         FROM events
         WHERE event_no = #{eventNo}
     </select>
 
+    <!-- 크롤링 -->
 	<insert id="insertCrawlingEvent" parameterType="event">
 		insert into event  (name, start_date, end_date, addr, info, homepage, sns, img_path)
 		select #{name}, #{start_date}, #{end_date}, #{addr}, #{info}, #{homepage}, #{sns}, #{img_path}
@@ -66,7 +74,7 @@
 	</select>
 
     <!--카테고리별 이벤트 조회-->
-    <select id="selectEventByCategory" parameterType="java.lang.Integer" resultType="com.multi.hereevent.dto.EventDTO">
+    <select id="selectEventByCategory" resultType="event">
         select *
         from event
         where category_no=#{category_no}
@@ -86,4 +94,20 @@
         values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료")
     </insert>
 
+    <!-- 관심 이벤트 등록, 해제 -->
+    <insert id="insertEventInterest" parameterType="Map">
+        insert into event_interest (event_no, member_no) value
+        (#{event_no}, #{member_no})
+    </insert>
+    <delete id="deleteEventInterest" parameterType="Map">
+        delete from event_interest
+        where event_no = #{event_no} and member_no = #{member_no}
+    </delete>
+
+    <!-- 관심 이벤트 조회 -->
+    <select id="selectEventInterestByMemberNo" resultType="eventInterest">
+        select i.*, e.name, e.start_date, e.end_date, e.addr, e.img_path
+        from event e inner join event_interest i on e.event_no = i.event_no
+        where i.member_no = #{member_no}
+    </select>
 </mapper>
