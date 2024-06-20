@@ -2,7 +2,9 @@ package com.multi.hereevent.category;
 
 import com.multi.hereevent.category.interest.CategoryInterestService;
 import com.multi.hereevent.dto.CategoryInterestDTO;
+import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.event.interest.EventInterestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @SessionAttributes("member")
 public class CategoryController {
-    private final CategoryService categoryService;
-    private final CategoryInterestService interestService;
+    private final CategoryInterestService categoryService;
+    private final EventInterestService eventService;
 
     /***** 관심 관리 *****/
     // 관심 목록 조회, 페이지 이동
@@ -25,8 +27,10 @@ public class CategoryController {
     public String myinterest(Model model) {
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         if(member != null) {
-            List<CategoryInterestDTO> categoryList = interestService.selectCategoryInterestByMemberNo(member.getMember_no());
+            List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(member.getMember_no());
+            List<EventDTO> eventList = eventService.selectEventInterestByMemberNo(member.getMember_no());
             model.addAttribute("categoryList", categoryList);
+            model.addAttribute("eventList", eventList);
             return "mypage/myinterest";
         }else{
             return "common/errorPage";
@@ -38,7 +42,7 @@ public class CategoryController {
     public String insertCategoryInterest(@RequestParam("category_no") int category_no, Model model) {
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         if(member != null) {
-            int result = interestService.insertCategoryInterest(category_no, member.getMember_no());
+            int result = categoryService.insertCategoryInterest(category_no, member.getMember_no());
             if(result > 0) {
                 return "redirect:/myinterest";
             }
@@ -50,7 +54,7 @@ public class CategoryController {
     public String deleteCategoryInterest(@RequestParam("category_no") int category_no, Model model) {
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         if(member != null) {
-            int result = interestService.deleteCategoryInterest(category_no, member.getMember_no());
+            int result = categoryService.deleteCategoryInterest(category_no, member.getMember_no());
             if(result > 0) {
                 return "redirect:/myinterest";
             }

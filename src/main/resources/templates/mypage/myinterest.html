@@ -11,13 +11,21 @@
     <title>HereEvent-MyInterest</title>
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function() {
-            $(".default").click(function () {
+            $(".MuiButton-contained.default").click(function () {
                 let category_no = $(this).val();
                 location.href = "/hereevent/myinterest/category/insert?category_no=" + $(this).val();
             });
-            $(".picked").click(function () {
+            $(".MuiButton-contained.picked").click(function () {
                 let category_no = $(this).val();
                 location.href = "/hereevent/myinterest/category/delete?category_no=" + $(this).val();
+            });
+            $(".interest-btn.default").click(function () {
+                location.href = "/hereevent/event/myinterest/insert?event_no=" + $(this).val();
+            });
+            $(".interest-btn.picked").click(function () {
+                if(confirm("관심 팝업에서 삭제하시겠습니다까?") === true) {
+                    location.href = "/hereevent/event/myinterest/delete?event_no=" + $(this).val();
+                }
             });
         });
     </script>
@@ -41,20 +49,23 @@
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section">
 
-        <!-- Section Title -->
-        <div class="container section-title">
-            <h2>Starter Section</h2>
-            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-        </div><!-- End Section Title -->
-
         <div class="container">
-
             <div class="submenu">
                 <a href="/hereevent/mypage"><h2>내 정보</h2></a>
                 <a class="on" href="/hereevent/myinterest"><h2>관심 내역</h2></a>
                 <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
                 <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
             </div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="container section-title">
+            <h2>관심 있는 카테고리와 팝업 스토어</h2>
+            <p>관심 있는 카테고리와 팝업 스토어를 추가해보세요.<br>
+                저희가 그에 맞게 추천 해드릴게요.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
 
             <div class="interest-category">
                 <h3>관심 카테고리</h3>
@@ -65,6 +76,33 @@
                         <span class="MuiButton-label" th:text="${category.name}"></span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>
+                </div>
+            </div>
+
+            <div class="interest-event">
+                <h3>관심 팝업</h3>
+                <div class="blog-comments">
+                    <div th:id="|comment-${i.count}|" class="comment" th:each="event, i : ${eventList}">
+                        <div class="d-flex">
+                            <div class="comment-img">
+                                <img th:if="${event.img_path == null}"
+                                     th:src="@{/images/event/default_profile.svg}" alt="default_profile">
+                                <img th:unless="${event.img_path == null}"
+                                     th:src="|@{/download/event/}${event.img_path}|" alt="member_profile">
+                            </div>
+                            <div>
+                                <h5>[[${event.name}]]
+                                    <a th:href="|@{/event/}${event.event_no}|" class="reply">
+                                        <i class="bi bi-reply-fill"></i>팝업 상세보기</a>
+                                    <input type="hidden" class="member" th:value="${session.member}">
+                                    <button class="default interest-btn" th:if="${event.event_interest_no == 0}" th:value="${event.event_no}">♡</button>
+                                    <button class="picked interest-btn" th:unless="${event.event_interest_no == 0}" th:value="${event.event_no}">♥</button>
+                                </h5>
+                                <p>[[${event.start_date}]] ~ [[${event.end_date}]]</p>
+                                <p th:text="${event.addr}"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

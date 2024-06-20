@@ -103,4 +103,11 @@
         delete from event_interest
         where event_no = #{event_no} and member_no = #{member_no}
     </delete>
+
+    <!-- 관심 이벤트 조회 -->
+    <select id="selectEventInterestByMemberNo" resultType="eventInterest">
+        select i.*, e.name, e.start_date, e.end_date, e.addr, e.img_path
+        from event e inner join event_interest i on e.event_no = i.event_no
+        where i.member_no = #{member_no}
+    </select>
 </mapper>

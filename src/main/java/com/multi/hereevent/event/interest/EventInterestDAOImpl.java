@@ -1,10 +1,12 @@
 package com.multi.hereevent.event.interest;
 
+import com.multi.hereevent.dto.EventDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -26,5 +28,10 @@ public class EventInterestDAOImpl implements EventInterestDAO{
         params.put("event_no", event_no);
         params.put("member_no", member_no);
         return sqlSession.delete("com.multi.hereevent.event.deleteEventInterest", params);
+    }
+
+    @Override
+    public List<EventDTO> selectEventInterestByMemberNo(int member_no) {
+        return sqlSession.selectList("com.multi.hereevent.event.selectEventInterestByMemberNo", member_no);
     }
 }

@@ -15,8 +15,8 @@
     flex: 1 1 auto;
 }
 .submenu > a.on {
-    color: #f0002e;
-    border-bottom: 2px solid #f0002e;
+    color: #e14533;
+    border-bottom: 2px solid #e14533;
     font-weight: 900;
 }
 .submenu > a h2 {
@@ -111,9 +111,19 @@
     font-size: 13px;
 }
 .category-select button.picked {
-    background: #f0002e;
+    background: #e14533;
     color: #fff;
-    border-color: #f0002e;
+    border-color: #e14533;
     font-weight: 700;
 }
+.interest-btn{
+    background: none;
+    padding: 5px 10px;
+    border: none;
+    font-size: 28px;
+    font-weight: bolder;
+    color: #e14533;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+}
+
 

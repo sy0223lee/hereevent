@@ -121,7 +121,7 @@ public class EventController {
         return "event/eventCategoryList";
     }
 
-    /* 관심 이벤트 등록, 해제 */
+    // 관심 이벤트 등록, 해제
     @GetMapping("/interest/insert")
     public String insertInterest(@RequestParam("event_no") int event_no, Model model){
         MemberDTO member = (MemberDTO) model.getAttribute("member");
@@ -139,6 +139,16 @@ public class EventController {
         int result = interestService.deleteEventInterest(event_no, member.getMember_no());
         if(result > 0){
             return "redirect:/event/" + event_no;
+        }
+        return "common/errorPage";
+    }
+    @GetMapping("/myinterest/delete")
+    public String deleteMyInterest(@RequestParam("event_no") int event_no, Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
+        int result = interestService.deleteEventInterest(event_no, member.getMember_no());
+        if(result > 0){
+            return "redirect:/myinterest";
         }
         return "common/errorPage";
     }
