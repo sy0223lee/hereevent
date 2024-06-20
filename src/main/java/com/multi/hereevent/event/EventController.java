@@ -1,12 +1,14 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.fileupload.FileUploadService;
 import com.multi.hereevent.dto.ReservationDTO;
 import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.review.ReviewService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,9 @@ public class EventController {
     }
     @GetMapping("/test2")
     public String test2(Model model) {
-        List<EventDTO> alleventlist = eventService.getAllEvent();
+        List<EventDTO> starlist = service.getListByStarRank();
+        model.addAttribute("starlist",starlist);
+        List<EventDTO> alleventlist = service.getAllEvent();
         model.addAttribute("alleventlist",alleventlist);
         List<EventDTO> openlist = eventService.getOpenEvent();
         model.addAttribute("openlist",openlist);

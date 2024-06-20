@@ -1,10 +1,13 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReservationDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Date;
+import java.sql.Time;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,8 +84,17 @@ public class EventDAOImpl implements EventDAO{
     }
     //예약하기
     @Override
-    public int insertReserve(ReservationDTO reservation) {
+    public int insertReserve(ReserveDTO reservation) {
         return sqlSession.insert("com.multi.hereevent.event.insertReserve", reservation);
+    }
+    //예약 순서 체크
+    @Override
+    public ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("event_no",event_no);
+        map.put("reserve_date",reserve_date);
+        map.put("reserve_time",reserve_time);
+        return sqlSession.selectOne("com.multi.hereevent.event.checkReserve",map);
     }
 
     // 크롤링

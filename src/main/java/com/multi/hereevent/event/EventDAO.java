@@ -1,9 +1,10 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReservationDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 public interface EventDAO {
@@ -38,8 +39,10 @@ public interface EventDAO {
     //사진 가져오기
     EventDTO getEventImage(int event_no);
     //예약하기
-    int insertReserve(ReservationDTO reservation);
-    // 
+    int insertReserve(ReserveDTO reservation);
+    ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time);
+
+    // 크롤링
     int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
     String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
 }

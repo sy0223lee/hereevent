@@ -89,10 +89,14 @@
         ORDER BY avg_star DESC limit 10
     </select>
     <!--예약하기-->
-    <insert id="insertReserve" parameterType="reservation">
-        insert into reserve (event_no,member_no, reserve_date, reserve_time,state)
-        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료")
+    <insert id="insertReserve" parameterType="reserve">
+        insert into reserve (event_no,member_no, reserve_date, reserve_time,state,reserve_order)
+        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료",#{reserve_order})
     </insert>
+    <select id="checkReserve" parameterType="Map" resultType="reserve">
+        select * from reserve
+        where event_no=#{event_no} AND reserve_date=#{reserve_date} AND reserve_time=#{reserve_time}
+        ORDER BY reserve_order DESC limit 1
 
     <!-- 관심 이벤트 등록, 해제 -->
     <insert id="insertEventInterest" parameterType="Map">
