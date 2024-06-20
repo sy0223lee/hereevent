@@ -83,7 +83,7 @@
     border-radius: 5px;
 }
 
-/* myinterest */
+/* 관심 내역 */
 .interest-category h3 {
     display: flex;
     flex-direction: row;
@@ -126,4 +126,15 @@
     text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
 }
 
-
+/* 후기 내역 */
+.comment-img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    margin: 0;
+}
+.comment-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

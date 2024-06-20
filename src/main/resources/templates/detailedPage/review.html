@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="/common/js/starRate.js"></script>
-    <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
 
     <title>HereEvent-EventDetail</title>
 </head>
@@ -30,45 +28,55 @@
                     <div>
                         <h5 th:text="${review.nick}"></h5>
 
-                        <div class="rating">
-                            <label class="rating-label rating-label-half" for="starhalf">
-                                <input type="radio" id="starhalf" class="rating-input" name="rating">
+                        <div class="rating readonly">
+                            <label class="rating-label rating-label-half">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 0.5} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-full" for="star1">
-                                <input type="radio" id="star1" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-full">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 1.0} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-half" for="star1half">
-                                <input type="radio" id="star1half" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-half">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 1.5} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-full" for="star2">
-                                <input type="radio" id="star2" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-full">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 2.0} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-half" for="star2half">
-                                <input type="radio" id="star2half" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-half">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 2.5} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-full" for="star3">
-                                <input type="radio" id="star3" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-full">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 3.0} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-half" for="star3half">
-                                <input type="radio" id="star3half" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-half">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 3.5} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-full" for="star4">
-                                <input type="radio" id="star4" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-full">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 4.0} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-half" for="star4half">
-                                <input type="radio" id="star4half" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-half">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 4.5} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
-                            <label class="rating-label rating-label-full" for="star5">
-                                <input type="radio" id="star5" class="rating-input" name="rating">
+                            <label class="rating-label rating-label-full">
+                                <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                       th:checked="${review.star == 5.0} ? true : false">
                                 <span class="star-icon"></span>
                             </label>
                         </div>
@@ -95,9 +103,50 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <h4 th:text="${session.member.nick}"></h4>
-                            <!- 별점 추가해야 함!! ->
-                            <h4>★★★★★</h4>
-                            <input type="hidden" name="star" value="5"> <!- 임시로 추가한 태그, 리뷰 작성 정상 작동 시 제거 필요 ->
+
+                            <div class="rating">
+                                <label class="rating-label rating-label-half" for="starhalf">
+                                    <input type="radio" id="starhalf" class="rating-input" name="star" value="0.5">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full" for="star1">
+                                    <input type="radio" id="star1" class="rating-input" name="star" value="1.0">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half" for="star1half">
+                                    <input type="radio" id="star1half" class="rating-input" name="star" value="1.5">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full" for="star2">
+                                    <input type="radio" id="star2" class="rating-input" name="star" value="2.0">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half" for="star2half">
+                                    <input type="radio" id="star2half" class="rating-input" name="star" value="2.5">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full" for="star3">
+                                    <input type="radio" id="star3" class="rating-input" name="star" value="3.0">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half" for="star3half">
+                                    <input type="radio" id="star3half" class="rating-input" name="star" value="3.5">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full" for="star4">
+                                    <input type="radio" id="star4" class="rating-input" name="star" value="4.0">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half" for="star4half">
+                                    <input type="radio" id="star4half" class="rating-input" name="star" value="4.5">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full" for="star5">
+                                    <input type="radio" id="star5" class="rating-input" name="star" value="5.0" checked>
+                                    <span class="star-icon"></span>
+                                </label>
+                            </div>
+
                         </div>
                     </div>
                     <div class="row">

@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS File -->
     <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
+    <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
+    <!-- js File -->
+    <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
 
     <title>HereEvent-MyReview</title>
 </head>
@@ -58,8 +61,60 @@
                         <div>
                             <h5>[[${review.name}]]<a th:href="|@{/event/}${review.event_no}|" class="reply"><i class="bi bi-reply-fill"></i>
                                 팝업 상세보기</a></h5>
-                            <!-- 별점 추가해야 함!! -->
-                            <sapn>★★★★★</sapn>
+
+                            <div class="rating readonly">
+                                <label class="rating-label rating-label-half">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 0.5} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 1.0} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 1.5} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 2.0} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 2.5} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 3.0} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 3.5} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 4.0} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-half">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 4.5} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                                <label class="rating-label rating-label-full">
+                                    <input type="radio" class="rating-input" th:name="${review.review_no}"
+                                           th:checked="${review.star == 5.0} ? true : false">
+                                    <span class="star-icon"></span>
+                                </label>
+                            </div>
+
                             <span th:text="${review.write_date}"></span>
                             <p class="comment-content" th:text="${review.content}"></p>
                         </div>
