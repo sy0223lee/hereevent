@@ -6,7 +6,6 @@
 
     <title>HereEvent-EventDetail</title>
 </head>
-
 <body>
 <div th:fragment="reservation">
 
@@ -27,6 +26,120 @@
             <button type="submit">예약</button>
             <button type="button">대기</button>
         </form>
+        <div class="calendar-container">
+            <div class="nav">
+                <button onclick="prevMonth()">&#9664;</button>
+                <span id="yearmonth"></span>
+                <button onclick="nextMonth()">&#9654;</button>
+            </div>
+            <table id="calendar">
+                <thead>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>
+                </thead>
+                <tbody id="calBody">
+                </tbody>
+            </table>
+        </div>
+        <!--달력-->
+        <script type="text/javascript" th:inline="javascript">
+            let lastDate = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth();
+            let date = today.getDate();
+            let selectedDate = null;
+
+            <!--이벤트 날짜 가져오기-->
+            let eventStartDate = new Date(/*[[${event.start_date}]]*/);
+            let eventEndDate = new Date(/*[[${event.end_date}]]*/);
+            function renderCalendar(year, month) {
+        if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+            lastDate[1] = 29;
+        } else {
+            lastDate[1] = 28;
+        }
+
+        document.getElementById("yearmonth").innerText = `${year}년 ${month + 1}월`;
+
+        const calBody = document.getElementById("calBody");
+        calBody.innerHTML = "";
+
+        let firstDay = new Date(year, month, 1).getDay();
+        let i = 1;
+
+        while (i <= lastDate[month]) {
+            let newTr = document.createElement("tr");
+            calBody.appendChild(newTr);
+
+            for (let j = 0; j < 7; j++) {
+                if (i === 1 && j < firstDay) {
+                    let newTd = document.createElement("td");
+                    newTr.appendChild(newTd);
+                } else {
+                    if (i > lastDate[month]) break;
+                    (function(d) {
+                        let newTd = document.createElement("td");
+                        let currentDate = new Date(year, month, d);
+                        if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
+                            newTd.classList.add("within-event");
+                            newTd.addEventListener("click", function() {
+                                selectDate(this, d);
+                            });
+                        } else {
+                            newTd.classList.add("disabled");
+                        }
+                        if (d === date && month === today.getMonth() && year === today.getFullYear()) {
+                            newTd.classList.add("today");
+                        }
+                        newTd.innerHTML = d;
+                        newTr.appendChild(newTd);
+                    })(i);
+                    i++;
+                }
+            }
+        }
+    }
+
+    function selectDate(td, d) {
+        if (selectedDate) {
+            selectedDate.classList.remove("selected");
+        }
+        selectedDate = td;
+        selectedDate.classList.add("selected");
+        document.getElementById('reserve_date').value = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    }
+
+    function prevMonth() {
+        if (month === 0) {
+            month = 11;
+            year--;
+        } else {
+            month--;
+        }
+        renderCalendar(year, month);
+    }
+
+    function nextMonth() {
+        if (month === 11) {
+            month = 0;
+            year++;
+        } else {
+            month++;
+        }
+        renderCalendar(year, month);
+    }
+
+    renderCalendar(year, month);
+        </script>
+
     </div>
 
 </div>
