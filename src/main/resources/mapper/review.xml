@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.hereevent.review">
+	<insert id="insertReview" parameterType="review">
+		insert into review (event_no, member_no, write_date, content, star) value
+		(#{event_no}, #{member_no}, now(), #{content}, #{star})
+	</insert>
+	<update id="updateReview" parameterType="review">
+		update review
+		set update_date = now(), content = #{content}, star = #{star}
+		where review_no = #{review_no}
+	</update>
+	<delete id="deleteReview">
+		delete from member
+		where review_no = #{review_no}
+	</delete>
+	<select id="selectReviewByEventNo" resultType="review">
+		select r.*, m.nick, m.img_path
+		from review r inner join member m on r.member_no = m.member_no
+		where event_no = #{event_no}
+	</select>
+	<select id="selectReviewByMemberNo" resultType="review">
+		select r.*, e.img_path, e.name
+		from review r
+			inner join member m on r.member_no = m.member_no
+			inner join event e on r.event_no = e.event_no
+		where m.member_no = #{member_no}
+	</select>
+</mapper>

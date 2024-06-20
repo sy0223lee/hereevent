@@ -1,53 +1,62 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.multi.hereevent.dto.ReservationDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class EventServiceImpl implements EventService{
-    private EventDAO dao;
+@RequiredArgsConstructor
+public class EventServiceImpl implements EventService {
+    private final EventDAO dao;
 
-    @Autowired
-    public EventServiceImpl(EventDAO dao) {
-        this.dao = dao;
+    @Override
+    public int insertEvent(EventDTO event) {
+        return dao.insertEvent(event);
     }
 
     @Override
-    public int insert(EventDTO event) {
-        return dao.insert(event);
+    public int updateEvent(EventDTO event) {
+        return dao.updateEvent(event);
     }
 
     @Override
-    public int update(EventDTO event) {
-        return dao.update(event);
+    public int deleteEvent(int event_no) {
+        return dao.deleteEvent(event_no);
     }
 
     @Override
-    public int delete(int event_no) {
-        return dao.delete(event_no);
+    public List<EventDTO> searchEvent(String keyword) {
+        return dao.searchEvent(keyword);
     }
 
     @Override
-    public EventDTO read(int event_no) {
-        return dao.read(event_no);
+    public List<EventDTO> getAllEvent() {
+        return dao.getAllEvent();
     }
 
     @Override
-    public List<EventDTO> search(String keyword) {
-        return dao.search(keyword);
+    public List<EventDTO> getListByStarRank() {
+        return dao.getListStarRank();
     }
 
     @Override
-    public List<EventDTO> popList() {
-        return List.of();
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        return dao.selectEventByCategoryNo(category_no);
     }
 
     @Override
-    public List<EventDTO> showList() {
-        return List.of();
+    public List<EventDTO> getOpenEvent() {
+        return dao.getOpenEvent();
     }
+
+    @Override
+    public List<EventDTO> getPopularEvent() {
+        return dao.getPopularEvent();
+    }
+
 
     //세부페이지
     @Override
@@ -60,4 +69,22 @@ public class EventServiceImpl implements EventService{
     public EventDTO getEventImage(int event_no) {
         return dao.getEventImage(event_no);
     }
+
+    @Override
+    public int insertReserve(ReservationDTO reservation) {
+        return dao.insertReserve(reservation);
+    }
+
+    // 크롤링
+    @Override
+    public int insertCrawlingEvent(EventDTO event) {
+        return dao.insertCrawlingEvent(event);
+    }
+
+    @Override
+    public int selectEventNoByEventName(String eventName) {
+        return Integer.parseInt(dao.selectEventNoByEventName(eventName));
+    }
+
+
 }

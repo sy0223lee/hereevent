@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.hereevent.event">
-    <select id="insert" parameterType="event">
+    <select id="insertEvent" parameterType="event">
         insert into event(name,start_date,end_date,addr,info,homepage,sns,type,reserve_limit,wait_limit)
-        value(event_seq.nextval,#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
+        value(#{name},#{start_date},#{end_date},#{addr},#{info},#{homepage},#{sns},#{type},#{reserve_limit},#{wait_limit})
     </select>
-    <select id="delete" parameterType="String">
+    <select id="deleteEvent" parameterType="String">
         delete from event where event_no = #{event_no}
     </select>
-    <select id="update" parameterType="event">
-        update event
+    <select id="updateEvent" parameterType="event">
+        UPDATE event
         set name = #{name}, start_date = #{start_date}, end_date = #{end_date},
         addr = #{addr}, info = #{info}, reserve_limit = #{reserve_limit},wait_limit = #{wait_limit}
-        where event_no = #{event_no}
+        WHERE event_no = #{event_no}
     </select>
-    <select id="read" parameterType="String" resultType="event">
-        select * from event where board_no = #{board_no}
+    <select id="searchEvent" parameterType="String" resultType="event">
+        SELECT *
+        FROM event
+        WHERE name Like CONCAT('%' , #{name} , '%')
     </select>
-    <select id="search" parameterType="String" resultType="event">
-        select * from event
-        where name like '%' || #{name} || '%'
+    <select id="getAllEvent" resultType="event">
+        SELECT *
+        FROM event
     </select>
-    <select id="selectPop" resultType="event">
-        select * from event
-        where type = 0
+    <select id="getOpenEvent" resultType="event">
+        SELECT event_no, category_no, name, start_date, end_date, addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
+        FROM event
+        WHERE start_date > now()
+        ORDER BY start_date
     </select>
-    <select id="selectShow" resultType="event">
-        select * from event
-        where type = 1
+    <select id="getPopularEvent" resultType="event">
+        SELECT e.event_no,e.name,e.start_date,e.end_date,e.addr, e.img_path,
+        COUNT(DISTINCT r.member_no) + COUNT(DISTINCT w.email) AS total_count
+        FROM event e
+        LEFT JOIN reserve r ON e.event_no = r.event_no
+        LEFT JOIN wait w ON e.event_no = w.event_no
+        GROUP BY e.event_no
+        ORDER BY total_count desc limit 10
     </select>
+
     <select id="getEventDetails" resultType="event">
         SELECT event_no, category_no, name, start_date, end_date,addr, info, homepage, sns, img_path, type, reserve_limit, wait_limit
         FROM event
@@ -40,4 +50,40 @@
         FROM events
         WHERE event_no = #{eventNo}
     </select>
+
+	<insert id="insertCrawlingEvent" parameterType="event">
+		insert into event  (name, start_date, end_date, addr, info, homepage, sns, img_path)
+		select #{name}, #{start_date}, #{end_date}, #{addr}, #{info}, #{homepage}, #{sns}, #{img_path}
+		from dual where not exists (
+			select event_no
+			from event
+			where name=#{name} and start_date=#{start_date} and end_date=#{end_date} and addr=#{addr})
+	</insert>
+	<select id="selectEventNoByEventName" parameterType="String" resultType="String">
+		select event_no
+		from event
+		where name=#{name}
+	</select>
+
+    <!--카테고리별 이벤트 조회-->
+    <select id="selectEventByCategory" parameterType="java.lang.Integer" resultType="com.multi.hereevent.dto.EventDTO">
+        select *
+        from event
+        where category_no=#{category_no}
+    </select>
+    <!--별점순 이벤트 조회-->
+    <select id="getEventByStarRank" resultType="event">
+        SELECT e.event_no, e.name, e.img_path, AVG(r.star) AS avg_star
+        FROM event AS e
+        JOIN review AS r
+        ON e.event_no = r.event_no
+        GROUP BY e.event_no
+        ORDER BY avg_star DESC limit 10
+    </select>
+    <!--예약하기-->
+    <insert id="insertReserve" parameterType="reservation">
+        insert into reserve (event_no,member_no, reserve_date, reserve_time,state)
+        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료")
+    </insert>
+
 </mapper>
