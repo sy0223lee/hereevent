@@ -9,36 +9,37 @@ import java.util.List;
 public interface EventDAO {
     //관리자페이지
     //행사 등록
-    public int insertEvent(EventDTO event);
+    int insertEvent(EventDTO event);
     //행사 수정
-    public int updateEvent(EventDTO event);
+    int updateEvent(EventDTO event);
     //행사 삭제
-    public int deleteEvent(int event_no);
+    int deleteEvent(int event_no);
 
     //행사이름 검색
-    public List<EventDTO> searchEvent(String keyword);
+    List<EventDTO> searchEvent(String keyword);
     //전체 팝업 조회
-    public List<EventDTO> getAllEvent();
+    List<EventDTO> getAllEvent();
 
     //별점 높은순 10순위 리스트
-    public List<EventDTO> getListStarRank();
+    List<EventDTO> getListStarRank();
     //카테고리별 조회
-    public List<EventDTO> selectEventByCategoryNo(int category_no);
+    List<EventDTO> selectEventByCategoryNo(int category_no);
 
     //오픈예정 행사
-    public List<EventDTO> getOpenEvent();
+    List<EventDTO> getOpenEvent();
     //예약,대기 높은순 10순위 리스트
-    public List<EventDTO> getPopularEvent();
+    List<EventDTO> getPopularEvent();
 
     //인스타그램 태그
 
     //세부페이지
-    public EventDTO getEventDetails(int event_no);  // 전체 데이터 조회
+    EventDTO getEventDetails(int event_no);  // 전체 데이터 조회
+    EventDTO getEventDetails(int event_no, int category_no); // 이벤트 상세 정보 + 회원 관심 여부 조회
     //사진 가져오기
-    public EventDTO getEventImage(int event_no);
+    EventDTO getEventImage(int event_no);
     //예약하기
-    public int insertReserve(ReservationDTO reservation);
+    int insertReserve(ReservationDTO reservation);
     // 
-    public int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
-    public String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
+    int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
+    String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
 }

@@ -1,10 +1,10 @@
-package com.multi.hereevent.category;
+package com.multi.hereevent.category.interest;
 
 import com.multi.hereevent.dto.CategoryInterestDTO;
 
 import java.util.List;
 
-public interface CategoryInterestDAO {
+public interface CategoryInterestService {
     int insertCategoryInterest(int category_no, int member_no);
     int updateCategoryInterest(CategoryInterestDTO categoryInterest);
     int deleteCategoryInterest(int category_no, int member_no);

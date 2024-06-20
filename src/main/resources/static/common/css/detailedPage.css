@@ -106,6 +106,24 @@
     text-decoration: underline;
 }
 
+/* 관심 이벤트 버튼 */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+.interest-btn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+    padding: 5px 10px;
+    border: none;
+    font-size: 40px;
+    font-weight: bolder;
+    color: #e14533;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+}
+
 /* 상세페이지 - 리뷰 */
 .comment-content{
     width: 100%;

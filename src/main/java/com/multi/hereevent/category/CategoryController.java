@@ -1,5 +1,6 @@
 package com.multi.hereevent.category;
 
+import com.multi.hereevent.category.interest.CategoryInterestService;
 import com.multi.hereevent.dto.CategoryInterestDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
