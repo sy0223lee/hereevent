@@ -11,13 +11,14 @@ import java.sql.Time;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("reservation")
-public class ReservationDTO {
+@Alias("reserve")
+public class ReserveDTO {
     private int reserve_no;
     private int event_no;
     private int member_no;
     private Date reserve_date;
     private Time reserve_time;
     private String state;
+    private int reserve_order;
 
 }

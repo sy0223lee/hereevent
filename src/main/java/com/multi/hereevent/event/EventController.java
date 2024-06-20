@@ -1,7 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReservationDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +25,8 @@ public class EventController {
     }
     @GetMapping("/test2")
     public String test2(Model model) {
+        List<EventDTO> starlist = service.getListByStarRank();
+        model.addAttribute("starlist",starlist);
         List<EventDTO> alleventlist = service.getAllEvent();
         model.addAttribute("alleventlist",alleventlist);
         List<EventDTO> openlist = service.getOpenEvent();
@@ -75,9 +77,21 @@ public class EventController {
         return "detailedPage/reservation";
     }
     @PostMapping("/reservation")
-    public String Reservation(ReservationDTO reservation){
+    public String Reservation(ReserveDTO reservation){
         System.out.println(reservation);
+        ReserveDTO checkReserve = service.checkReserveOrder(reservation.getEvent_no(),
+                reservation.getReserve_date(),reservation.getReserve_time());
+        System.out.println("check===>"+checkReserve);
+        if(checkReserve==null){
+            reservation.setReserve_order(1);
+        }else{
+            int lastorder = checkReserve.getReserve_order();
+            lastorder++;
+            reservation.setReserve_order(lastorder);
+        }
+        System.out.println("setReserveOrder==>"+reservation);
         service.insertReserve(reservation);
+
         return "redirect:/event/test2";
     }
     //후기
