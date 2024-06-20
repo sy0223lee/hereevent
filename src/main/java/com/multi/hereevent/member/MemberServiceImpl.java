@@ -56,5 +56,8 @@ public class MemberServiceImpl implements MemberService{
         return dao.checkMemberNick(nick);
     }
 
-
+    @Override
+    public boolean checkMemberEmail(String email) {
+        return dao.checkMemberEmail(email);
+    }
 }

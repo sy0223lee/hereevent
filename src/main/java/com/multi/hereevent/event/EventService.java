@@ -1,8 +1,11 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReservationDTO;
+import com.multi.hereevent.dto.ReserveDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 public interface EventService {
@@ -35,8 +38,11 @@ public interface EventService {
     EventDTO getEventDetails(int event_no, int category_no); // 이벤트 상세 정보 + 회원 관심 여부 조회
     //event image
     EventDTO getEventImage(int event_no);
+  
     //예약하기
-    int insertReserve(ReservationDTO reservation);
+    int insertReserve(ReserveDTO reservation);
+    ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time);
+
     // 크롤링
     int insertCrawlingEvent(EventDTO event);
     int selectEventNoByEventName(String eventName);
