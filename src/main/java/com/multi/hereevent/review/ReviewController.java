@@ -27,7 +27,7 @@ public class ReviewController {
     public String insertReview(ReviewDTO review){
         int result = service.insertReview(review);
         if(result > 0){
-            return "redirect:/event/review/" + review.getEvent_no();
+            return "redirect:/event/" + review.getEvent_no();
         }else {
             return "common/errorPage";
         }

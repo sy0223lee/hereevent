@@ -1,0 +1,45 @@
+.rating {
+    float: none;
+    display: flex;
+}
+
+.rating-input {
+    display: none;
+}
+
+.rating-label {
+    width: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.rating-label:nth-child(even){
+    margin-right: 2px;
+}
+
+.star-icon {
+    width: 10px;
+    height: 20px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url("../../images/star/star.svg");
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+.filled {
+    background-image: url("../../images/star/star-fill.svg");
+}
+
+.rating-label-full .star-icon {
+    background-position: right;
+}
+
+.rating-label-half .star-icon {
+    background-position: left;
+}
+
+.rating.readonly .star-icon {
+    cursor: default;
+}

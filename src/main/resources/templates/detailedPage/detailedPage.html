@@ -7,16 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- CSS File -->
     <link href="/hereevent/common/css/detailedPage.css" rel="stylesheet">
+    <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
+    <!-- js File -->
+    <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
 
-    <title>이벤트 상세 페이지</title>
     <script th:inline="javascript">
-        function scrollToSection(sectionId) {
-            var element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
         $(document).ready(function() {
             $(".default").click(function () {
                 let member = $(".member").val();
