@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/common/js/starRate.js"></script>
+    <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
 
     <title>HereEvent-EventDetail</title>
 </head>
@@ -10,7 +12,7 @@
 <body>
 <div th:fragment="review">
     <h2 class="title">이벤트 후기</h2>
-    <!-- Blog Comments Section -->
+    <!- Blog Comments Section ->
     <section id="blog-comments" class="blog-comments section">
 
         <div class="container">
@@ -27,13 +29,55 @@
                     </div>
                     <div>
                         <h5 th:text="${review.nick}"></h5>
-                        <!-- 별점 추가해야 함!! -->
-                        <sapn>★★★★★</sapn>
+
+                        <div class="rating">
+                            <label class="rating-label rating-label-half" for="starhalf">
+                                <input type="radio" id="starhalf" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star1">
+                                <input type="radio" id="star1" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star1half">
+                                <input type="radio" id="star1half" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star2">
+                                <input type="radio" id="star2" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star2half">
+                                <input type="radio" id="star2half" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star3">
+                                <input type="radio" id="star3" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star3half">
+                                <input type="radio" id="star3half" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star4">
+                                <input type="radio" id="star4" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star4half">
+                                <input type="radio" id="star4half" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star5">
+                                <input type="radio" id="star5" class="rating-input" name="rating">
+                                <span class="star-icon"></span>
+                            </label>
+                        </div>
+
                         <span th:text="${review.write_date}"></span>
                         <p class="comment-content" th:text="${review.content}"></p>
                     </div>
                 </div>
-            </div><!-- End comment #1 -->
+            </div><!- End comment #1 ->
 
             <div class="reply-form" th:if="${session.member != null}">
 
@@ -51,9 +95,9 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <h4 th:text="${session.member.nick}"></h4>
-                            <!-- 별점 추가해야 함!! -->
+                            <!- 별점 추가해야 함!! ->
                             <h4>★★★★★</h4>
-                            <input type="hidden" name="star" value="5"> <!-- 임시로 추가한 태그, 리뷰 작성 정상 작동 시 제거 필요 -->
+                            <input type="hidden" name="star" value="5"> <!- 임시로 추가한 태그, 리뷰 작성 정상 작동 시 제거 필요 ->
                         </div>
                     </div>
                     <div class="row">
@@ -72,7 +116,7 @@
 
         </div>
 
-    </section><!-- /Blog Comments Section -->
+    </section><!- /Blog Comments Section ->
 </div>
 </body>
 </html>

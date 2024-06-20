@@ -1,0 +1,66 @@
+/*.rating-label {*/
+/*    width: 12px; !* 원본 사이즈/2 *!*/
+/*    overflow: hidden;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.rating-label .star-icon {*/
+/*    width: 12px; !* 원본 사이즈/2 *!*/
+/*    height: 24px;*/
+/*    display: block;*/
+/*    position: relative;*/
+/*    left: 0;*/
+/*    background-image: url("../images/ico-star-empty.svg");*/
+/*    background-repeat: no-repeat;*/
+/*}*/
+/*.rating-label-full .star-icon {*/
+/*    background-position: right;*/
+/*}*/
+/*.rating-label-half .star-icon {*/
+/*    background-position: left;*/
+/*}*/
+
+.rating {
+    float: none;
+    width: 200px;
+    display: flex;
+
+    &-input {
+        display: none;
+    }
+
+    &-label {
+        width: 20px;
+        overflow: hidden;
+        cursor: pointer;
+
+        .star-icon {
+            width: 20px;
+            height: 40px;
+            display: block;
+            position: relative;
+            left: 0;
+            background-image: url('https://velog.velcdn.com/images/jellykelly/post/9957327f-f358-4c25-9989-5bb3dd5755d6/image.svg');
+            background-repeat: no-repeat;
+            background-size: 40px;
+
+            &.filled {
+                background-image: url(' https://velog.velcdn.com/images/jellykelly/post/10caf033-b0ef-4d58-804b-6e33395e4ea5/image.svg');
+            }
+        }
+
+        &-full .star-icon {
+            background-position: right;
+        }
+
+        &-half .star-icon {
+            background-position: left;
+        }
+    }
+
+    &.readonly {
+        .star-icon {
+            opacity: 0.7;
+            cursor: default;
+        }
+    }
+}
