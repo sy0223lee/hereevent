@@ -1,6 +1,7 @@
 package com.multi.hereevent.wait;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.dto.WaitDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,14 @@ public class WaitServiceImpl implements WaitService {
     }
 
     @Override
-    public List<WaitDTO> waitList() {
-        return List.of();
+    public List<WaitDTO> getWaitList() {
+        List<WaitDTO> waitlist= dao.getWaitList();
+        return waitlist;
+    }
+
+    @Override
+    public WaitDTO read(String wait_tel) {
+        return null;
     }
 
     @Override
@@ -35,4 +42,18 @@ public class WaitServiceImpl implements WaitService {
     public int waitDelete(int wait_no) {
         return 0;
     }
+
+    @Override
+    public boolean canInsert(String wait_tel) {
+        WaitDTO existingWait = dao.findByWaitTelAndState(wait_tel);
+        if (existingWait == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+
 }

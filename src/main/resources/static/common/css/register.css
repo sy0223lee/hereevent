@@ -104,3 +104,7 @@ body {
             height: auto;
             object-fit: contain;
         }
+        #warning{
+            text-align: center;
+            font-weight: bold;
+        }
