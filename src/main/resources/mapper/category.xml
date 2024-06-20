@@ -4,7 +4,7 @@
 	<select id="selectCategoryInterestByMemberNo" resultType="categoryInterest">
 		with
 		c as (select * from category where value is null),
-		i as (select * from category_interest where member_no = 1)
+		i as (select * from category_interest where member_no = #{member_no})
 		select i.category_interest_no, c.category_no, i.member_no, c.name
 		from c left join i on c.category_no = i.category_no
 	</select>

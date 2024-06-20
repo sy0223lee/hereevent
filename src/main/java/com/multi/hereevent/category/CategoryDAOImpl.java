@@ -1,9 +1,11 @@
 package com.multi.hereevent.category;
 
 import com.multi.hereevent.dto.CategoryDTO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class CategoryDAOImpl implements CategoryDAO{
     @Override
     public int insertCategory(CategoryDTO category) {
