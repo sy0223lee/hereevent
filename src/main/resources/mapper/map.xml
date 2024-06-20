@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.hereevent.map">
+    <select id="select" parameterType="Map" resultType="event">
+        SELECT *
+        FROM event
+        <where>
+            <if test="state=='still' and type!=null">
+                <!--<![CDATA[ < ]]>-->
+                WHERE start_date &lt; now() and end_date > now() and type=#{type}
+                ORDER BY end_date
+            </if>
+            <if test="state=='open' and type!=null">
+                WHERE start_date > now() and type=#{type}
+                ORDER BY end_date
+            </if>
+            <if test="state=='end' and type!=null">
+                WHERE end_date &lt; now() and type=#{type}
+                ORDER BY end_date
+            </if>
+        </where>
+    </select>
+
+    <select id="stateStill" resultType="event">
+        SELECT *
+        FROM event
+        <![CDATA[
+         WHERE start_date < now() and end_date > now()
+        ]]>
+         ORDER BY end_date
+    </select>
+    <select id="stateOpen" resultType="event">
+        SELECT *
+        FROM event
+        WHERE start_date > now()
+        ORDER BY end_date
+    </select>
+    <select id="stateEnd" resultType="event">
+        SELECT *
+        FROM event
+        <![CDATA[
+        WHERE end_date < now()
+        ]]>
+        ORDER BY end_date
+    </select>
+    <select id="typeReserve" resultType="event">
+        SELECT *
+        FROM event
+        WHERE type = 'reserve'
+    </select>
+    <select id="typeWait" resultType="event">
+        SELECT *
+        FROM event
+        WHERE type = 'wait'
+    </select>
+    <select id="typeBoth" resultType="event">
+        SELECT *
+        FROM event
+        WHERE type = 'both'
+    </select>
+</mapper>
