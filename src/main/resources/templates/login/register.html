@@ -1,21 +1,56 @@
 <!DOCTYPE html >
-<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HereEvent Register</title>
     <link href="/hereevent/common/css/register.css" rel="stylesheet">
-    <style>
 
-    </style>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function(){
+            $("#nick").keyup(function(){
+                let data1 = {"nick" : $("#nick").val()};
+                $.ajax({
+                    url:"/hereevent/check-nick",
+                    type:"post",
+                    data: data1,
+                    dataType: 'text',
+                    success: function(result){
+                        $("#check-duplicate-nick").text(result);
+                    },
+                    error: function(){
+                        alert("요청 실패");
+                    }
+                });
+            });
+            $("#email").keyup(function(){
+                let data2 = {"email" : $("#email").val()};
+                $.ajax({
+                    url:"/hereevent/check-email",
+                    type:"post",
+                    data: data2,
+                    dataType: 'text',
+                    success: function(result){
+                        $("#check-duplicate-email").text(result);
+                    },
+                    error: function(){
+                        alert("요청 실패");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+<main layout:fragment="main" class="main">
 <div class="signup-container">
     <h2>회원가입</h2>
     <form action="/hereevent/insert" method="post">
         <label for="email">이메일</label>
         <input type="email" id="email" name="email" placeholder="이메일을 입력하세요">
-
+        <span id="check-duplicate-email"></span>
         <label for="pass">비밀번호</label>
         <input type="text" id="pass" name="pass" placeholder="비밀번호를 입력하세요">
 
@@ -24,7 +59,7 @@
 
         <label for="nick">닉네임</label>
         <input type="text" id="nick" name="nick" placeholder="닉네임을 입력하세요">
-
+        <span id="check-duplicate-nick"></span>
         <label for="tel">전화번호</label>
         <input type="tel" id="tel" name="tel" placeholder="전화번호를 입력하세요">
 
@@ -47,5 +82,7 @@
         <a href="#">아이디/비밀번호 찾기</a>
     </div>
 </div>
+</main>
+
 </body>
 </html>

@@ -60,7 +60,7 @@ public class MemberController {
             return "common/errorPage";
         }
     }
-    // 닉네임 중복 확인
+    // 닉네임 중복 확인(마이페이지)
     @PostMapping(value = "/mypage/check-nick", produces = "application/text; charset=utf-8")
     @ResponseBody
     public String checkNick(@RequestParam("nick") String nick) {
@@ -69,6 +69,28 @@ public class MemberController {
             return "사용 가능한 닉네임";
         }else {
             return "사용 불가능한 닉네임";
+        }
+    }
+    // 닉네임 중복 확인(회원가입)
+    @PostMapping(value = "/check-nick", produces = "application/text; charset=utf-8")
+    @ResponseBody
+    public String checkNickRegister(@RequestParam("nick") String nick) {
+        boolean available = service.checkMemberNick(nick);
+        if (available) {
+            return "사용 가능한 닉네임";
+        }else {
+            return "사용 불가능한 닉네임";
+        }
+    }
+    //이메일 중복 확인(회원가입)
+    @PostMapping(value = "/check-email", produces = "application/text; charset=utf-8")
+    @ResponseBody
+    public String checkEmail(@RequestParam("email") String email) {
+        boolean available = service.checkMemberEmail(email);
+        if (available) {
+            return "사용 가능한 이메일";
+        }else {
+            return "사용 불가능한 이메일";
         }
     }
     // 생일 수정 페이지 이동
@@ -109,13 +131,6 @@ public class MemberController {
             return "common/errorPage";
         }
     }
-
-    /***** 관심 관리 *****/
-    @GetMapping("/myinterest")
-    public String myinterest() {
-        return "mypage/myinterest";
-    }
-
 
     /***** 행사 내역 *****/
     @GetMapping("/myevent")

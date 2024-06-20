@@ -95,10 +95,14 @@
         <button class="arrow left" onclick="moveLeft('rating')">
             <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
         </button>
-        <div class="images" id="rating" th:each="star:${starlist}">
-            <a th:href="@{/event/{eventNo}(eventNo=${star.event_no})}">
-                <img src="/hereevent/images/main/팝업예시1.png" alt="캐릭터">
-            </a>
+        <div class="images" id="rating" >
+            <span th:each="star:${starlist}">
+            <a th:href="|@{/event/}${star.event_no}|"><img th:src="|@{/download/event/}${star.img_path}|" alt="star 1"></a>
+            </span>
+        </div>
+            <button class="arrow right" onclick="moveRight('rating')">
+                <img src="/hereevent/images/main/rightarrow.png" alt="오른쪽 화살표">
+            </button>
         </div>
     </div>
 

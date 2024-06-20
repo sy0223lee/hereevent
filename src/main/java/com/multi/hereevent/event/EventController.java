@@ -1,11 +1,14 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReserveDTO;
+import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.fileupload.FileUploadService;
 import com.multi.hereevent.dto.ReservationDTO;
 import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.review.ReviewService;
-import jdk.jfr.Event;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +18,12 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@SessionAttributes("member")
 @RequestMapping("/event")
 public class EventController {
     private final EventService eventService;
     private final ReviewService reviewService;
+    private final EventInterestService interestService;
 
     @GetMapping("/test")
     public String test() {
@@ -30,7 +35,9 @@ public class EventController {
     }
     @GetMapping("/test2")
     public String test2(Model model) {
-        List<EventDTO> alleventlist = eventService.getAllEvent();
+        List<EventDTO> starlist = service.getListByStarRank();
+        model.addAttribute("starlist",starlist);
+        List<EventDTO> alleventlist = service.getAllEvent();
         model.addAttribute("alleventlist",alleventlist);
         List<EventDTO> openlist = eventService.getOpenEvent();
         model.addAttribute("openlist",openlist);
@@ -54,7 +61,15 @@ public class EventController {
     // 세부페이지
     @GetMapping("/{event_no}")
     public String getEventDetails(@PathVariable("event_no") int event_no, Model model) {
-        EventDTO eventDetails = eventService.getEventDetails(event_no);
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        EventDTO eventDetails;
+        if(member != null){
+            // 로그인 되어 있는 경우 사용자가 관심 있는 이벤트인지 같이 넘겨주기
+            eventDetails = eventService.getEventDetails(event_no, member.getMember_no());
+        }else {
+            // 로그인이 안 되어 있는 경우 이벤트 정보만 넘겨주기
+            eventDetails = eventService.getEventDetails(event_no);
+        }
         List<ReviewDTO> reviewList = reviewService.selectReviewByEventNo(event_no);
         model.addAttribute("event", eventDetails);
         model.addAttribute("reviewList", reviewList);
@@ -105,11 +120,41 @@ public class EventController {
     //카테고리별 리스트
     @GetMapping("/list")
     public String listCategory(@RequestParam("category_no") int category_no, Model model){
-        //System.out.println("NO==>>"+ category_no);
         List<EventDTO> eventlist = eventService.selectEventByCategoryNo(category_no);
-       // System.out.println("eventlist=>>>>"+eventlist);
         model.addAttribute("eventlist",eventlist);
         return "event/eventCategoryList";
+    }
+
+    // 관심 이벤트 등록, 해제
+    @GetMapping("/interest/insert")
+    public String insertInterest(@RequestParam("event_no") int event_no, Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
+        int result = interestService.insertEventInterest(event_no, member.getMember_no());
+        if(result > 0){
+            return "redirect:/event/" + event_no;
+        }
+        return "common/errorPage";
+    }
+    @GetMapping("/interest/delete")
+    public String deleteInterest(@RequestParam("event_no") int event_no, Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
+        int result = interestService.deleteEventInterest(event_no, member.getMember_no());
+        if(result > 0){
+            return "redirect:/event/" + event_no;
+        }
+        return "common/errorPage";
+    }
+    @GetMapping("/myinterest/delete")
+    public String deleteMyInterest(@RequestParam("event_no") int event_no, Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
+        int result = interestService.deleteEventInterest(event_no, member.getMember_no());
+        if(result > 0){
+            return "redirect:/myinterest";
+        }
+        return "common/errorPage";
     }
 }
 

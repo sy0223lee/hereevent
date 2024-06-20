@@ -9,13 +9,29 @@
     <link href="/hereevent/common/css/detailedPage.css" rel="stylesheet">
 
     <title>이벤트 상세 페이지</title>
-    <script>
+    <script th:inline="javascript">
         function scrollToSection(sectionId) {
             var element = document.getElementById(sectionId);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
         }
+
+        $(document).ready(function() {
+            $(".default").click(function () {
+                let member = $(".member").val();
+                if(member === ""){ // 로그인 하지 않은 상태인 경우
+                    alert("로그인을 해주세요.");
+                }else {
+                    location.href = "/hereevent/event/interest/insert?event_no=" + $(this).val();
+                }
+            });
+            $(".picked").click(function () {
+                if(confirm("관심 팝업에서 삭제하시겠습니다까?") === true) {
+                    location.href = "/hereevent/event/interest/delete?event_no=" + $(this).val();
+                }
+            });
+        });
     </script>
 
     <title>HereEvent-EventDetail</title>
@@ -44,27 +60,14 @@
                 <div class="container">
                     <article class="article">
                         <div class="post-img">
-                            <div th:each="imgPath : ${event.img_path}">
+                            <div th:each="imgPath : ${event.img_path}" class="image-container">
                                 <img th:src="|@{/download/event/}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />
+
+                                <input type="hidden" class="member" th:value="${session.member}">
+                                <button class="default interest-btn" th:if="${event.event_interest_no == 0}" th:value="${event.event_no}">♡</button>
+                                <button class="picked interest-btn" th:unless="${event.event_interest_no == 0}" th:value="${event.event_no}">♥</button>
                             </div>
                         </div>
-
-                        <!--                사진 슬라이드        <div class="post-img">-->
-                        <!--                        <div class="slider__wrap">-->
-                        <!--                            <div th:each="imgPath : ${event.img_path}">-->
-                        <!--                                <div class="slider s1">-->
-
-                        <!--                                    <img th:src="|@{/download/event}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-
-                        <!--                            <div class="slider__btn">-->
-                        <!--                                <a href="#" class="prev" title="이전이미지">prev</a>-->
-                        <!--                                <a href="#" class="next" title="다음이미지">next</a>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="slider__dot"></div>-->
-                        <!--                        </div>-->
-                        <!--                        </div>-->
 
                         <h2 class="title"><span th:text="${event.name}"></span></h2>
                         <div class="container">
