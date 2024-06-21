@@ -15,17 +15,33 @@ public class WaitDAOImpl implements WaitDAO {
 
     @Override
     public WaitDTO waitLogin(WaitDTO wait) {
-        return sqlSession.selectOne("com.multi.hereevent.wait.waitLogin", wait);
+        return sqlSession.selectOne("com.multi.hereevent.wait.login", wait);
     }
+
+    @Override
+    public WaitDTO findByWaitTelAndState(String wait_tel) {
+        return sqlSession.selectOne("com.multi.hereevent.wait.check",wait_tel);
+    }
+
 
     @Override
     public int waitInsert(WaitDTO wait) {
-        return 0;
+        return sqlSession.insert("com.multi.hereevent.wait.insert",wait);
     }
 
     @Override
-    public List<WaitDTO> waitList() {
-        return List.of();
+    public int delete(String wait_no) {
+        return sqlSession.delete("com.multi.hereevent.wait.delete", wait_no);
+    }
+
+    @Override
+    public List<WaitDTO> getWaitList() {
+        return sqlSession.selectList("com.multi.hereevent.wait.selectall");
+    }
+
+    @Override
+    public WaitDTO read(String wait_no) {
+        return sqlSession.selectOne("com.multi.hereevent.wait.read", wait_no);
     }
 
     @Override

@@ -27,15 +27,15 @@ public class EventDTO {
     private int wait_limit; //시간당 제한인원(대기)
     private float avg_star;
 
+    // 관심 이벤트 설정 여부 저장을 위한 멤버변수
+    private int event_interest_no;
+
     // 이벤트 크롤링 결과 insert 하기 위한 생성자
-    public EventDTO(String name, Date start_date, Date end_date, String addr, String info, String homepage, String sns, String img_path) {
+    public EventDTO(String name, Date start_date, Date end_date, String addr, String info) {
         this.name = name;
         this.start_date = start_date;
         this.end_date = end_date;
         this.addr = addr;
         this.info = info;
-        this.homepage = homepage;
-        this.sns = sns;
-        this.img_path = img_path;
     }
 }

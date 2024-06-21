@@ -1,12 +1,17 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReservationDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.sql.Time;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -66,19 +71,44 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
+    public EventDTO getEventDetails(int event_no, int member_no) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("event_no", event_no);
+        param.put("member_no", member_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventDetailsWithInterest", param);
+    }
+
+    @Override
     public EventDTO getEventImage(int event_no) {
         return sqlSession.selectOne("com.multi.hereevent.event.getEventImage", event_no);
     }
     //예약하기
     @Override
-    public int insertReserve(ReservationDTO reservation) {
+    public int insertReserve(ReserveDTO reservation) {
         return sqlSession.insert("com.multi.hereevent.event.insertReserve", reservation);
+    }
+    //예약 순서 체크
+    @Override
+    public ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("event_no",event_no);
+        map.put("reserve_date",reserve_date);
+        map.put("reserve_time",reserve_time);
+        return sqlSession.selectOne("com.multi.hereevent.event.checkReserve",map);
     }
 
     // 크롤링
     @Override
     public int insertCrawlingEvent(EventDTO event) {
         return sqlSession.insert("com.multi.hereevent.event.insertCrawlingEvent", event);
+    }
+
+    @Override
+    public int updateEventImg(int event_no, String img_path) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("event_no", event_no);
+        params.put("img_path", img_path);
+        return sqlSession.update("com.multi.hereevent.event.updateEventImg", params);
     }
 
     @Override
