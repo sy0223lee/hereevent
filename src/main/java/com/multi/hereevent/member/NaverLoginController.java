@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.security.SecureRandom;
 
 @Controller
 @RequiredArgsConstructor
+@SessionAttributes("member")
 public class NaverLoginController {
     private final MemberService service;
 
@@ -39,7 +41,7 @@ public class NaverLoginController {
     }
 
     @GetMapping("/login/naver/callback")
-    public String naverLogin(@RequestParam("code") String code, @RequestParam("state") String state) throws ParseException {
+    public String naverLogin(@RequestParam("code") String code, @RequestParam("state") String state, Model model) throws ParseException {
         System.out.println("===== 네이버 로그인 접근 토큰 요청 =====");
         String url = "https://nid.naver.com/oauth2.0/token";
         RestTemplate restTemplate = new RestTemplate();
@@ -67,13 +69,12 @@ public class NaverLoginController {
         String accessToken = (String) object.get("access_token");
         System.out.println("[accessToken]: " + accessToken);
 
-        getUserInfo(accessToken);
+        getUserInfo(accessToken, model);
 
-
-        return "redirect:/";
+        return "mypage/mypage";
     }
 
-    public void getUserInfo(String accessToken) throws ParseException {
+    public void getUserInfo(String accessToken, Model model) throws ParseException {
         String url = "https://openapi.naver.com/v1/nid/me";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -94,7 +95,7 @@ public class NaverLoginController {
         JSONObject object = (JSONObject) parser.parse(responseBody);
 
         // {"id":"FSZPR2GWa_330BHMOma5NTLlo42jTLedEfkUgAOhia4","nickname":"sy0****","email":"email@naver.com","mobile":"010-1234-1234","mobile_e164":"+821012341234","name":"\uc774\uc2b9\uc724"}
-        String email = (String) object.get("email");
+        String email = (String) object.get("email"); // 이게 널이 된다...? 왜지...?
         String pass = (String) object.get("naver"); // 소셜 로그인의 경우 패스워드를 따로 저장하지 않으므로 어느 사이트 로그인인지 저장
         String name = (String) object.get("name");
         String nick = (String) object.get("nickname");
@@ -103,8 +104,12 @@ public class NaverLoginController {
         MemberDTO member = service.memberFindByEmail(email);
         if(member != null){
             System.out.println("회원 정보 조회");
+            model.addAttribute("member", member);
         }else{
             System.out.println("회원 정보 없으므로 insert 필요");
+            member = new MemberDTO(email, pass, name, nick, tel);
+            service.memberInsert(member);
+            model.addAttribute("member", member);
         }
     }
 }
