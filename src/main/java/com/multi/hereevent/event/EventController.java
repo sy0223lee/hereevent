@@ -1,8 +1,11 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.event.interest.EventInterestService;
+import com.multi.hereevent.fileupload.FileUploadService;
+import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.review.ReviewService;
 
@@ -72,6 +75,38 @@ public class EventController {
         model.addAttribute("reviewList", reviewList);
         return "detailedPage/detailedPage";
     }
+
+//    //상세정보 (*스크롤형식으로 바꿔 필요 없어져 주석처리*)
+//    @GetMapping("/content/{event_no}")
+//    public String showContent(@PathVariable("event_no") int event_no, Model model) {
+//        EventDTO eventDetails = eventService.getEventDetails(event_no);
+//        model.addAttribute("event", eventDetails);
+//        return "detailedPage/content";
+//    }
+//    //길찾기
+//    @GetMapping("/navigation/{event_no}")
+//    public String showNavigation(@PathVariable("event_no") int event_no, Model model) {
+//        EventDTO eventDetails = eventService.getEventDetails(event_no);
+//        model.addAttribute("event", eventDetails);
+//        return "detailedPage/navigation";
+//    }
+//    //예약
+//    @GetMapping("/reservation/{event_no}")
+//    public String showReservation(@PathVariable("event_no") int event_no, Model model) {
+//        System.out.println("reservatation");
+//        EventDTO eventDetails = eventService.getEventDetails(event_no);
+//        model.addAttribute("event", eventDetails);
+//
+//        return "detailedPage/reservation";
+//    }
+//    //후기
+//    @GetMapping("/review/{event_no}")
+//    public String showReview(@PathVariable("event_no") int event_no, Model model) {
+//        System.out.println("review");
+//        EventDTO eventDetails = eventService.getEventDetails(event_no);
+//        model.addAttribute("event", eventDetails);
+//        return "detailedPage/review";
+//    }
 
     //이벤트 사진 가져오기
     @GetMapping("/image/{event_no}")
