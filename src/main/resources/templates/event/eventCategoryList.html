@@ -4,27 +4,39 @@
       layout:decorate="~{layout/mainLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카테고리별 조회</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .event-card {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .event-card img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <main layout:fragment="main" class="main">
-        <h1>카테고리별 조회</h1>
-        <hr/>
-        <table>
-            <tr>
-               <th>행사번호</th>
-                <th>행사이름</th>
-                <th>행사시작일자</th>
-                <th>행사종료일자</th>
-            </tr>
-            <tr th:each="event:${eventlist}">
-                <td>[[${event.event_no}]]</td>
-                <td><a th:href="@{/event/{eventNo}(eventNo=${event.event_no})}">[[${event.name}]]</a></td>
-                <td>[[${event.start_date}]]</td>
-                <td>[[${event.end_date}]]</td>
-            </tr>
-        </table>
-    </main>
+<main layout:fragment="main" class="main">
+    <h1>카테고리별 조회</h1>
+    <hr/>
+    <div class="container">
+        <div class="row" th:each="event, iterStat : ${eventlist}">
+            <div class="col-md-3 event-card">
+                <a th:href="@{/event/{eventNo}(eventNo=${event.event_no})}">
+                    <img th:src="|@{/download/event/}${event.img_path}|" alt="Event Image">
+                </a>
+                <h5 th:text="${event.name}">Event Name</h5>
+                <p>기간: <span th:text="${event.start_date}">Start Date</span> ~ <span th:text="${event.end_date}">End Date</span></p>
+            </div>
+            <div th:if="${iterStat.index + 1} % 4 == 0"></div>
+        </div>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HereEvent Login</title>
+    <link href="/hereevent/common/css/login.css" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <h2>대기 신청 확인</h2>
+    <form action="/hereevent/wait/login" method="post">
+        <label for="wait_tel">전화번호</label>
+        <input type="text" id="wait_tel" name="wait_tel" placeholder="전화번호를 입력하세요">
+
+        <div class="extra-options">
+            <label>
+                <input type="checkbox" name="remember"> 전화번호 저장
+            </label>
+        </div>
+
+        <button type="submit" class="login">로그인</button>
+    </form>
+</div>
+</body>
+</html>

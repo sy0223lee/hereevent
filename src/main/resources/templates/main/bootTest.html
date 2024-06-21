@@ -1,6 +1,7 @@
-
-<!doctype html>
-<html lang="en" data-bs-theme="auto">
+<!DOCTYPE html >
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
 <head><script src="/docs/5.3/assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
@@ -111,6 +112,7 @@
     <link href="/hereevent/common/css/carousel.css" rel="stylesheet">
 </head>
 <body>
+<main layout:fragment="main" class="main">
 <!--<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="check2" viewBox="0 0 16 16">
         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -379,5 +381,6 @@
     </footer>-->
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</main>
 </body>
 </html>
