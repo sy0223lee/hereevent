@@ -94,6 +94,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public int updateEventImg(int event_no, String img_path) {
+        return dao.updateEventImg(event_no, img_path);
+    }
+
+    @Override
     public int selectEventNoByEventName(String eventName) {
         return Integer.parseInt(dao.selectEventNoByEventName(eventName));
     }

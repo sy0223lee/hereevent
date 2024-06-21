@@ -44,5 +44,6 @@ public interface EventDAO {
 
     // 크롤링
     int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
+    int updateEventImg(int event_no, String img_path);
     String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
 }

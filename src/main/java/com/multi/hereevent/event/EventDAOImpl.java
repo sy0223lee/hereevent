@@ -104,6 +104,14 @@ public class EventDAOImpl implements EventDAO{
     }
 
     @Override
+    public int updateEventImg(int event_no, String img_path) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("event_no", event_no);
+        params.put("img_path", img_path);
+        return sqlSession.update("com.multi.hereevent.event.updateEventImg", params);
+    }
+
+    @Override
     public String selectEventNoByEventName(String eventName) {
         return sqlSession.selectOne("com.multi.hereevent.event.selectEventNoByEventName", eventName);
     }

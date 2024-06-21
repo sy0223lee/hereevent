@@ -75,42 +75,25 @@ public class CrawlingService {
                 Date startDate = new SimpleDateFormat("yy.MM.dd").parse(date[0]); // 시작일자
                 Date endDate = new SimpleDateFormat("yy.MM.dd").parse(date[1]); // 종료일자
 
-                // 링크 크롤링 불가... 자기네 DB에 따로 저장해서 변수로 불러오는 방식이라 링크가 노출되어 있지 않는 것 같음...!
-                String homepage = null; // 브랜드 홈페이지
-                String sns = null; // 브랜드 SNS
-                List<WebElement> linkList = element.findElements(By.cssSelector(".popupdetail-link > ul > li"));
-                for (WebElement e : linkList) {
-                    try { // 링크가 없는 경우 에러로 멈추지 않고 넘어갈 수 있도록 try-catch 문 사용
-                        String type = e.findElement(By.tagName("a")).getText();
-                        String link = e.findElement(By.tagName("a")).getAttribute("href");
-                        if (type.equals("브랜드 홈페이지 바로가기") && !link.equals(detailUrl)) {
-                            homepage = link;
-                        } else if (type.equals("SNS 바로가기") && !link.equals(detailUrl)) {
-                            sns = link;
-                        }
-                    } catch (Exception ignored) {
-
-                    }
-                }
-
-                // 이벤트 이미지 저장 후 경로 가져오기
-                String imgUrl = eventImgList.get(i);
-                String imgPath = null;
-                if(imgUrl.startsWith("https")){
-                    imgPath = fileUploadService.uploadEventImg(imgUrl);
-                }
-
                 // 가져온 정보로 EventDTO 객체 생성
-                EventDTO event = new EventDTO(name, new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()), addr, info, homepage, sns, imgPath);
+                EventDTO event = new EventDTO(name, new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()), addr, info);
 
                 // 이벤트 이름, 기간이 동일한 이벤트가 이미 존재하는 경우 삽입 X, 존재하지 않는 경우 삽입
-                // 새로운 이벤트가 삽입된 경우 이벤트 운영 시간도 삽입
+                // 새로운 이벤트가 삽입된 경우 이미지 경로 설정해주고 이벤트 운영 시간도 삽입
                 if(eventService.insertCrawlingEvent(event) > 0) {
+                    // 이벤트 이미지 저장 후 경로 가져오기
+                    String imgUrl = eventImgList.get(i);
+                    String imgPath = null;
+                    if(imgUrl.startsWith("https")){
+                        imgPath = fileUploadService.uploadEventImg(imgUrl);
+                    }
+                    // 가져온 이미지 경로 DB에 저장
+                    int eventNo = eventService.selectEventNoByEventName(name); // select event 한 결과값
+                    eventService.updateEventImg(eventNo, imgPath);
+
                     List<EventTimeDTO> eventTimeList = new ArrayList<>();
 
                     element = driver.findElement(By.cssSelector("ul.open"));
-                    int eventNo = eventService.selectEventNoByEventName(name); // select event 한 결과값
-
                     List<WebElement> timeList = element.findElements(By.tagName("li"));
                     for(int j=1; j<8; j++){
                         String text = timeList.get(j).getText();

@@ -45,5 +45,6 @@ public interface EventService {
 
     // 크롤링
     int insertCrawlingEvent(EventDTO event);
+    int updateEventImg(int event_no, String img_path);
     int selectEventNoByEventName(String eventName);
 }
