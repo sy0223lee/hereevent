@@ -1,110 +1,100 @@
-body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
+.signup-container {
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
 
-        .signup-container {
-            width: 500px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .signup-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.signup-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 
-        .signup-container label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+.signup-container input[type="text"],
+.signup-container input[type="email"],
+.signup-container input[type="password"],
+.signup-container input[type="tel"],
+.signup-container input[type="number"],
+.signup-container input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-        .signup-container input[type="text"],
-        .signup-container input[type="email"],
-        .signup-container input[type="password"],
-        .signup-container input[type="tel"],
-        .signup-container input[type="number"],
-        .signup-container input[type="file"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+.signup-container input[type="file"] {
+    padding: 5px;
+    border: none;
+    background-color: #f8f8f8;
+}
 
-        .signup-container input[type="file"] {
-            padding: 5px;
-            border: none;
-            background-color: #f8f8f8;
-        }
+.signup-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-        .signup-container button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #28a745;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+.signup-container button:hover {
+    background-color: #218838;
+}
 
-        .signup-container button:hover {
-            background-color: #218838;
-        }
+.extra-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-        .extra-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+.extra-options label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
 
-        .extra-options label {
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
+.extra-options input[type="checkbox"] {
+    margin-right: 5px;
+}
 
-        .extra-options input[type="checkbox"] {
-            margin-right: 5px;
-        }
+.links {
+    text-align: center;
+}
 
-        .links {
-            text-align: center;
-        }
+.links a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 10px;
+}
 
-        .links a {
-            color: #007bff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
+.links a:hover {
+    text-decoration: underline;
+}
+.post-img {
+    margin: 0px auto 20px auto; /* 상단 마진 10px 추가 */
+    overflow: hidden;
+    display: block;
+    max-width: 100%;
+}
 
-        .links a:hover {
-            text-decoration: underline;
-        }
-        .post-img {
-            margin: 0px auto 20px auto; /* 상단 마진 10px 추가 */
-            overflow: hidden;
-            display: block;
-            max-width: 100%;
-        }
-
-        .post-img img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-        #warning{
-            text-align: center;
-            font-weight: bold;
-        }
+.post-img img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+#warning{
+    text-align: center;
+    font-weight: bold;
+}
