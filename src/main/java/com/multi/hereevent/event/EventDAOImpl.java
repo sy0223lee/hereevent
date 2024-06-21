@@ -1,68 +1,89 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.ReservationDTO;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class EventDAOImpl implements EventDAO{
-    SqlSession sqlSessionTemplate;
-
-    @Autowired
-    public EventDAOImpl(SqlSession sqlSessionTemplate) {
-        this.sqlSessionTemplate = sqlSessionTemplate;
-    }
-
+    private final SqlSession sqlSession;
 
     @Override
-    public int insert(EventDTO event) {
-        return sqlSessionTemplate.insert("com.multi.hereevent.event.insert",event);
+    public int insertEvent(EventDTO event) {
+        return sqlSession.insert("com.multi.hereevent.event.insertEvent",event);
     }
 
     @Override
-    public int update(EventDTO event) {
-        return sqlSessionTemplate.update("com.multi.hereevent.event.update", event);
+    public int updateEvent(EventDTO event) {
+        return sqlSession.update("com.multi.hereevent.event.updateEvent", event);
     }
 
     @Override
-    public int delete(int event_no) {
-        return sqlSessionTemplate.delete("com.multi.hereevent.event.delete", event_no);
+    public int deleteEvent(int event_no) {
+        return sqlSession.delete("com.multi.hereevent.event.deleteEvent", event_no);
     }
 
     @Override
-    public EventDTO read(int event_no) {
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.read", event_no);
+    public List<EventDTO> searchEvent(String keyword) {
+        return sqlSession.selectList("com.multi.hereevent.event.searchEvent", keyword);
     }
 
     @Override
-    public List<EventDTO> search(String keyword) {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.search", keyword);
+    public List<EventDTO> getAllEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getAllEvent");
     }
 
     @Override
-    public List<EventDTO> popList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectPop");
-    }
-    @Override
-    public List<EventDTO> showList() {
-        return sqlSessionTemplate.selectList("com.multi.hereevent.event.selectShow");
+    public List<EventDTO> getListStarRank() {
+        return sqlSession.selectList("com.multi.hereevent.event.getEventByStarRank");
     }
 
+    @Override
+    public List<EventDTO> selectEventByCategoryNo(int category_no) {
+        //System.out.println("DAONO===>>>"+category_no);
+        return sqlSession.selectList("com.multi.hereevent.event.selectEventByCategory", category_no);
+    }
+
+    @Override
+    public List<EventDTO> getOpenEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getOpenEvent");
+    }
+
+    @Override
+    public List<EventDTO> getPopularEvent() {
+        return sqlSession.selectList("com.multi.hereevent.event.getPopularEvent");
+    }
 
     //세부페이지
     @Override
     public EventDTO getEventDetails(int event_no) {
-
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
-
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventDetails", event_no);
     }
 
     @Override
     public EventDTO getEventImage(int event_no) {
-        return sqlSessionTemplate.selectOne("com.multi.hereevent.event.getEventImage", event_no);
+        return sqlSession.selectOne("com.multi.hereevent.event.getEventImage", event_no);
+    }
+    //예약하기
+    @Override
+    public int insertReserve(ReservationDTO reservation) {
+        return sqlSession.insert("com.multi.hereevent.event.insertReserve", reservation);
+    }
+
+    // 크롤링
+    @Override
+    public int insertCrawlingEvent(EventDTO event) {
+        return sqlSession.insert("com.multi.hereevent.event.insertCrawlingEvent", event);
+    }
+
+    @Override
+    public String selectEventNoByEventName(String eventName) {
+        return sqlSession.selectOne("com.multi.hereevent.event.selectEventNoByEventName", eventName);
     }
 
 }

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
-import java.sql.Date;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class MemberController {
     }
     @PostMapping("/login")
     public String login(MemberDTO member, Model model) {
-        MemberDTO loginMember = service.memberLogin(member);
+        MemberDTO loginMember = service.loginMember(member);
         model.addAttribute("member", loginMember);
         return "redirect:/mypage";
     }
@@ -37,7 +35,7 @@ public class MemberController {
     @PostMapping("/insert")
     public String register(MemberDTO member){
         System.out.println(member);
-        service.memberInsert(member);
+        service.insertMember(member);
         return "redirect:/login";
     }
 
@@ -49,24 +47,24 @@ public class MemberController {
     // 닉네임 수정 페이지 이동
     @GetMapping("/mypage/edit-nick")
     public String editNickPage() {
-        return "mypage/edit_nick";
+        return "mypage/editNick";
     }
     // 닉네임 수정
     @PostMapping("/mypage/edit-nick")
     public String editNick(MemberDTO member, Model model) {
-        int result = service.memberUpdateNick(member);
+        int result = service.updateMemberNick(member);
         if(result > 0) {
-            model.addAttribute("member", service.memberDetail(member.getMember_no()));
+            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         }else{
-            return "common/error_page";
+            return "common/errorPage";
         }
     }
     // 닉네임 중복 확인
     @PostMapping(value = "/mypage/check-nick", produces = "application/text; charset=utf-8")
     @ResponseBody
     public String checkNick(@RequestParam("nick") String nick) {
-        boolean available = service.memberCheckNick(nick);
+        boolean available = service.checkMemberNick(nick);
         if (available) {
             return "사용 가능한 닉네임";
         }else {
@@ -76,23 +74,23 @@ public class MemberController {
     // 생일 수정 페이지 이동
     @GetMapping("/mypage/edit-birth")
     public String editBirthPage() {
-        return "mypage/edit_birth";
+        return "editBirth";
     }
     // 생일 수정
     @PostMapping("/mypage/edit-birth")
     public String editBirth(MemberDTO member, Model model) {
-        int result = service.memberUpdateBirth(member);
+        int result = service.updateMemberBirth(member);
         if(result > 0) {
-            model.addAttribute("member", service.memberDetail(member.getMember_no()));
+            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         }else {
-            return "common/error_page";
+            return "common/errorPage";
         }
     }
     // 프로필 사진 수정 페이지 이동
     @GetMapping("/mypage/edit-profile-img")
     public String editProfileImgPage(){
-        return "mypage/edit_profile_img";
+        return "mypage/editProfileImg";
     }
     // 프로필 사진 수정
     @PostMapping("/mypage/edit-profile-img")
@@ -103,12 +101,12 @@ public class MemberController {
         try {
             storeFilename = fileService.uploadProfileImg(profileImg);
             member.setImg_path(storeFilename);
-            service.memberUpdateProfileImg(member);
-            model.addAttribute("member", service.memberDetail(member.getMember_no()));
+            service.updateMemberProfileImg(member);
+            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         } catch (IOException e) {
             e.printStackTrace();
-            return "common/error_page";
+            return "common/errorPage";
         }
     }
 
@@ -118,11 +116,6 @@ public class MemberController {
         return "mypage/myinterest";
     }
 
-    /***** 후기 관리 *****/
-    @GetMapping("/myreview")
-    public String myreview() {
-        return "mypage/myreview";
-    }
 
     /***** 행사 내역 *****/
     @GetMapping("/myevent")

@@ -24,6 +24,8 @@
     margin: 0;
     font-weight: 600;
 }
+
+/* 내 정보 */
 .profile-img-area img {
     width: 80px;
     height: 80px;
@@ -80,3 +82,5 @@
     margin: 10px 4px;
     border-radius: 5px;
 }
+
+/* 리뷰 */
