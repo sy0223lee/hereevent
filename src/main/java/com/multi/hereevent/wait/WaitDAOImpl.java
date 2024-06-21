@@ -6,6 +6,9 @@ import com.multi.hereevent.dto.WaitDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import java.util.List;
 @Repository
@@ -20,8 +23,15 @@ public class WaitDAOImpl implements WaitDAO {
 
     @Override
     public WaitDTO findByWaitTelAndState(String wait_tel) {
-        return sqlSession.selectOne("com.multi.hereevent.wait.check",wait_tel);
+//        Map<String, String> params = new HashMap<>();
+//        params.put("wait_tel", wait_tel);
+//        params.put("state", "wait");
+
+        WaitDTO dto =  sqlSession.selectOne("com.multi.hereevent.wait.check", wait_tel);
+        System.out.println("====================="+dto);
+        return dto;
     }
+
 
 
     @Override
