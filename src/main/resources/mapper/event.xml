@@ -60,18 +60,23 @@
 
     <!-- 크롤링 -->
 	<insert id="insertCrawlingEvent" parameterType="event">
-		insert into event  (name, start_date, end_date, addr, info, homepage, sns, img_path)
-		select #{name}, #{start_date}, #{end_date}, #{addr}, #{info}, #{homepage}, #{sns}, #{img_path}
+		insert into event  (name, start_date, end_date, addr, info, homepage, sns)
+		select #{name}, #{start_date}, #{end_date}, #{addr}, #{info}, #{homepage}, #{sns}
 		from dual where not exists (
 			select event_no
 			from event
-			where name=#{name} and start_date=#{start_date} and end_date=#{end_date} and addr=#{addr})
+			where name=#{name} and start_date=#{start_date} and end_date=#{end_date})
 	</insert>
 	<select id="selectEventNoByEventName" parameterType="String" resultType="String">
 		select event_no
 		from event
 		where name=#{name}
 	</select>
+    <update id="updateEventImg" parameterType="Map">
+        update event
+        set img_path = #{img_path}
+        where event_no = #{event_no}
+    </update>
 
     <!--카테고리별 이벤트 조회-->
     <select id="selectEventByCategory" resultType="event">
