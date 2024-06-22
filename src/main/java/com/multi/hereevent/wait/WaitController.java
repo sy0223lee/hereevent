@@ -30,13 +30,20 @@ public class WaitController {
     @PostMapping("/insert")
     public String register(WaitDTO wait, RedirectAttributes redirectAttributes, @RequestParam("wait_tel") String waitTel){
         System.out.println(wait);
-        service.waitInsert(wait);
-        redirectAttributes.addAttribute("event_no", wait.getEvent_no());
+
+
         if(!service.canInsert(waitTel)){
-            return "redirect:/wait/register/event/{event_no}";
-        }else{
-            return "redirect:/waitregister?error=waitExists";
+            System.out.println("이미등록 사용자 있");
+            redirectAttributes.addAttribute("error", "이미 다른 팝업스토어에 대기 중 입니다.");
+
+        }else {
+            service.waitInsert(wait);
+
+
         }
+        redirectAttributes.addAttribute("event_no", wait.getEvent_no());
+        redirectAttributes.addAttribute("success", "true");
+        return "redirect:/wait/register/event/{event_no}";
     }
 
 

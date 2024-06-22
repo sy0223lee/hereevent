@@ -46,13 +46,7 @@ public class WaitServiceImpl implements WaitService {
     @Override
     public boolean canInsert(String wait_tel) {
         WaitDTO existingWait = dao.findByWaitTelAndState(wait_tel);
-        if (existingWait == null){
-            return false;
-        }
-        else{
-            return true;
-        }
-
+        return existingWait == null;
     }
 
 
