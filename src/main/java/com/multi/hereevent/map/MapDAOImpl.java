@@ -1,5 +1,6 @@
 package com.multi.hereevent.map;
 
+import com.multi.hereevent.dto.ButtonDTO;
 import com.multi.hereevent.dto.EventDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,7 @@ public class MapDAOImpl implements MapDAO{
     private final SqlSession sqlSession;
 
     @Override
-    public List<EventDTO> button(String state, String type) {
-        List<EventDTO> list = null;
-        Map<String,String> map = new HashMap<>();
-        map.put(state,"state");
-        map.put(type,"type");
-        list = sqlSession.selectList("com.multi.hereevent.map.select",map);
-        return list;
+    public List<EventDTO> button(ButtonDTO buttonDTO) {
+        return sqlSession.selectList("com.multi.hereevent.map.select",buttonDTO);
     }
 }
