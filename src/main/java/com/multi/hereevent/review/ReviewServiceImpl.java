@@ -1,8 +1,10 @@
 package com.multi.hereevent.review;
 
 import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.dto.ReviewImgDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,9 +13,15 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService{
     private final ReviewDAO dao;
 
+    @Transactional
     @Override
-    public int insertReview(ReviewDTO review) {
-        return dao.insertReview(review);
+    public int insertReview(ReviewDTO review, List<ReviewImgDTO> imgList) {
+        if(imgList.isEmpty()){
+            return dao.insertReview(review);
+        }else{
+            dao.insertReview(review);
+            return dao.insertReviewImg(imgList);
+        }
     }
 
     @Override

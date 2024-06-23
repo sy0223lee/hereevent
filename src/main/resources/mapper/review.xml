@@ -5,6 +5,12 @@
 		insert into review (event_no, member_no, write_date, content, star) value
 		(#{event_no}, #{member_no}, now(), #{content}, #{star})
 	</insert>
+	<insert id="insertReviewImg" parameterType="List">
+		insert into review_img (review_no, img_path) values
+		<foreach collection="list" item="file" separator=",">
+			(last_insert_id(), #{file.img_path})
+		</foreach>
+	</insert>
 	<update id="updateReview" parameterType="review">
 		update review
 		set update_date = now(), content = #{content}, star = #{star}
