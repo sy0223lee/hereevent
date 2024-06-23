@@ -65,4 +65,9 @@ public class MemberServiceImpl implements MemberService{
     public MemberDTO memberFindByEmail(String email) {
         return dao.memberFindByEmail(email);
     }
+
+    @Override
+    public MemberDTO memberFindByEmail(String email) {
+        return dao.memberFindByEmail(email);
+    }
 }
