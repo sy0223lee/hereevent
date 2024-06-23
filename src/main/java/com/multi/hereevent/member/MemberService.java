@@ -15,4 +15,5 @@ public interface MemberService {
     int deleteMember(int member_no);
     boolean checkMemberNick(String nick);
     boolean checkMemberEmail(String email);
+    MemberDTO findMemberByEmail(String email);
 }
