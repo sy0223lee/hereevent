@@ -81,19 +81,19 @@
 
             <div class="interest-event">
                 <h3>관심 팝업</h3>
-                <div class="blog-comments">
-                    <div th:id="|comment-${i.count}|" class="comment" th:each="event, i : ${eventList}">
+                <div class="blog-comments row">
+                    <div th:id="|comment-${i.count}|" class="comment col-md-6" th:each="event, i : ${eventList}">
                         <div class="d-flex">
-                            <div class="comment-img">
+                            <div class="col-md-3 interest-event-img">
                                 <img th:if="${event.img_path == null}"
                                      th:src="@{/images/event/default_profile.svg}" alt="default_profile">
                                 <img th:unless="${event.img_path == null}"
                                      th:src="|@{/download/event/}${event.img_path}|" alt="member_profile">
                             </div>
-                            <div>
-                                <h5>[[${event.name}]]
-                                    <a th:href="|@{/event/}${event.event_no}|" class="reply">
-                                        <i class="bi bi-reply-fill"></i>팝업 상세보기</a>
+                            <div class="col-md-9">
+                                <h5>[[${event.name}]]</h5>
+                                <h5><a th:href="|@{/event/}${event.event_no}|" class="reply">
+                                    <i class="bi bi-reply-fill"></i>팝업 상세보기</a>
                                     <input type="hidden" class="member" th:value="${session.member}">
                                     <button class="default interest-btn" th:if="${event.event_interest_no == 0}" th:value="${event.event_no}">♡</button>
                                     <button class="picked interest-btn" th:unless="${event.event_interest_no == 0}" th:value="${event.event_no}">♥</button>

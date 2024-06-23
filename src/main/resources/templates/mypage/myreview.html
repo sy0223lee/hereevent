@@ -52,7 +52,7 @@
             <div class="blog-comments">
                 <div th:id="|comment-${i.count}|" class="comment" th:each="review, i : ${reviewList}">
                     <div class="d-flex">
-                        <div class="col-md-2 comment-img">
+                        <div class="col-md-2 event-img">
                             <img th:if="${review.img_path == null}"
                                  th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
                             <img th:unless="${review.img_path == null}"
@@ -116,6 +116,13 @@
                             </div>
 
                             <span th:text="${review.write_date}"></span>
+
+                            <div class="review-img">
+                                <div th:each="review_img : ${review.review_imgs}">
+                                    <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
+                                </div>
+                            </div>
+
                             <p class="comment-content" th:text="${review.content}"></p>
                         </div>
                     </div>

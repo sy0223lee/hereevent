@@ -82,6 +82,13 @@
                         </div>
 
                         <span th:text="${review.write_date}"></span>
+
+                        <div class="review-img">
+                            <div th:each="review_img : ${review.review_imgs}">
+                                <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
+                            </div>
+                        </div>
+
                         <p class="comment-content" th:text="${review.content}"></p>
                     </div>
                 </div>

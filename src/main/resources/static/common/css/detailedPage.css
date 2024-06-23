@@ -139,6 +139,17 @@
 .comment-content{
     width: 100%;
 }
+.review-img {
+    overflow: hidden;
+    margin: 0;
+}
+.review-img img {
+    float: left;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-left: 5px;
+}
 
 /* 상세페이지 - 예약 */
 body {
