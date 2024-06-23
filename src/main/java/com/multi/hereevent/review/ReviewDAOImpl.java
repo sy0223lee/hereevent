@@ -1,6 +1,7 @@
 package com.multi.hereevent.review;
 
 import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.dto.ReviewImgDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,11 @@ public class ReviewDAOImpl implements ReviewDAO{
     @Override
     public int insertReview(ReviewDTO review) {
         return sqlSession.insert("com.multi.hereevent.review.insertReview", review);
+    }
+
+    @Override
+    public int insertReviewImg(List<ReviewImgDTO> imgList) {
+        return sqlSession.insert("com.multi.hereevent.review.insertReviewImg", imgList);
     }
 
     @Override

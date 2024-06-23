@@ -91,7 +91,7 @@
 
                 <h4>Leave a Review</h4>
                 <p>Required fields are marked * </p>
-                <form action="/hereevent/review/insert" method="post">
+                <form action="/hereevent/review/insert" method="post" enctype="multipart/form-data">
                     <input type="hidden" th:name="event_no" th:value="${event.event_no}">
                     <input type="hidden" th:name="member_no" th:value="${session.member.member_no}">
                     <div class="row">
@@ -149,6 +149,14 @@
 
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col form-group">
+                            <input type="file" name="files" placeholder="이미지 선택"
+                                   class="form-control" multiple="multiple">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col form-group">
                             <textarea name="content" class="form-control" placeholder="Your Review*"></textarea>

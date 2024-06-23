@@ -2,6 +2,8 @@ package com.multi.hereevent.review;
 
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.dto.ReviewImgDTO;
+import com.multi.hereevent.fileupload.FileUploadService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -18,14 +22,17 @@ import java.util.List;
 @SessionAttributes("member")
 public class ReviewController {
     private final ReviewService service;
+    private final FileUploadService fileUploadService;
 
     // 이벤트 상세페이지에서 리뷰 조회
     // EventController에 작성
 
     // 리뷰 작성은 이벤트 상세페이지에서
     @PostMapping("/review/insert")
-    public String insertReview(ReviewDTO review){
-        int result = service.insertReview(review);
+    public String insertReview(ReviewDTO review) throws IOException {
+        List<MultipartFile> fileList = review.getFiles();
+        List<ReviewImgDTO> imgList = fileUploadService.uploadReviewImg(fileList);
+        int result = service.insertReview(review, imgList);
         if(result > 0){
             return "redirect:/event/" + review.getEvent_no();
         }else {

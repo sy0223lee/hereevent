@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +26,7 @@ public class ReviewDTO {
     private String nick; // 멤버 닉네임
     private String img_path; // 멤버 프로필 또는 이벤트 이미지
     private String name; // 이벤트 이름
+
+    // 이미지 저장할 때 필요한 멤버 변수
+    private List<MultipartFile> files;
 }
