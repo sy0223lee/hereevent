@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HereEvent Login</title>
     <link href="/hereevent/common/css/login.css" rel="stylesheet">
-    <style>
-
-    </style>
 </head>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
@@ -52,6 +49,7 @@
       }
 </script>
 <body>
+<main layout:fragment="main" class="main">
 <div class="login-container">
     <h2>로그인</h2>
     <form action="/hereevent/login" method="post">
@@ -78,5 +76,6 @@
         <button class="naver-login" onclick="location.href='/hereevent/login/naver'" title="네이버 로그인"></button>
     </div>
 </div>
+</main>
 </body>
 </html>

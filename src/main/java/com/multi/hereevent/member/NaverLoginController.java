@@ -67,11 +67,10 @@ public class NaverLoginController {
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(responseBody);
         String accessToken = (String) object.get("access_token");
-        System.out.println("[accessToken]: " + accessToken);
 
         getUserInfo(accessToken, model);
 
-        return "mypage/mypage";
+        return "mypage/mypage"; // 나중에 메인 페이지로 갈 수 있도록 수정
     }
 
     public void getUserInfo(String accessToken, Model model) throws ParseException {
@@ -90,26 +89,22 @@ public class NaverLoginController {
 
         // 출력
         String responseBody = response.getBody();
-        System.out.println(responseBody);
         JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(responseBody);
+        JSONObject root = (JSONObject) parser.parse(responseBody);
+        JSONObject info = (JSONObject) root.get("response");
 
-        // {"id":"FSZPR2GWa_330BHMOma5NTLlo42jTLedEfkUgAOhia4","nickname":"sy0****","email":"email@naver.com","mobile":"010-1234-1234","mobile_e164":"+821012341234","name":"\uc774\uc2b9\uc724"}
-        String email = (String) object.get("email"); // 이게 널이 된다...? 왜지...?
-        String pass = (String) object.get("naver"); // 소셜 로그인의 경우 패스워드를 따로 저장하지 않으므로 어느 사이트 로그인인지 저장
-        String name = (String) object.get("name");
-        String nick = (String) object.get("nickname");
-        String tel = (String) object.get("mobile");
+        String email = (String) info.get("email");
+        String pass = "naver"; // 소셜 로그인의 경우 패스워드를 따로 저장하지 않으므로 어느 사이트 로그인인지 저장
+        String name = (String) info.get("name");
+        String nick = (String) info.get("nickname");
+        String tel = (String) info.get("mobile");
 
         MemberDTO member = service.findMemberByEmail(email);
-        if(member != null){
-            System.out.println("회원 정보 조회");
-            model.addAttribute("member", member);
-        }else{
-            System.out.println("회원 정보 없으므로 insert 필요");
+        if(member == null){ // 회원 정보가 존재하지 않으면 DB에 insert 한 후 로그인
             member = new MemberDTO(email, pass, name, nick, tel);
             service.insertMember(member);
             model.addAttribute("member", member);
         }
+        model.addAttribute("member", member);
     }
 }
