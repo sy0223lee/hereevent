@@ -56,11 +56,12 @@
     </style>
 </head>
 <body>
+<div class="banner">
+
+</div>
     <main layout:fragment="main" class="main">
     <!-- 배너 이미지 -->
-    <div class="banner">
 
-    </div>
 
     <!-- 카테고리별 이미지 -->
     <div class="section">
@@ -110,7 +111,7 @@
         <div class="section">
             <h2>전체행사</h2>
             <div class="slider">
-                <button class="arrow left" onclick="moveLeft('reservation')">
+                <button class="arrow left" onclick="moveLeft('all')">
                     <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
                 </button>
                 <div class="images" id="all">
@@ -118,7 +119,7 @@
                      <a th:href="|@{/event/}${all.event_no}|"><img th:src="|@{/download/event/}${all.img_path}|" alt="Reservation 1"></a>
                     </span>
                 </div>
-                <button class="arrow right" onclick="moveRight('reservation')">
+                <button class="arrow right" onclick="moveRight('all')">
                     <img src="/hereevent/images/main/rightarrow.png" alt="오른쪽 화살표">
                 </button>
             </div>
@@ -128,7 +129,7 @@
     <div class="section">
         <h2>오픈예정행사</h2>
         <div class="slider">
-            <button class="arrow left" onclick="moveLeft('reservation')">
+            <button class="arrow left" onclick="moveLeft('open')">
                 <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
             </button>
             <div class="images" id="open">
@@ -136,7 +137,7 @@
                         <a th:href="|@{/event/}${open.event_no}|"><img th:src="|@{/download/event/}${open.img_path}|" alt="Reservation 1"></a>
                     </span>
             </div>
-            <button class="arrow right" onclick="moveRight('reservation')">
+            <button class="arrow right" onclick="moveRight('open')">
                 <img src="/hereevent/images/main/rightarrow.png" alt="오른쪽 화살표">
             </button>
         </div>
@@ -146,7 +147,7 @@
         <div class="section">
             <h2>예약/대기 많은 행사</h2>
             <div class="slider">
-                <button class="arrow left" onclick="moveLeft('reservation')">
+                <button class="arrow left" onclick="moveLeft('popular')">
                     <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
                 </button>
                 <div class="images" id="popular">
@@ -154,7 +155,7 @@
                      <a th:href="|@{/event/}${popular.event_no}|"><img th:src="|@{/download/event/}${popular.img_path}|" alt="Reservation 1"></a>
                     </span>
                 </div>
-                <button class="arrow right" onclick="moveRight('reservation')">
+                <button class="arrow right" onclick="moveRight('popular')">
                     <img src="/hereevent/images/main/rightarrow.png" alt="오른쪽 화살표">
                 </button>
             </div>

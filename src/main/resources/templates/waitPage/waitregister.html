@@ -30,9 +30,7 @@
 
         <button type="submit">확인</button>
     </form>
-    <div class="links">
-        <p th:if="${param.error}" th:text="'오류: ' + ${param.error}"></p>
-    </div>
+
 </div>
 </body>
 <script>
@@ -41,11 +39,23 @@
         var email = document.getElementById("email").value.trim();
 
         if (tel === "" || email === "") {
-                event.preventDefault();
+            event.preventDefault();
             alert("빈칸이 있습니다. 확인 후 다시 제출해주세요.");
-        } else {
-            alert("대기에 등록되었습니다.");
         }
     });
+
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        const errorMessage = params.get('error');
+        if (errorMessage) {
+            alert('오류: ' + errorMessage);
+        } else {
+            const successMessage = params.get('success');
+            if (successMessage) {
+                alert('대기에 등록되었습니다.');
+            }
+        }
+    };
+
 </script>
 </html>

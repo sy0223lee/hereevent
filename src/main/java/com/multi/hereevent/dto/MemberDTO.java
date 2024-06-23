@@ -24,4 +24,14 @@ public class MemberDTO {
     private String img_path; // 프로필 사진 경로
     private int mgr; // 관리자 여부, 0 = member, 1 = manager
     private MultipartFile profile_img; // 프로필 이미지 업로드를 위한 멤버변수
+
+    // 네이버 로그인을 위한 생성자
+    public MemberDTO(String email, String pass, String name, String nick, String tel){
+        this.email = email;
+        this.pass = pass;
+        this.name = name;
+        this.nick = nick;
+        this.tel = tel;
+        this.mgr = 0;
+    }
 }

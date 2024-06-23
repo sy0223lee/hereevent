@@ -103,7 +103,7 @@
         where event_no=#{event_no} AND reserve_date=#{reserve_date} AND reserve_time=#{reserve_time}
         ORDER BY reserve_order DESC limit 1
     </select>
-
+    
     <!-- 관심 이벤트 등록, 해제 -->
     <insert id="insertEventInterest" parameterType="Map">
         insert into event_interest (event_no, member_no) value

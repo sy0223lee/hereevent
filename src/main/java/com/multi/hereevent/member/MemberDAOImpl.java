@@ -63,4 +63,9 @@ public class MemberDAOImpl implements MemberDAO {
         MemberDTO member = sqlSession.selectOne("com.multi.hereevent.member.checkEmail", email);
         return member == null; // 조회된 회원이 없으면 사용 가능한 닉네임 이므로 true 반환
     }
+
+    @Override
+    public MemberDTO findMemberByEmail(String email) {
+        return sqlSession.selectOne("com.multi.hereevent.member.findByEmail", email);
+    }
 }

@@ -96,7 +96,7 @@ public class MemberController {
     // 생일 수정 페이지 이동
     @GetMapping("/mypage/edit-birth")
     public String editBirthPage() {
-        return "editBirth";
+        return "mypage/editBirth";
     }
     // 생일 수정
     @PostMapping("/mypage/edit-birth")
