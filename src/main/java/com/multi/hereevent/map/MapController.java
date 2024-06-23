@@ -1,12 +1,10 @@
 package com.multi.hereevent.map;
 
+import com.multi.hereevent.dto.ButtonDTO;
 import com.multi.hereevent.dto.EventDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,10 +21,16 @@ public class MapController {
     }
 
     @GetMapping("/clicktest")
-    public String clicktest(@RequestParam("state") String state, @RequestParam("type") String type, Model model){
-        System.out.println("clicktest");
-        List<EventDTO> list = mapService.button(state,type);
-        model.addAttribute("list",list);
+    public String clicktest(){
         return "kakaomap/clicktest";
+    }
+    @GetMapping("/clicktest/ajaxtest")
+    @ResponseBody
+    public List<EventDTO> ajaxtest(@RequestBody ButtonDTO buttonDTO){
+        List<EventDTO> list = mapService.button(buttonDTO);
+        System.out.println(buttonDTO);
+        System.out.println(buttonDTO.getState());
+        System.out.println(buttonDTO.getType());
+        return list;
     }
 }

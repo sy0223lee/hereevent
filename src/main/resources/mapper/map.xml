@@ -18,6 +18,9 @@
                 WHERE end_date &lt; now() and type=#{type}
                 ORDER BY end_date
             </if>
+            <if test="state==null and type!=null">
+                WHERE type=#{type}
+            </if>
         </where>
     </select>
 

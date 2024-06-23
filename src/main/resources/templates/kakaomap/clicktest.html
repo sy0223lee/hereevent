@@ -12,49 +12,34 @@
     </head>
     <body>
         <div>
-            <input type="checkbox" class="btn-check" id="btn-check-4" autocomplete="off">
-            <label class="btn" for="btn-check-4">Single toggle</label>
+            <!--체크박스 버튼-->
+           <div id="state">
+                <input value="still" type="checkbox" class="btn-check" id="still" autocomplete="off">
+                <label class="btn" for="still">still</label>
 
-            <input type="checkbox" class="btn-check" id="btn-check-5" checked autocomplete="off">
-            <label class="btn" for="btn-check-5">ㅇ</label>
+                <input value="open" type="checkbox" class="btn-check" id="open" autocomplete="off">
+                <label class="btn" for="open">open</label>
 
-            <div>
-                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btn-check-outlined">Single toggle</label><br>
+                <input value="end" type="checkbox" class="btn-check" id="end" autocomplete="off">
+                <label class="btn" for="end">end</label>
+            </div>
+            <div id="type">
+                <input value="reserve" type="checkbox" class="btn-check" id="reserve" autocomplete="off">
+                <label class="btn btn-outline-primary" for="reserve">reserve</label>
 
-                <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off">
-                <label class="btn btn-outline-secondary" for="btn-check-2-outlined">Checked</label><br>
+                <input value="wait" type="checkbox" class="btn-check" id="wait" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="wait">wait</label>
+
+                <input value="both" type="checkbox" class="btn-check" id="both" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="both">both</label>
             </div>
 
-            <div name="state">
-                상태
-                <input value="still" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="seoul">진행중</label>
-
-                <input value="open" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="around">오픈예정</label>
-
-                <input value="end" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="busan">종료</label>
-            </div>
-            <div name="type">
-                예약
-                <input value="reserve" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="seoul">사전예약</label>
-
-                <input value="wait" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="around">현장대기</label>
-
-                <input value="both" type="radio" class="btn-check" name="options-outlined" autocomplete="off">
-                <label class="btn btn-outline-danger" for="busan">사전예약+현장대기</label>
-            </div>
-
-
+            <!--radio 버튼-->
             <div>
                 <div>
                     핫플
-                    <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" for="seongsu">성수</label>
+                    <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off">
+                    <label class="btn btn-outline-danger" for="seongsu">성수</label>
 
                     <input type="radio" class="btn-check" name="options-outlined" id="jamsil" autocomplete="off">
                     <label class="btn btn-outline-danger" for="jamsil">잠실</label>
@@ -79,72 +64,11 @@
                 <div>
                     내주변
                     <input type="radio" class="btn-check" name="options-outlined" id="mylocation" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="mylocation">내위치</label>
+                    <label class="btn btn-outline-success" for="mylocation">내위치</label>
                 </div>
             </div>
 
 
-
-            <div>
-                <button onclick="getCurrentPosBtn()" type="button" id="myloc" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    내위치
-                </button>
-            </div>
-            <div>
-                상태
-                <button type="button" id="state-still" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    진행중
-                </button>
-                <button type="button" id="state-open" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    오픈예정
-                </button>
-                <button type="button" id="state-end" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    종료
-                </button>
-            </div>
-            <br/>
-            <div>
-                예약
-                <button type="button" id="type-reserve" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    사전예약
-                </button>
-                <button type="button" id="type-wait" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    현장대기
-                </button>
-                <button type="button" id="type-both" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    사전예약+현장대기
-                </button>
-            </div>
-            <br/>
-
-            <div>
-                지역
-                <button type="button" id="region-seoul" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    서울
-                </button>
-                <button type="button" id="region-around" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    경기
-                </button>
-                <button type="button" id="region-busan" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    부산
-                </button>
-            </div>
-            <br/>
-            <div>
-                핫플
-                <button type="button" id="hot-seongsu" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    성수
-                </button>
-                <button type="button" id="hot-jamsil" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    잠실
-                </button>
-                <button type="button" id="hot-hongdae" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    홍대
-                </button>
-                <button type="button" id="hot-gangnam" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    강남
-                </button>
-            </div>
 
         </div>
         <div id="map" style="width:100%;height:350px;"></div>
@@ -169,103 +93,103 @@
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c7411c7e9cd13cdaac33d749ab11436&libraries=services"></script>
         <script th:inline="javascript">
-
-            //JQuery를 이용해서 select에서 선택을 하면 컨트롤러가 요청되도록 처리
-            //타임리프에서 사용하는 변수를 자바스크립트에서 사용하는 경우
-
-            let state = /*[[${state}]]*/;
-            let type = /*[[${type}]]*/;
-            //컨트롤러를 요청하고 response될때 공유해준 값을 타임리프를 실행해서 받아오기
-            //category자리에 자바스크립트에서 사용할 타임리프로 실행할 변수 넣기
-
-            $(document).ready(function () {
-                //선택된거에 셀렉티드속성을 주는..느낌?
-                //select에서 선택된 option에 selected속성을 추가
-                $("#state").val(state).attr("selected","selected")
-                $("#state").change(function() {
-                    //select가 변경되는 change이벤트가 발생하면 컨트롤러를 호출
-                    location.href="/hereevent/map/clicktest?state="+$(this).val()
-                })
-                $("#type").val(type).attr("selected","selected")
-                $("#type").change(function() {
-                    //select가 변경되는 change이벤트가 발생하면 컨트롤러를 호출
-                    location.href="/hereevent/map/clicktest?type="+$(this).val()
-                })
-            });
-
-
-
-            // 초기 지도 옵션 설정
-                var mapOption = {
-                    center: new kakao.maps.LatLng(37.54366481430039, 127.05889745872842), // 초기 중심 좌표(성수)
-                    level: 5 // 초기 확대 레벨
-                };
-            // 지도의 중심좌표를 담을 변수
-                var mapContainer = document.getElementById('map');
-
-            // 초기 지도 생성
-                var map = new kakao.maps.Map(mapContainer, mapOption);
-
-
-            function locationLoadSuccess(pos){
-                // 현재 위치 받아오기
-                var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
-
-                // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-                map.panTo(currentPos);
-            };
-
-            function locationLoadError(pos){
-                alert('위치 정보를 가져오는데 실패했습니다.');
-            };
-            function getCurrentPosBtn(){
-                navigator.geolocation.getCurrentPosition(locationLoadSuccess,locationLoadError);
-            };
-
-
-            // 성수 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('hot-seongsu').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.54366481430039, 127.05889745872842);
-                  var map = new kakao.maps.Map(mapContainer, mapOption);
-              });
-
-            // 잠실 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('hot-jamsil').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.509358600639494, 127.1051299097808);
-                  var map = new kakao.maps.Map(mapContainer, mapOption);
-              });
-
-            // 홍대 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('hot-hongdae').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.555849659619895, 126.94824554655163);
-              });
-            // 강남 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('hot-gangnam').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.49783159114859,127.0339598307763);
-              });
-
-
-            // 서울 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('region-seoul').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.53814735887608, 126.99898167513268);
-                  mapOption.level = 8
-              });
-
-            // 경기도 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('region-around').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(37.369188031896265, 127.01776935446426);
-                  mapOption.level = 10
-              });
-
-            // 부산 버튼 클릭 시 지도 옵션 변경
-              document.getElementById('region-busan').addEventListener('click', function() {
-                  mapOption.center = new kakao.maps.LatLng(35.137294960653996, 129.1042017597341);
-                  mapOption.level = 9
-              });
+            $(document).ready(function() {
+                $("#state>input").each(function() {
+                    $(this).click(function() {
+                        let state = $(this).val();
+                        $.ajax({
+                            url : '/hereevent/map/clicktest',
+                            data : {"state" : state},
+                            method: 'GET',
+                            success: console.log(state)
+                        })
+                    });
+                });
+                $("#type>input").each(function() {
+                    $(this).click(function() {
+                        let type = $(this).val();
+                        $.ajax({
+                            url : '/hereevent/map/clicktest',
+                            data : {"type" : type},
+                            method: 'GET',
+                            success: console.log(type)
+                        })
+                    });
+                });
+            });//end ready
 
 
 
-            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+
+        var map;
+        var mapContainer = document.getElementById('map');
+        var mapOption = {
+            center: new kakao.maps.LatLng(37.54366481430039, 127.05889745872842), // 초기 중심 좌표(성수)
+            level: 5 // 초기 확대 레벨
+        };
+
+        // 지도 생성
+        map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+        function locationLoadSuccess(pos){
+            // 현재 위치 받아오기
+            var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+            map.setCenter(currentPos);
+            map.setLevel(5); // 원하는 확대 레벨로 설정
+        };
+
+        function locationLoadError(){
+            alert('위치 정보를 가져오는데 실패했습니다.');
+        };
+
+        function getCurrentPos(){
+              navigator.geolocation.getCurrentPosition(function(pos) {
+                locationLoadSuccess(pos);
+            }, locationLoadError);
+        };
+
+        function changeMapLocation(lat, lng, level) {
+            map.setCenter(new kakao.maps.LatLng(lat, lng));
+            map.setLevel(level); // 필요한 경우에만 확대 레벨 설정
+        }
+
+
+            // 각 버튼 클릭 시 지도 중심 좌표 변경
+        document.getElementById('seongsu').addEventListener('click', function() {
+            changeMapLocation(37.54366481430039, 127.05889745872842);
+        });
+
+        document.getElementById('jamsil').addEventListener('click', function() {
+            changeMapLocation(37.509358600639494, 127.1051299097808);
+        });
+
+        document.getElementById('hongdae').addEventListener('click', function() {
+            changeMapLocation(37.555849659619895, 126.94824554655163);
+        });
+
+        document.getElementById('gangnam').addEventListener('click', function() {
+            changeMapLocation(37.49783159114859, 127.0339598307763);
+        });
+
+        document.getElementById('seoul').addEventListener('click', function() {
+            changeMapLocation(37.53814735887608, 126.99898167513268, 8);
+        });
+
+        document.getElementById('around').addEventListener('click', function() {
+            changeMapLocation(37.369188031896265, 127.01776935446426, 10);
+        });
+
+        document.getElementById('busan').addEventListener('click', function() {
+            changeMapLocation(35.137294960653996, 129.1042017597341, 9);
+        });
+
+        document.getElementById('mylocation').addEventListener('click', function() {
+            getCurrentPos();
+        });
+
+
+
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
