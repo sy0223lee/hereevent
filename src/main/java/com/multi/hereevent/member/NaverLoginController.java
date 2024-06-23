@@ -101,14 +101,14 @@ public class NaverLoginController {
         String nick = (String) object.get("nickname");
         String tel = (String) object.get("mobile");
 
-        MemberDTO member = service.memberFindByEmail(email);
+        MemberDTO member = service.findMemberByEmail(email);
         if(member != null){
             System.out.println("회원 정보 조회");
             model.addAttribute("member", member);
         }else{
             System.out.println("회원 정보 없으므로 insert 필요");
             member = new MemberDTO(email, pass, name, nick, tel);
-            service.memberInsert(member);
+            service.insertMember(member);
             model.addAttribute("member", member);
         }
     }

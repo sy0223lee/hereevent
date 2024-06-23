@@ -14,5 +14,6 @@ public interface MemberDAO {
     int updateMemberProfileImg(MemberDTO member);
     int deleteMember(int member_no);
     boolean checkMemberNick(String nick);
-    MemberDTO memberFindByEmail(String email);
+    boolean checkMemberEmail(String email);
+    MemberDTO findMemberByEmail(String email);
 }

@@ -65,7 +65,7 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public MemberDTO memberFindByEmail(String email) {
+    public MemberDTO findMemberByEmail(String email) {
         return sqlSession.selectOne("com.multi.hereevnet.member.findByEmail", email);
     }
 }
