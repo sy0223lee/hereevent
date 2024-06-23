@@ -34,13 +34,23 @@ public class ReviewServiceImpl implements ReviewService{
         return 0;
     }
 
+    @Transactional
     @Override
     public List<ReviewDTO> selectReviewByEventNo(int event_no) {
-        return dao.selectReviewByEventNo(event_no);
+        List<ReviewDTO> reviewList = dao.selectReviewByEventNo(event_no);
+        for(ReviewDTO review : reviewList){
+            review.setReview_imgs(dao.selectReviewImgs(review.getReview_no()));
+        }
+        return reviewList;
     }
 
+    @Transactional
     @Override
     public List<ReviewDTO> selectReviewByMemberNo(int member_no) {
-        return dao.selectReviewByMemberNo(member_no);
+        List<ReviewDTO> reviewList = dao.selectReviewByMemberNo(member_no);
+        for(ReviewDTO review : reviewList){
+            review.setReview_imgs(dao.selectReviewImgs(review.getReview_no()));
+        }
+        return reviewList;
     }
 }

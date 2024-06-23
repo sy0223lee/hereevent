@@ -29,4 +29,6 @@ public class ReviewDTO {
 
     // 이미지 저장할 때 필요한 멤버 변수
     private List<MultipartFile> files;
+    // 이미지 불러올 때 필요한 멤버 변수
+    private List<ReviewImgDTO> review_imgs;
 }
