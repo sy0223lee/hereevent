@@ -38,8 +38,8 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Transactional
     @Override
-    public ReviewDTO selectReview(int review_no) {
-        ReviewDTO review = dao.selectReview(review_no);
+    public ReviewDTO selectReviewWithEventImg(int review_no) {
+        ReviewDTO review = dao.selectReviewWithEventImg(review_no);
         review.setReview_imgs(dao.selectReviewImgs(review_no));
         return review;
     }

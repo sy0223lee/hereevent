@@ -1,10 +1,11 @@
 package com.multi.hereevent.review;
 
+import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.dto.ReviewImgDTO;
+import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.fileupload.FileUploadService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @SessionAttributes("member")
 public class ReviewController {
-    private final ReviewService service;
+    private final ReviewService reviewService;
+    private final EventService eventService;
     private final FileUploadService fileUploadService;
 
     // 이벤트 상세페이지에서 리뷰 조회
@@ -32,7 +34,7 @@ public class ReviewController {
     public String insertReview(ReviewDTO review) throws IOException {
         List<MultipartFile> fileList = review.getFiles();
         List<ReviewImgDTO> imgList = fileUploadService.uploadReviewImg(fileList);
-        int result = service.insertReview(review, imgList);
+        int result = reviewService.insertReview(review, imgList);
         if(result > 0){
             return "redirect:/event/" + review.getEvent_no();
         }else {
@@ -45,7 +47,7 @@ public class ReviewController {
     public String myReviewPage(Model model){
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         assert member != null;
-        List<ReviewDTO> reviewList = service.selectReviewByMemberNo(member.getMember_no());
+        List<ReviewDTO> reviewList = reviewService.selectReviewByMemberNo(member.getMember_no());
         model.addAttribute("reviewList", reviewList);
         return "mypage/myreview";
     }
@@ -53,13 +55,13 @@ public class ReviewController {
     // 리뷰 수정과 삭제는 마이페이지에서
     @GetMapping("/myreview/update")
     public String updateReviewPage(@RequestParam("review_no") String review_no, Model model){
-        ReviewDTO review = service.selectReview(Integer.parseInt(review_no));
+        ReviewDTO review = reviewService.selectReviewWithEventImg(Integer.parseInt(review_no));
         model.addAttribute("review", review);
         return "mypage/editReview";
     }
     @PostMapping("/myreview/update")
     public String updateReview(ReviewDTO review){
-        int result = service.updateReview(review);
+        int result = reviewService.updateReview(review);
         if(result > 0){
             return "redirect:/myreview";
         }else {
@@ -68,7 +70,7 @@ public class ReviewController {
     }
     @PostMapping("/myreview/delete")
     public String deleteReview(@RequestParam("review_no") String review_no){
-        int result = service.deleteReview(Integer.parseInt(review_no));
+        int result = reviewService.deleteReview(Integer.parseInt(review_no));
         if(result > 0){
             return "redirect:/myreview";
         }else {
