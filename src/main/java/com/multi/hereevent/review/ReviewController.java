@@ -52,6 +52,12 @@ public class ReviewController {
 
     // 리뷰 수정과 삭제는 마이페이지에서
     @GetMapping("/myreview/update")
+    public String updateReviewPage(@RequestParam("review_no") String review_no, Model model){
+        ReviewDTO review = service.selectReview(Integer.parseInt(review_no));
+        model.addAttribute("review", review);
+        return "mypage/editReview";
+    }
+    @PostMapping("/myreview/update")
     public String updateReview(ReviewDTO review){
         int result = service.updateReview(review);
         if(result > 0){
@@ -60,9 +66,9 @@ public class ReviewController {
             return "common/errorPage";
         }
     }
-    @GetMapping("/myreview/delete")
-    public String deleteReview(String event_no){
-        int result = service.deleteReview(Integer.parseInt(event_no));
+    @PostMapping("/myreview/delete")
+    public String deleteReview(@RequestParam("review_no") String review_no){
+        int result = service.deleteReview(Integer.parseInt(review_no));
         if(result > 0){
             return "redirect:/myreview";
         }else {

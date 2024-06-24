@@ -29,9 +29,19 @@ public class ReviewServiceImpl implements ReviewService{
         return dao.updateReview(review);
     }
 
+    @Transactional
     @Override
     public int deleteReview(int review_no) {
-        return 0;
+        dao.deleteReviewImg(review_no);
+        return dao.deleteReview(review_no);
+    }
+
+    @Transactional
+    @Override
+    public ReviewDTO selectReview(int review_no) {
+        ReviewDTO review = dao.selectReview(review_no);
+        review.setReview_imgs(dao.selectReviewImgs(review_no));
+        return review;
     }
 
     @Transactional

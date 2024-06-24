@@ -99,8 +99,8 @@
                 <h4>Leave a Review</h4>
                 <p>Required fields are marked * </p>
                 <form action="/hereevent/review/insert" method="post" enctype="multipart/form-data">
-                    <input type="hidden" th:name="event_no" th:value="${event.event_no}">
-                    <input type="hidden" th:name="member_no" th:value="${session.member.member_no}">
+                    <input type="hidden" name="event_no" th:value="${event.event_no}">
+                    <input type="hidden" name="member_no" th:value="${session.member.member_no}">
                     <div class="row">
                         <div class="col-md-2 form-group comment-img">
                             <img th:if="${session.member.img_path == null}"

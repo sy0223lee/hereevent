@@ -84,7 +84,7 @@
                 <div class="blog-comments row">
                     <div th:id="|comment-${i.count}|" class="comment col-md-6" th:each="event, i : ${eventList}">
                         <div class="d-flex">
-                            <div class="col-md-3 interest-event-img">
+                            <div class="col-md-3 align-self-center interest-event-img">
                                 <img th:if="${event.img_path == null}"
                                      th:src="@{/images/event/default_profile.svg}" alt="default_profile">
                                 <img th:unless="${event.img_path == null}"

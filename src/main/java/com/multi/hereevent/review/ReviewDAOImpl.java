@@ -25,12 +25,22 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     public int updateReview(ReviewDTO review) {
-        return 0;
+        return sqlSession.update("com.multi.hereevent.review.updateReview", review);
     }
 
     @Override
     public int deleteReview(int review_no) {
-        return 0;
+        return sqlSession.delete("com.multi.hereevent.review.deleteReview", review_no);
+    }
+
+    @Override
+    public void deleteReviewImg(int review_no) {
+        sqlSession.delete("com.multi.hereevent.review.deleteReviewImg", review_no);
+    }
+
+    @Override
+    public ReviewDTO selectReview(int review_no) {
+        return sqlSession.selectOne("com.multi.hereevent.review.selectReview", review_no);
     }
 
     @Override
