@@ -20,7 +20,9 @@ $(document).ready(function() {
                 });
 
                 starIcon.addEventListener('mouseleave', () => {
-                    checkedRate(); // 체크된 라디오 버튼만큼 별점 active
+                    if (wrap.classList.contains('readonly') === false) {
+                        checkedRate(); // 체크된 라디오 버튼만큼 별점 active
+                    }
                 });
             });
         });
