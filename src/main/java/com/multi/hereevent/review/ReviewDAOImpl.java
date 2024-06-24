@@ -39,8 +39,8 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public ReviewDTO selectReview(int review_no) {
-        return sqlSession.selectOne("com.multi.hereevent.review.selectReview", review_no);
+    public ReviewDTO selectReviewWithEventImg(int review_no) {
+        return sqlSession.selectOne("com.multi.hereevent.review.selectReviewWithEventImg", review_no);
     }
 
     @Override
