@@ -26,6 +26,21 @@
                     location.href = "/hereevent/event/interest/delete?event_no=" + $(this).val();
                 }
             });
+            $(".delete-review-btn").click(function () {
+                if (confirm("후기를 삭제하시겠습니까?") === true) {
+                    let form = document.createElement("form");
+                    let obj = document.createElement("input");
+                    obj.setAttribute("type", "hidden");
+                    obj.setAttribute("name", "review_no");
+                    obj.setAttribute("value", $(this).val());
+
+                    form.appendChild(obj);
+                    form.setAttribute("method", "post");
+                    form.setAttribute("action", "/hereevent/myreview/delete");
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
         });
     </script>
 

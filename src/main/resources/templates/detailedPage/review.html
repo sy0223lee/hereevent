@@ -25,8 +25,16 @@
                         <img th:unless="${review.img_path == null}"
                              th:src="|@{/download/profile/}${review.img_path}|" alt="member_profile">
                     </div>
-                    <div>
-                        <h5 th:text="${review.nick}"></h5>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h5 th:text="${review.nick}"></h5>
+                            <h5 th:if="${session.member != null and session.member.member_no == review.member_no}">
+                                <button th:onclick="|location.href='@{/myreview/update(review_no=${review.review_no})}'|" class="reply edit-review-btn">
+                                    <i class="bi bi-pencil"></i></button>
+                                <button class="reply delete-review-btn" th:value="${review.review_no}">
+                                    <i class="bi bi-trash"></i></button>
+                            </h5>
+                        </div>
 
                         <div class="rating readonly">
                             <label class="rating-label rating-label-half">
@@ -182,5 +190,6 @@
 
     </section><!- /Blog Comments Section ->
 </div>
+
 </body>
 </html>

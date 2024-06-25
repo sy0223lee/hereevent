@@ -150,6 +150,17 @@
     object-fit: cover;
     margin-left: 5px;
 }
+.blog-comments .comment h5 .edit-review-btn,
+.blog-comments .comment h5 .delete-review-btn {
+    background: none;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.blog-comments .comment h5 .edit-review-btn:hover,
+.blog-comments .comment h5 .delete-review-btn:hover {
+    color: var(--accent-color);
+}
 
 /* 상세페이지 - 예약 */
 .reservation{
