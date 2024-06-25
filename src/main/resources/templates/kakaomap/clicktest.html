@@ -14,7 +14,8 @@
         <div>
             <!--체크박스 버튼-->
            <div id="state">
-                <input value="still" type="checkbox" class="btn-check" id="still" autocomplete="off">
+               state
+                <input value="still" type="checkbox" class="btn-check" id="still" autocomplete="off" checked>
                 <label class="btn" for="still">still</label>
 
                 <input value="open" type="checkbox" class="btn-check" id="open" autocomplete="off">
@@ -24,21 +25,22 @@
                 <label class="btn" for="end">end</label>
             </div>
             <div id="type">
-                <input value="reserve" type="checkbox" class="btn-check" id="reserve" autocomplete="off">
-                <label class="btn btn-outline-primary" for="reserve">reserve</label>
+                type
+                <input value="reserve" type="radio" class="btn-check" name="options-base" id="reserve" autocomplete="off">
+                <label class="btn" for="reserve">reserve</label>
 
-                <input value="wait" type="checkbox" class="btn-check" id="wait" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="wait">wait</label>
+                <input value="wait" type="radio" class="btn-check" name="options-base" id="wait" autocomplete="off">
+                <label class="btn" for="wait">wait</label>
 
-                <input value="both" type="checkbox" class="btn-check" id="both" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="both">both</label>
+                <input value="both" type="radio" class="btn-check" name="options-base" id="both" autocomplete="off">
+                <label class="btn" for="both">both</label>
             </div>
 
             <!--radio 버튼-->
             <div>
                 <div>
                     핫플
-                    <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off">
+                    <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off" checked>
                     <label class="btn btn-outline-danger" for="seongsu">성수</label>
 
                     <input type="radio" class="btn-check" name="options-outlined" id="jamsil" autocomplete="off">
@@ -72,50 +74,96 @@
 
         </div>
         <div id="map" style="width:100%;height:350px;"></div>
-        <table class="table">
+        <table id="eventlist" class="table">
             <thead>
-            <tr>
-                <th>이름</th>
-                <th>시작날짜</th>
-                <th>종료날짜</th>
-                <th>위치</th>
-            </tr>
+                <tr>
+                    <th>이름</th>
+                    <th>시작날짜</th>
+                    <th>종료날짜</th>
+                    <th>위치</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="event:${list}">
-                <td><span th:text="${event.name }"></span></td>
-                <td><span th:text="${event.start_date }"></span></td>
-                <td><span th:text="${event.end_date }"></span></td>
-                <td><span th:text="${event.addr }"></span></td>
-            </tr>
+                <tr th:each="event:${list}">
+                    <td><span th:text="${event.name }"></span></td>
+                    <td><span th:text="${event.start_date }"></span></td>
+                    <td><span th:text="${event.end_date }"></span></td>
+                    <td><span th:text="${event.addr }"></span></td>
+                </tr>
             </tbody>
         </table>
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c7411c7e9cd13cdaac33d749ab11436&libraries=services"></script>
         <script th:inline="javascript">
             $(document).ready(function() {
+                var myformdata = new FormData();
                 $("#state>input").each(function() {
                     $(this).click(function() {
                         let state = $(this).val();
+                        if ($(this).is(':checked')) {
+                            myformdata.append("state", state);
+                        } else {
+                              // FormData에서 해당 값을 삭제하는 방법
+                            let tempFormData = new FormData();
+                            myformdata.forEach((value, key) => {
+                                if (key !== 'state' || value !== state) {
+                                    tempFormData.append(key, value);
+                                }
+                            });
+                            myformdata = tempFormData;
+                        }
                         $.ajax({
-                            url : '/hereevent/map/clicktest',
-                            data : {"state" : state},
-                            method: 'GET',
-                            success: console.log(state)
+                            url : '/hereevent/map/clicktest/ajaxtest',
+                            method: 'POST',
+                            processData:false,
+                            data:myformdata,
+                            contentType:false,
+                            success:function(data){
+                                let printdata="";
+                                data.forEach(event =>{
+                                    printdata = printdata
+                                    + "<tbody><tr>"
+                                    + "<td><span>"+event.name+"</span></td>"
+                                    + "<td><span>"+event.start_date+"</span></td>"
+                                    + "<td><span>"+event.end_date+"</span></td>"
+                                    + "<td><span>"+event.addr+"</span></td>"
+                                    + "</tr></tbody>"
+                                })
+                                $("#eventlist").empty();//<tr>태그 모두 지우기
+                                $("#eventlist").append(printdata)
+                            }
                         })
                     });
                 });
                 $("#type>input").each(function() {
                     $(this).click(function() {
                         let type = $(this).val();
+                        myformdata.delete("type");
+                        myformdata.append("type", type);
                         $.ajax({
-                            url : '/hereevent/map/clicktest',
-                            data : {"type" : type},
-                            method: 'GET',
-                            success: console.log(type)
+                            url : '/hereevent/map/clicktest/ajaxtest',
+                            method: 'POST',
+                            processData:false,
+                            data:myformdata,
+                            contentType:false,
+                            success:function(data){
+                                let printdata="";
+                                data.forEach(event =>{
+                                    printdata = printdata
+                                    + "<tbody><tr>"
+                                    + "<td><span>"+event.name+"</span></td>"
+                                    + "<td><span>"+event.start_date+"</span></td>"
+                                    + "<td><span>"+event.end_date+"</span></td>"
+                                    + "<td><span>"+event.addr+"</span></td>"
+                                    + "</tr></tbody>"
+                                })
+                                $("#eventlist").empty();//<tr>태그 모두 지우기
+                                $("#eventlist").append(printdata)
+                            }
                         })
                     });
                 });
+
             });//end ready
 
 
@@ -130,6 +178,192 @@
 
         // 지도 생성
         map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+
+
+
+        <!--주소로 검색해서 마커-->
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch('서울특별시 성동구 연무장 5길 9-13', function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+             if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+
+
+
+
+        <!--커스텀마커-->
+        // 지도에 마커를 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(33.450701, 126.570667)
+        });
+
+        // 커스텀 오버레이에 표시할 컨텐츠 입니다
+        // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+        // 별도의 이벤트 메소드를 제공하지 않습니다
+        var content = '<div class="wrap">' +
+                    '    <div class="info">' +
+                    '        <div class="title">' +
+                    '            카카오 스페이스닷원' +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
+                    '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
+                    '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+        // 마커 위에 커스텀오버레이를 표시합니다
+        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+        var overlay = new kakao.maps.CustomOverlay({
+            content: content,
+            map: map,
+            position: marker.getPosition()
+        });
+
+        // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+        kakao.maps.event.addListener(marker, 'click', function() {
+            overlay.setMap(map);
+        });
+
+        // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
+        function closeOverlay() {
+            overlay.setMap(null);
+        }
+
+
+
+
+
+
+
+
+
+
+        <!--마커 여러개 표시하기-->
+        // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
+        var positions = [
+            {
+                content: '<div>카카오</div>',
+                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+            },
+            {
+                content: '<div>생태연못</div>',
+                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+            },
+            {
+                content: '<div>텃밭</div>',
+                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+            },
+            {
+                content: '<div>근린공원</div>',
+                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+            }
+        ];
+
+        for (var i = 0; i < positions.length; i ++) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: positions[i].latlng // 마커의 위치
+            });
+
+            // 마커에 표시할 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: positions[i].content // 인포윈도우에 표시할 내용
+            });
+
+            // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+            // 이벤트 리스너로는 클로저를 만들어 등록합니다
+            // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+        }
+
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        }
+
+        /* 아래와 같이도 할 수 있습니다 */
+        /*
+        for (var i = 0; i < positions.length; i ++) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: positions[i].latlng // 마커의 위치
+            });
+
+            // 마커에 표시할 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: positions[i].content // 인포윈도우에 표시할 내용
+            });
+
+            // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+            // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+            (function(marker, infowindow) {
+                // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    infowindow.open(map, marker);
+                });
+
+                // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    infowindow.close();
+                });
+            })(marker, infowindow);
+        }
+        */
+
+
+
+
+
+
+
+
+
 
 
         function locationLoadSuccess(pos){
@@ -157,19 +391,19 @@
 
             // 각 버튼 클릭 시 지도 중심 좌표 변경
         document.getElementById('seongsu').addEventListener('click', function() {
-            changeMapLocation(37.54366481430039, 127.05889745872842);
+            changeMapLocation(37.54366481430039, 127.05889745872842, 5);
         });
 
         document.getElementById('jamsil').addEventListener('click', function() {
-            changeMapLocation(37.509358600639494, 127.1051299097808);
+            changeMapLocation(37.509358600639494, 127.1051299097808, 5);
         });
 
         document.getElementById('hongdae').addEventListener('click', function() {
-            changeMapLocation(37.555849659619895, 126.94824554655163);
+            changeMapLocation(37.555849659619895, 126.94824554655163, 5);
         });
 
         document.getElementById('gangnam').addEventListener('click', function() {
-            changeMapLocation(37.49783159114859, 127.0339598307763);
+            changeMapLocation(37.49783159114859, 127.0339598307763, 5);
         });
 
         document.getElementById('seoul').addEventListener('click', function() {

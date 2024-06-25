@@ -15,4 +15,9 @@ public class MapServiceImpl implements MapService{
     public List<EventDTO> button(ButtonDTO buttonDTO) {
         return dao.button(buttonDTO);
     }
+
+    @Override
+    public List<EventDTO> selectStill() {
+        return dao.selectStill();
+    }
 }
