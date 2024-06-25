@@ -13,32 +13,34 @@
             padding: 0;
             text-align: center;
         }
-        .banner {
-            width: 80%;
+        .main {
+        background-color: #36bea6;
+        }
+        .banner img{
             height: 350px;
-            background: url('/images/main/팝업예시1.png') no-repeat center center;
-            background-size: cover;
         }
         .section {
             margin: 20px 0;
+            background-color: #36bea6;
         }
         .slider {
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: auto;
         }
         .images {
             display: flex;
             overflow: hidden;
-            width: 780px; /* 5 images * 150px + 4 * 6px margin */
+            width: 1500px; /* 5 images * 150px + 4 * 6px margin */
         }
         .images a {
             flex: 0 0 auto;
             margin: 0 3px;
         }
         .images img {
-            width: 150px;
-            height: 150px;
+            width: 300px;
+            height: 300px;
             object-fit: cover;
             border: 1px solid #ccc;
         }
@@ -61,11 +63,11 @@
 </div>
     <main layout:fragment="main" class="main">
     <!-- 배너 이미지 -->
-
+    <div class="banner"><img src="/hereevent/images/main/팝업예시1.png"></div>
 
     <!-- 카테고리별 이미지 -->
     <div class="section">
-        <h2>카테고리별 이미지</h2>
+        <h2>카테고리</h2>
         <div class="slider">
             <button class="arrow left" onclick="moveLeft('category')">
                 <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">
@@ -91,7 +93,7 @@
 
 <!-- 별점 순 이미지 -->
 <div class="section">
-    <h2>별점 순 이미지</h2>
+    <h2>별점 순</h2>
     <div class="slider">
         <button class="arrow left" onclick="moveLeft('rating')">
             <img src="/hereevent/images/main/leftarrow.png" alt="왼쪽 화살표">

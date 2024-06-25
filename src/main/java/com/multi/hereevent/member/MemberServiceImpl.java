@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.CategoryInterestDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO findMemberByEmail(String email) {
         return dao.findMemberByEmail(email);
+    }
+
+    @Override
+    public int setInterestCategory(CategoryInterestDTO ci) {
+        return dao.setInterestCategory(ci);
     }
 }

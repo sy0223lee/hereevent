@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.CategoryInterestDTO;
 import com.multi.hereevent.dto.MemberDTO;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface MemberService {
     boolean checkMemberNick(String nick);
     boolean checkMemberEmail(String email);
     MemberDTO findMemberByEmail(String email);
+
+    int setInterestCategory(CategoryInterestDTO ci);
 }

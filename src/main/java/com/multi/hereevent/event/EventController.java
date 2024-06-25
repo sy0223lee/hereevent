@@ -75,7 +75,20 @@ public class EventController {
         model.addAttribute("reviewList", reviewList);
         return "detailedPage/detailedPage";
     }
-
+    //예약기능
+    @PostMapping("/reservation")
+    public String reservation(ReserveDTO reserve){
+        if(eventService.checkReserveOrder(reserve.getEvent_no(),
+                reserve.getReserve_date(),reserve.getReserve_time())==null){
+            reserve.setReserve_order(1);
+        }else{
+            int order = reserve.getReserve_order();
+            order++;
+            reserve.setReserve_order(order);
+        };
+        eventService.insertReserve(reserve);
+        return "main/mainPage2";
+    }
 //    //상세정보 (*스크롤형식으로 바꿔 필요 없어져 주석처리*)
 //    @GetMapping("/content/{event_no}")
 //    public String showContent(@PathVariable("event_no") int event_no, Model model) {

@@ -98,10 +98,16 @@
         insert into reserve (event_no,member_no, reserve_date, reserve_time,state,reserve_order)
         values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료",#{reserve_order})
     </insert>
+    <!--예약 순서 체크-->
     <select id="checkReserve" parameterType="Map" resultType="reserve">
         select * from reserve
         where event_no=#{event_no} AND reserve_date=#{reserve_date} AND reserve_time=#{reserve_time}
         ORDER BY reserve_order DESC limit 1
+    </select>
+    <!--예약 인원 체크-->
+    <select id="checkLimit" resultType="Integer">
+        select count(*) from reserve
+        where event_no=#{event_no}
     </select>
     
     <!-- 관심 이벤트 등록, 해제 -->

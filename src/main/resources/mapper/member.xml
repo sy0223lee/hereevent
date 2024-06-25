@@ -43,4 +43,10 @@
 		from member
 		where email = #{email}
 	</select>
+	<insert id="setInterestCategory" parameterType="categoryInterest">
+		INSERT INTO category_interest (member_no, category1,category2,category3)
+		SELECT m.member_no, #{category1},#{category2},#{category3}
+		FROM member m
+		WHERE m.member_no = #{member_no};
+	</insert>
 </mapper>
