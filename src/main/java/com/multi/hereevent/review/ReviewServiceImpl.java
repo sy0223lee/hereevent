@@ -24,16 +24,25 @@ public class ReviewServiceImpl implements ReviewService{
         }
     }
 
-    @Override
-    public int updateReview(ReviewDTO review) {
-        return dao.updateReview(review);
-    }
-
     @Transactional
     @Override
+    public int updateReview(ReviewDTO review, List<ReviewImgDTO> imgList) {
+        if (imgList.isEmpty()) {
+            return dao.updateReview(review);
+        } else {
+            dao.updateReview(review);
+            return dao.insertReviewImgWithReviewNo(review.getReview_no(), imgList);
+        }
+    }
+
+    @Override
     public int deleteReview(int review_no) {
-        dao.deleteReviewImg(review_no);
         return dao.deleteReview(review_no);
+    }
+
+    @Override
+    public void deleteReviewImg(int review_img_no) {
+        dao.deleteReviewImg(review_img_no);
     }
 
     @Transactional
@@ -62,5 +71,10 @@ public class ReviewServiceImpl implements ReviewService{
             review.setReview_imgs(dao.selectReviewImgs(review.getReview_no()));
         }
         return reviewList;
+    }
+
+    @Override
+    public List<ReviewImgDTO> selectReviewImgs(int review_no) {
+        return dao.selectReviewImgs(review_no);
     }
 }

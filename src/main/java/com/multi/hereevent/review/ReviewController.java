@@ -9,10 +9,7 @@ import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -60,8 +57,10 @@ public class ReviewController {
         return "mypage/editReview";
     }
     @PostMapping("/myreview/update")
-    public String updateReview(ReviewDTO review){
-        int result = reviewService.updateReview(review);
+    public String updateReview(ReviewDTO review) throws IOException {
+        List<MultipartFile> fileList = review.getFiles();
+        List<ReviewImgDTO> imgList = fileUploadService.uploadReviewImg(fileList);
+        int result = reviewService.updateReview(review, imgList);
         if(result > 0){
             return "redirect:/myreview";
         }else {
@@ -76,5 +75,14 @@ public class ReviewController {
         }else {
             return "common/errorPage";
         }
+    }
+    @GetMapping("/myreview/delete/img")
+    @ResponseBody
+    public List<ReviewImgDTO> deleteReviewImg(@RequestParam("review_img_no") String review_img_no,
+                                    @RequestParam("review_no") String review_no){
+        // 리뷰 이미지 삭제
+        reviewService.deleteReviewImg(Integer.parseInt(review_img_no));
+        // 리뷰 이미지 정보 다시 받아서 전송
+        return reviewService.selectReviewImgs(Integer.parseInt(review_no));
     }
 }
