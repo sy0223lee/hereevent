@@ -10,17 +10,16 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/map")
 public class MapController {
     private final MapService mapService;
 
-    @GetMapping("/kakaomap.html")
+    @GetMapping("/map/kakaomap.html")
     public String address(){
         System.out.println("카카오지도");
         return "kakaomap/kakaomap";
     }
 
-    @GetMapping("/clicktest")
+    @GetMapping("/map/clicktest")
     public String clicktest(){
         return "kakaomap/clicktest";
     }

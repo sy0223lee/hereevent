@@ -1,6 +1,5 @@
 package com.multi.hereevent.member;
 
-import com.google.gson.JsonObject;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -25,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequiredArgsConstructor
 @SessionAttributes("member")
-public class KaKaoLoginController {
+public class KakaoLoginController {
     private final MemberService service;
 
     @GetMapping("/login/kakao")
