@@ -16,13 +16,19 @@
 		set update_date = now(), content = #{content}, star = #{star}
 		where review_no = #{review_no}
 	</update>
+	<insert id="insertReviewImgWithReviewNo" parameterType="Map">
+		insert into review_img (review_no, img_path) values
+		<foreach collection="img_list" item="file" separator=",">
+			(#{review_no}, #{file.img_path})
+		</foreach>
+	</insert>
 	<delete id="deleteReview">
 		delete from review
 		where review_no = #{review_no}
 	</delete>
 	<delete id="deleteReviewImg">
 		delete from review_img
-		where review_no = #{review_no}
+		where review_img_no = #{review_img_no}
 	</delete>
 	<select id="selectReviewWithEventImg" resultType="review">
 		select r.*, e.img_path, e.name
