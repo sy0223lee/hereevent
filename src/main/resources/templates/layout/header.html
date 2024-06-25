@@ -2,32 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/hereevent/common/css/header.css">
     <title>HereEvent - Header</title>
 </head>
 <body>
 <header th:fragment="header" id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <a href="/hereevent" class="logo d-flex align-items-center me-auto">
+        <a href="/hereevent" class="logo d-flex align-items-center">
             <img src="/hereevent/images/logo/here-event_logo.png" alt="HereEvent">
         </a>
-        <form action="/hereevent/search" method="post" class="search-form">
-            <input type="text" name="query" placeholder="검색어를 입력하세요" required>
-            <button type="submit">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
+
+        <div class="search-widget flex-fill">
+            <form action="/hereevent/search" method="post">
+                <input type="text" name="query" placeholder="검색어를 입력하세요" required>
+                <button type="submit"><i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#hero" class="active"><i class="bi bi-geo-alt"></i><br></a></li>
-                <li><a href="/hereevent/mypage"><i class="bi bi-person-circle"></i></a></li>
+                <li><a href="/hereevent/map/clicktest"><i class="bi bi-geo-alt"></i></a></li> <!-- 지도 -->
+                <li th:unless="${session.member == null}"><a href="/hereevent/mypage"><i class="bi bi-person-circle"></i></a></li> <!-- 마이페이지 -->
+                <li th:unless="${session.member == null}"><a href="#"><i class="bi bi-box-arrow-right"></i></a></li> <!-- 로그아웃 -->
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="btn-getstarted" href="/hereevent/login">Login</a>
+        <a th:if="${session.member == null}" class="btn-getstarted" href="/hereevent/login">Login</a>
 
     </div>
 

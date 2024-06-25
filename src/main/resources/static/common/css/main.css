@@ -12,9 +12,9 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "IBM Plex Sans KR", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "IBM Plex Sans KR", "Raleway",  sans-serif;
+  --nav-font: "IBM Plex Sans KR", "Poppins",  sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -91,21 +91,12 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 36px;
-  margin-right: 8px;
+  max-height: 56px;
 }
 
-.header .logo h1 {
-  font-size: 32px;
-  margin: 0;
-  font-weight: 700;
-  color: var(--heading-color);
-}
-
-.header .logo span {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--accent-color);
+.header .search-widget {
+  margin: 0 30px;
+  padding: 0 30px;
 }
 
 .header .btn-getstarted,
@@ -130,15 +121,21 @@ h6 {
     order: 1;
   }
 
+  .header .search-widget{
+    order: 2;
+    margin: 0 30px;
+    padding: 0 30px;
+  }
+
   .header .btn-getstarted,
   .header .btn-getstarted:focus {
-    order: 2;
+    order: 3;
     margin: 0 15px 0 0;
     padding: 6px 15px;
   }
 
   .header .navmenu {
-    order: 3;
+    order: 4;
   }
 }
 
@@ -170,7 +167,7 @@ h6 {
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-color);
-    padding: 18px 15px;
+    padding-right: 15px;
     font-size: 16px;
     font-family: var(--nav-font);
     font-weight: 400;
@@ -183,7 +180,7 @@ h6 {
 
   .navmenu a i,
   .navmenu a:focus i {
-    font-size: 12px;
+    font-size: 28px;
     line-height: 0;
     margin-left: 5px;
     transition: 0.3s;
@@ -863,36 +860,43 @@ section,
 /*--------------------------------------------------------------
 # Clients Section
 --------------------------------------------------------------*/
+
 .clients .swiper-slide img {
-  opacity: 0.5;
   transition: 0.3s;
-  filter: grayscale(100);
+  width: 100%;
+  object-fit: cover;
+}
+.clients .swiper-slide {
+  width: 200px;
+  height: 200px;
+  display: block;
+  overflow: hidden;
 }
 
 .clients .swiper-slide img:hover {
-  filter: none;
-  opacity: 1;
+  cursor: pointer;
 }
 
 .clients .swiper-wrapper {
   height: auto;
 }
 
-.clients .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
 
-.clients .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  opacity: 1;
-  background-color: color-mix(in srgb, var(--default-color), transparent 80%);
-}
+/*.clients .swiper-pagination {*/
+/*  margin-top: 20px;*/
+/*  position: relative;*/
+/*}*/
 
-.clients .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-color);
-}
+/*.clients .swiper-pagination .swiper-pagination-bullet {*/
+/*  width: 12px;*/
+/*  height: 12px;*/
+/*  opacity: 1;*/
+/*  background-color: color-mix(in srgb, var(--default-color), transparent 80%);*/
+/*}*/
+
+/*.clients .swiper-pagination .swiper-pagination-bullet-active {*/
+/*  background-color: var(--accent-color);*/
+/*}*/
 
 /*--------------------------------------------------------------
 # About Section
