@@ -40,8 +40,10 @@ public interface EventService {
   
     //예약하기
     int insertReserve(ReserveDTO reservation);
+    //예약 순서 체크
     ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time);
-
+    //예약 인원 체크
+    int checkReserveLimit(int event_no);
     // 크롤링
     int insertCrawlingEvent(EventDTO event);
     int updateEventImg(int event_no, String img_path);

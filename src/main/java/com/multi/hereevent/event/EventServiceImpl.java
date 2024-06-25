@@ -87,6 +87,11 @@ public class EventServiceImpl implements EventService {
         return dao.checkReserveOrder(event_no,reserve_date,reserve_time);
     }
 
+    @Override
+    public int checkReserveLimit(int event_no) {
+        return dao.checkReserveLimit(event_no);
+    }
+
     // 크롤링
     @Override
     public int insertCrawlingEvent(EventDTO event) {

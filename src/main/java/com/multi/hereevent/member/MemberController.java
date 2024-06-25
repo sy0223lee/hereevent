@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.CategoryInterestDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +34,24 @@ public class MemberController {
         return "login/register";
     }
     @PostMapping("/insert")
-    public String register(MemberDTO member){
-        System.out.println(member);
+    public String register(MemberDTO member, Model model){
         service.insertMember(member);
+        System.out.println(member);
+        MemberDTO find = service.findMemberByEmail(member.getEmail());
+        System.out.println("find===>"+find);
+        model.addAttribute("member",find);
+        return "redirect:/interestCategory";
+    }
+    @GetMapping("/interestCategory")
+    public String interestCategoryPage(){
+        return "login/interestCategory";
+    }
+    @PostMapping("/interestCategory")
+    public String setInterestCategory(CategoryInterestDTO ci){
+        service.setInterestCategory(ci);
+        System.out.println(ci);
         return "redirect:/login";
     }
-
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {
