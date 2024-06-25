@@ -12,9 +12,13 @@
     <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
 
     <title>HereEvent-MyPage</title>
-    <script>
+</head>
+<body>
+<main layout:fragment="main" class="main">
+
+    <script type="text/javascript">
         $(document).ready(function() {
-            $(".delete-review-img").click(function () {
+            $('.review-img').on('click', '.delete-review-img', function(){
                 if (confirm("해당 이미지를 삭제하시겠습니까?") === true) {
                     let data = {"review_img_no": $(this).val(), "review_no": $(".review_no").val()};
                     $.ajax({
@@ -26,12 +30,12 @@
                             console.log(result);
                             alert(result.length);
 
-                            let html;
-                            for(var i=0; i<result.length; i++){
-                                html += "<div><img src='/download/review/" + result[i].img_path + "' alt='" + result[i].img_path + "'>" +
-                                        "<button class='delete-review-img' value='" + result[i].review_img_no + "'>이미지 삭제</button></div>"
+                            let html = "";
+                            for(let reviewImg of result){
+                                html += "<div class='review-img-container'><img src='/hereevent/download/review/" + reviewImg.img_path + "' alt='" + reviewImg.img_path + "'>" +
+                                    "<button type='button' class='delete-review-img' value='" + reviewImg.review_img_no + "'><i class='bi bi-trash'></i></button></div>"
                             }
-                            $(".review-img").innerHTML = html;
+                            $("#review-img").html(html);
                         },
                         error: function(obj, msg, statusMsg){
                             console.log("요청 실패: " + obj + ", " + msg + ", " + statusMsg);
@@ -41,9 +45,6 @@
             });
         });
     </script>
-</head>
-<body>
-<main layout:fragment="main" class="main">
 
     <!-- Page Title -->
     <div class="page-title">
@@ -134,10 +135,10 @@
 
                         <span th:text="${review.write_date}"></span>
 
-                        <div class="review-img">
+                        <div class="review-img" id="review-img">
                             <div class="review-img-container" th:each="review_img : ${review.review_imgs}">
                                 <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
-                                <button class="delete-review-img" th:value="${review_img.review_img_no}"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="delete-review-img" th:value="${review_img.review_img_no}"><i class="bi bi-trash"></i></button>
                             </div>
                         </div>
 
