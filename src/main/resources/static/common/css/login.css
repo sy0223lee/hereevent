@@ -61,14 +61,14 @@
     background-color: #28a745;
 }
 .kakao-login {
-    background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fprosell.oopy.io%2F845a0760-d543-46ae-965d-018c4289eb32&psig=AOvVaw0gSuAqnJuDypZl3AT9_B8u&ust=1718263103117000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJiEhYHD1YYDFQAAAAAdAAAAABAE');
-    background-color: #fee500;
+    background-image: url('/hereevent/images/login/kakaologin_circle.png');
+    background-color: #03c75a; /* 네이버 배경색 */
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .naver-login {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Naver_Line.png/220px-Naver_Line.png');
+    background-image: url('/hereevent/images/login/naverlogin_circle.png');
     background-color: #03c75a; /* 네이버 배경색 */
     background-repeat: no-repeat;
     background-position: center;
