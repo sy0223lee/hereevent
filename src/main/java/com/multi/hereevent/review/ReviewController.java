@@ -26,7 +26,7 @@ public class ReviewController {
     // 이벤트 상세페이지에서 리뷰 조회
     // EventController에 작성
 
-    // 리뷰 작성은 이벤트 상세페이지에서
+    // 이벤트 상세페이지에서 리뷰 작성
     @PostMapping("/review/insert")
     public String insertReview(ReviewDTO review) throws IOException {
         List<MultipartFile> fileList = review.getFiles();
@@ -34,6 +34,15 @@ public class ReviewController {
         int result = reviewService.insertReview(review, imgList);
         if(result > 0){
             return "redirect:/event/" + review.getEvent_no();
+        }else {
+            return "common/errorPage";
+        }
+    }
+    @PostMapping("/event/review/delete")
+    public String deleteReview(@RequestParam("review_no") String review_no, @RequestParam("event_no") String event_no){
+        int result = reviewService.deleteReview(Integer.parseInt(review_no));
+        if(result > 0){
+            return "redirect:/event/" + event_no;
         }else {
             return "common/errorPage";
         }
@@ -49,7 +58,7 @@ public class ReviewController {
         return "mypage/myreview";
     }
 
-    // 리뷰 수정과 삭제는 마이페이지에서
+    // 마이페이지 리뷰 수정과 삭제
     @GetMapping("/myreview/update")
     public String updateReviewPage(@RequestParam("review_no") String review_no, Model model){
         ReviewDTO review = reviewService.selectReviewWithEventImg(Integer.parseInt(review_no));

@@ -32,23 +32,34 @@
             let member = /*[[${session.member}]]*/;
             if(member != null) {
                 $('.write-member-no').each(function () {
-                    if(member.member_no == $(this).val()){
+                    if(member.member_no == $(this).val()){ // 타입이 달라서 == tkdyd
                         $('.reply-form').hide();
                     }
                 });
             }
+            $('.edit-review-btn').click(function (){
+                if(confirm("후기를 수정하기 위해 마이페이지로 이동하시겠습니까?") === true){
+                    location.href = '/hereevent/myreview/update?review_no=' + $(this).val();
+                }
+            });
             // 로그인한 멤버가 본인의 후기 삭제
             $(".delete-review-btn").click(function () {
                 if (confirm("후기를 삭제하시겠습니까?") === true) {
-                    let form = document.createElement("form");
-                    let obj = document.createElement("input");
-                    obj.setAttribute("type", "hidden");
-                    obj.setAttribute("name", "review_no");
-                    obj.setAttribute("value", $(this).val());
+                    let reviewNo = document.createElement("input");
+                    reviewNo.setAttribute("type", "hidden");
+                    reviewNo.setAttribute("name", "review_no");
+                    reviewNo.setAttribute("value", $(this).val());
 
-                    form.appendChild(obj);
+                    let eventNo = document.createElement("input");
+                    eventNo.setAttribute("type", "hidden");
+                    eventNo.setAttribute("name", "event_no");
+                    eventNo.setAttribute("value", $('.write-event-no').val());
+
+                    let form = document.createElement("form");
+                    form.appendChild(reviewNo);
+                    form.appendChild(eventNo);
                     form.setAttribute("method", "post");
-                    form.setAttribute("action", "/hereevent/myreview/delete");
+                    form.setAttribute("action", "/hereevent/event/review/delete");
                     document.body.appendChild(form);
                     form.submit();
                 }
