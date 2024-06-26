@@ -27,6 +27,7 @@
                     </div>
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between">
+                            <input type="hidden" class="write-member-no" th:value="${review.member_no}">
                             <h5 th:text="${review.nick}"></h5>
                             <h5 th:if="${session.member != null and session.member.member_no == review.member_no}">
                                 <button th:onclick="|location.href='@{/myreview/update(review_no=${review.review_no})}'|" class="reply edit-review-btn">
