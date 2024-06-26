@@ -72,6 +72,21 @@ public class EventController {
         return "detailedPage/detailedPage";
     }
 
+    //예약기능
+    @PostMapping("/event/reservation")
+    public String reservation(ReserveDTO reserve){
+        if(eventService.checkReserveOrder(reserve.getEvent_no(),
+                reserve.getReserve_date(),reserve.getReserve_time())==null){
+            reserve.setReserve_order(1);
+        }else{
+            int order = reserve.getReserve_order();
+            order++;
+            reserve.setReserve_order(order);
+        };
+        eventService.insertReserve(reserve);
+        return "main/mainPage2";
+    }
+
     //이벤트 사진 가져오기
     @GetMapping("/event/image/{event_no}")
     @ResponseBody

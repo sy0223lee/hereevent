@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- CSS File -->
+<link href="/hereevent/common/css/mywait.css" rel="stylesheet">
+
+<title>MyWait</title>
+</head>
+
+<body>
+<main layout:fragment="main" class="main">
+    <!-- Page Title -->
+    <div class="page-title">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/hereevent">Home</a></li>
+                    <li class="current">나의 대기</li>
+                </ol>
+            </nav>
+            <h1>나의 대기</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Starter Section Section -->
+
+        <div class="container">
+            <div class="submenu">
+                <h2>나의 대기</h2>
+
+            </div>
+        </div>
+        <!-- Section Title -->
+        <div class="container section-title">
+            <h2>내가 예약한 팝업스토어</h2>
+            <form action="/hereevent/wait/position" method="post">
+
+            <section class="event-details">
+                <div class="event-info">
+                    <div class="event-image">
+                        <img th:src="@{'/download/event/' + ${event.img_path}}" th:alt="${firstImgPath}" alt="Event Image" />
+                    </div>
+                    <div class="event-details-text">
+                        <p>행사 제목: <span th:text="${event.name}"></span></p>
+
+                        <p>주소: <span th:text="${event.addr}"></span></p>
+                    </div>
+                </div>
+                <div class="waiting-info">
+                    <span class="waiting-label">현재 대기 인원</span>
+                    <span class="waiting-count" th:text="${waitingCount} + ' 명'"></span>
+                    <span class="waiting-label">예상 대기 시간</span>
+                </div>
+                <div class="actions">
+                    <button class="action-button" onclick="updateStateToVisit(${event.wait_no})">입장</button>
+                    <button type="button" class="btn btn-danger btn-lg"
+                            th:onclick="|location.href='@{/wait/delete(wait_no=${wait_no})}'|">대기 취소</button>
+
+                </div>
+                <div class="waiting-number">
+                    <p>대기 번호: <span th:text="${event.wait_no}"></span></p>
+                    <p>당신의 순서: <span th:text="${position}"></span></p>
+                </div>
+            </section>
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+</main>
+<script>
+    function updateStateToVisit(wait_no) {
+        fetch('/wait/updateState', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'wait_no': wait_no
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    alert('상태가 방문으로 변경되었습니다.');
+                    location.reload();
+                } else {
+                    alert('상태 변경에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('상태 변경 중 오류가 발생했습니다.');
+            });
+    }
+</script>
+</body>
+</html>

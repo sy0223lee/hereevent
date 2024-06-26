@@ -96,6 +96,11 @@ public class EventDAOImpl implements EventDAO{
         map.put("reserve_time",reserve_time);
         return sqlSession.selectOne("com.multi.hereevent.event.checkReserve",map);
     }
+    //예약 인원 체크
+    @Override
+    public int checkReserveLimit(int event_no) {
+        return sqlSession.selectOne("com.multi.hereevent.event.checkLimit",event_no);
+    }
 
     // 크롤링
     @Override

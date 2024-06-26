@@ -1,5 +1,6 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.dto.CategoryInterestDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -67,5 +68,10 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public MemberDTO findMemberByEmail(String email) {
         return sqlSession.selectOne("com.multi.hereevent.member.findByEmail", email);
+    }
+
+    @Override
+    public int setInterestCategory(CategoryInterestDTO ci) {
+        return sqlSession.insert("com.multi.hereevent.member.setInterestCategory",ci);
     }
 }
