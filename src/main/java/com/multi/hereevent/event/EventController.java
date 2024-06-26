@@ -2,6 +2,7 @@ package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.review.ReviewService;
