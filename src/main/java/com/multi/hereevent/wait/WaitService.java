@@ -20,9 +20,14 @@ public interface WaitService {
 
     //대기 상세정보 불러오기
     WaitDTO waitDetail(int wait_no);
-
+    //대기로 이벤트 상세정보 불러오기
+    WaitDTO EventDetail(int wait_no);
+    WaitDTO waitDetailTel(String wait_tel);
     //대기 삭제
     int waitDelete(int wait_no);
-
+    //대기 순서
+    int getWaitingPosition(int event_no,int wait_no);
+    int getWaitingCount(int event_no);
+    int updateStateToVisit(WaitDTO wait);
     boolean canInsert(String wait_tel);
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
@@ -18,4 +19,7 @@ public class WaitDTO {
     private String email;
     private LocalDateTime wait_date;
     private String state;
+    private String name; // 이벤트이름
+    private String addr; //위치
+    private String img_path;
 }

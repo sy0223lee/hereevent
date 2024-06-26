@@ -21,5 +21,12 @@ public interface WaitDAO {
     WaitDTO read(String wait_no);
     //wait_no로 세부정보 가져오기
     WaitDTO waitDetail(int wait_no);
-
+    //wait_tel로 세부정보 가져오기
+    WaitDTO waitDetailTel(String wait_tel);
+    //wait_no로 event세부정보 가져오기
+    WaitDTO eventDetails(int wait_no);
+    //wait_state변환
+    int updateState(WaitDTO wait);
+    //event_no로 기다리는 순서 추출
+    List<WaitDTO> getWaitingListByEventNo(int event_no);
 }

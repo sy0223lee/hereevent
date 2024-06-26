@@ -24,7 +24,7 @@ public class WaitServiceImpl implements WaitService {
 
     @Override
     public List<WaitDTO> getWaitList() {
-        List<WaitDTO> waitlist= dao.getWaitList();
+        List<WaitDTO> waitlist = dao.getWaitList();
         return waitlist;
     }
 
@@ -39,9 +39,43 @@ public class WaitServiceImpl implements WaitService {
     }
 
     @Override
+    public WaitDTO EventDetail(int wait_no) {
+        return dao.eventDetails(wait_no);
+    }
+
+    @Override
+    public WaitDTO waitDetailTel(String wait_tel) {
+
+        return dao.waitDetailTel(wait_tel);
+    }
+
+    @Override
     public int waitDelete(int wait_no) {
         return 0;
     }
+
+    @Override
+    public int getWaitingPosition(int event_no, int wait_no) {
+        List<WaitDTO> waitingList = dao.getWaitingListByEventNo(event_no);
+        for (int i = 0; i < waitingList.size(); i++) {
+            if (waitingList.get(i).getWait_no() == wait_no) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int getWaitingCount(int event_no) {
+        List<WaitDTO> waitingList = dao.getWaitingListByEventNo(event_no);
+        return waitingList.size();
+    }
+
+    @Override
+    public int updateStateToVisit(WaitDTO wait) {
+        return dao.updateState(wait);
+    }
+
 
     @Override
     public boolean canInsert(String wait_tel) {
