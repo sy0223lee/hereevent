@@ -89,10 +89,17 @@ public class ReviewController {
     @GetMapping("/myreview/delete/img")
     @ResponseBody
     public List<ReviewImgDTO> deleteReviewImg(@RequestParam("review_img_no") String review_img_no,
-                                    @RequestParam("review_no") String review_no){
+                                                @RequestParam("review_no") String review_no){
         // 리뷰 이미지 삭제
         reviewService.deleteReviewImg(Integer.parseInt(review_img_no));
         // 리뷰 이미지 정보 다시 받아서 전송
         return reviewService.selectReviewImgs(Integer.parseInt(review_no));
+    }
+
+    /***** 관리자 페이지 *****/
+    @GetMapping("/admin/review")
+    public String adminReviewPage(Model model){
+        model.addAttribute("reviewList", reviewService.selectAll());
+        return "admin/review";
     }
 }

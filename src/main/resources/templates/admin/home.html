@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS File -->
+    <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
+
+    <title>HereEvent-MyPage</title>
+</head>
+<body>
+<main layout:fragment="main" class="main">
+
+    <!-- Page Title -->
+    <div class="page-title">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/hereevent">Home</a></li>
+                    <li class="current">관리</li>
+                </ol>
+            </nav>
+            <h1>관리</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section">
+
+        <h3><a href="/hereevent/admin/review">후기 관리</a></h3>
+
+    </section>
+
+</main>
+</body>
+</html>
