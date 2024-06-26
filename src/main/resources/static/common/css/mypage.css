@@ -25,7 +25,7 @@
     font-weight: 600;
 }
 
-/* 내 정보 */
+/* mypage.html 내 정보 */
 .profile-img-area img {
     width: 80px;
     height: 80px;
@@ -83,7 +83,7 @@
     border-radius: 5px;
 }
 
-/* 관심 내역 */
+/* myinterest.html 관심 내역 */
 .interest-category h3 {
     display: flex;
     flex-direction: row;
@@ -125,16 +125,114 @@
     color: #e14533;
     text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
 }
-
-/* 후기 내역 */
-.comment-img {
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    margin: 0;
+.interest-event-img {
+    position: relative;
+    width: 25%;
+    padding-bottom: 25%;
+    margin-right: 20px;
 }
-.comment-img img {
+.interest-event-img img {
+    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* myreview.html 후기 내역 */
+.event-img {
+    position: relative;
+    width: 16%;
+    padding-bottom: 16%;
+    margin-right: 20px;
+}
+.event-img img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.review-img {
+    overflow: hidden;
+    margin: 0;
+}
+.review-img img {
+    float: left;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 5px;
+}
+.blog-comments .comment h5 .edit-review-btn,
+.blog-comments .comment h5 .delete-review-btn {
+    background: none;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.blog-comments .comment h5 .edit-review-btn:hover,
+.blog-comments .comment h5 .delete-review-btn:hover {
+    color: var(--accent-color);
+}
+
+/* editReview.html 후기 수정 */
+.review-img-container {
+    position: relative;
+    display: inline-block;
+}
+.delete-review-img{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    padding: 5px 10px;
+    border: none;
+    color: --default-color;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+}
+
+textarea.edit-content{
+    background-color: var(--background-color);
+    color: var(--default-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
+    border-radius: 4px;
+    padding: 10px 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    height: 120px;
+}
+input.edit-img{
+    background-color: var(--background-color);
+    color: var(--default-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
+    border-radius: 4px;
+    padding: 10px 10px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+textarea.edit-content:focus, input.edit-img:focus{
+    box-shadow: none;
+    border-color: var(--accent-color);
+}
+.btn-primary {
+    border-radius: 4px;
+    padding: 10px 20px;
+    border: 0;
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+}
+.btn-primary:hover {
+    color: var(--contrast-color);
+    background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+.btn-secondary {
+    border-radius: 4px;
+    padding: 10px 20px;
+    border: 0;
+    background-color: var(--default-color);
+    color: var(--contrast-color);
+}
+.btn-secondary:hover {
+    color: var(--contrast-color);
+    background-color: color-mix(in srgb, var(--default-color), transparent 20%);
 }

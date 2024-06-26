@@ -4,8 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.multi.hereevent.dto.ReviewImgDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,14 +18,11 @@ import javax.imageio.ImageIO;
 @Service
 public class FileUploadService {
     // 파일 업로드 경로
-    // Naver Cloud 서버 이용하는 경우 해 서버에 저장될 수 있도록 변경하기 !!
+    // Naver Cloud 서버 이용하는 경우 해당 서버에 저장될 수 있도록 변경하기 !!
     @Value("C:/hereevent_upload/")
     private String filePath;
 
     // 파일 경로
-    public String getFilePath(String filename){
-        return filePath + filename;
-    }
     public String getProfileFilePath(String filename) {
         return filePath + "profile/" + filename;
     }
@@ -31,6 +31,27 @@ public class FileUploadService {
     }
     public String getReviewFilePath(String filename) {
         return filePath + "review/" + filename;
+    }
+
+    // 리뷰 사진 저장
+    public List<ReviewImgDTO> uploadReviewImg(List<MultipartFile> multipartFiles) throws IOException {
+        List<ReviewImgDTO> imgList = new ArrayList<ReviewImgDTO>();
+        for(MultipartFile multipartFile : multipartFiles) {
+            if(!multipartFile.isEmpty()) {
+                String storeFilename = "";
+
+                if(!multipartFile.isEmpty()) {
+                    String originalFilename = multipartFile.getOriginalFilename();
+                    if(originalFilename != null) {
+                        storeFilename = createStoreFilename(originalFilename);
+                        multipartFile.transferTo(new File(getReviewFilePath(storeFilename)));
+                    }
+                }
+
+                imgList.add(new ReviewImgDTO(storeFilename));
+            }
+        }
+        return imgList;
     }
 
     // 프로필 사진 저장
@@ -47,7 +68,7 @@ public class FileUploadService {
         return storeFilename;
     }
 
-    // 이벤트 사진 저장
+    // 크롤링한 이벤트 사진 저장
     public String uploadEventImg(String imgUrl) throws IOException {
         URL url = new URL(imgUrl);
         int position = imgUrl.lastIndexOf('/');

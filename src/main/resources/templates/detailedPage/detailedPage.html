@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <!-- CSS File -->
+    <!-- CSS File -->
     <link href="/hereevent/common/css/detailedPage.css" rel="stylesheet">
     <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
     <!-- js File -->
@@ -24,6 +24,44 @@
             $(".picked").click(function () {
                 if(confirm("관심 팝업에서 삭제하시겠습니다까?") === true) {
                     location.href = "/hereevent/event/interest/delete?event_no=" + $(this).val();
+                }
+            });
+
+            // 후기 관련 js
+            // 로그인한 멤버가 후기를 이미 작성했으면 작성 form 숨기기
+            let member = /*[[${session.member}]]*/;
+            if(member != null) {
+                $('.write-member-no').each(function () {
+                    if(member.member_no == $(this).val()){ // 타입이 달라서 == tkdyd
+                        $('.reply-form').hide();
+                    }
+                });
+            }
+            $('.edit-review-btn').click(function (){
+                if(confirm("후기를 수정하기 위해 마이페이지로 이동하시겠습니까?") === true){
+                    location.href = '/hereevent/myreview/update?review_no=' + $(this).val();
+                }
+            });
+            // 로그인한 멤버가 본인의 후기 삭제
+            $(".delete-review-btn").click(function () {
+                if (confirm("후기를 삭제하시겠습니까?") === true) {
+                    let reviewNo = document.createElement("input");
+                    reviewNo.setAttribute("type", "hidden");
+                    reviewNo.setAttribute("name", "review_no");
+                    reviewNo.setAttribute("value", $(this).val());
+
+                    let eventNo = document.createElement("input");
+                    eventNo.setAttribute("type", "hidden");
+                    eventNo.setAttribute("name", "event_no");
+                    eventNo.setAttribute("value", $('.write-event-no').val());
+
+                    let form = document.createElement("form");
+                    form.appendChild(reviewNo);
+                    form.appendChild(eventNo);
+                    form.setAttribute("method", "post");
+                    form.setAttribute("action", "/hereevent/event/review/delete");
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             });
         });

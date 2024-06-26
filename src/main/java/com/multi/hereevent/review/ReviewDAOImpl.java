@@ -1,15 +1,18 @@
 package com.multi.hereevent.review;
 
 import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.dto.ReviewImgDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
-public class ReviewDAOImpl implements ReviewDAO{
+public  class ReviewDAOImpl implements ReviewDAO{
     private final SqlSession sqlSession;
 
     @Override
@@ -18,13 +21,36 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
+    public int insertReviewImg(List<ReviewImgDTO> imgList) {
+        return sqlSession.insert("com.multi.hereevent.review.insertReviewImg", imgList);
+    }
+
+    @Override
     public int updateReview(ReviewDTO review) {
-        return 0;
+        return sqlSession.update("com.multi.hereevent.review.updateReview", review);
+    }
+
+    @Override
+    public int insertReviewImgWithReviewNo(int review_no, List<ReviewImgDTO> imgList) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("review_no", review_no);
+        params.put("img_list", imgList);
+        return sqlSession.insert("com.multi.hereevent.review.insertReviewImgWithReviewNo", params);
     }
 
     @Override
     public int deleteReview(int review_no) {
-        return 0;
+        return sqlSession.delete("com.multi.hereevent.review.deleteReview", review_no);
+    }
+
+    @Override
+    public void deleteReviewImg(int review_img_no) {
+        sqlSession.delete("com.multi.hereevent.review.deleteReviewImg", review_img_no);
+    }
+
+    @Override
+    public ReviewDTO selectReviewWithEventImg(int review_no) {
+        return sqlSession.selectOne("com.multi.hereevent.review.selectReviewWithEventImg", review_no);
     }
 
     @Override
@@ -35,5 +61,10 @@ public class ReviewDAOImpl implements ReviewDAO{
     @Override
     public List<ReviewDTO> selectReviewByMemberNo(int member_no) {
         return sqlSession.selectList("com.multi.hereevent.review.selectReviewByMemberNo", member_no);
+    }
+
+    @Override
+    public List<ReviewImgDTO> selectReviewImgs(int review_no) {
+        return sqlSession.selectList("com.multi.hereevent.review.selectReviewImgs", review_no);
     }
 }

@@ -25,8 +25,18 @@
                         <img th:unless="${review.img_path == null}"
                              th:src="|@{/download/profile/}${review.img_path}|" alt="member_profile">
                     </div>
-                    <div>
-                        <h5 th:text="${review.nick}"></h5>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <input type="hidden" class="write-member-no" th:value="${review.member_no}">
+                            <input type="hidden" class="write-event-no" th:value="${review.event_no}">
+                            <h5 th:text="${review.nick}"></h5>
+                            <h5 th:if="${session.member != null and session.member.member_no == review.member_no}">
+                                <button class="reply edit-review-btn" th:value="${review.review_no}">
+                                    <i class="bi bi-pencil"></i></button>
+                                <button class="reply delete-review-btn" th:value="${review.review_no}">
+                                    <i class="bi bi-trash"></i></button>
+                            </h5>
+                        </div>
 
                         <div class="rating readonly">
                             <label class="rating-label rating-label-half">
@@ -82,6 +92,13 @@
                         </div>
 
                         <span th:text="${review.write_date}"></span>
+
+                        <div class="review-img">
+                            <div th:each="review_img : ${review.review_imgs}">
+                                <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
+                            </div>
+                        </div>
+
                         <p class="comment-content" th:text="${review.content}"></p>
                     </div>
                 </div>
@@ -91,9 +108,9 @@
 
                 <h4>Leave a Review</h4>
                 <p>Required fields are marked * </p>
-                <form action="/hereevent/review/insert" method="post">
-                    <input type="hidden" th:name="event_no" th:value="${event.event_no}">
-                    <input type="hidden" th:name="member_no" th:value="${session.member.member_no}">
+                <form action="/hereevent/review/insert" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="event_no" th:value="${event.event_no}">
+                    <input type="hidden" name="member_no" th:value="${session.member.member_no}">
                     <div class="row">
                         <div class="col-md-2 form-group comment-img">
                             <img th:if="${session.member.img_path == null}"
@@ -149,6 +166,14 @@
 
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col form-group">
+                            <input type="file" name="files" placeholder="이미지 선택"
+                                   class="form-control" multiple="multiple">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col form-group">
                             <textarea name="content" class="form-control" placeholder="Your Review*"></textarea>
@@ -167,5 +192,6 @@
 
     </section><!- /Blog Comments Section ->
 </div>
+
 </body>
 </html>

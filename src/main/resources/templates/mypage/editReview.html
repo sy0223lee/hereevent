@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS File -->
+    <link href="/hereevent/common/css/mypage.css" rel="stylesheet">
+    <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
+    <!-- js File -->
+    <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
+
+    <title>HereEvent-MyPage</title>
+</head>
+<body>
+<main layout:fragment="main" class="main">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.review-img').on('click', '.delete-review-img', function(){
+                if (confirm("해당 이미지를 삭제하시겠습니까?") === true) {
+                    let data = {"review_img_no": $(this).val(), "review_no": $(".review_no").val()};
+                    $.ajax({
+                        url: "/hereevent/myreview/delete/img",
+                        type: "get",
+                        data: data,
+                        dataType: "json",
+                        success: function(result){
+                            console.log(result);
+                            alert(result.length);
+
+                            let html = "";
+                            for(let reviewImg of result){
+                                html += "<div class='review-img-container'><img src='/hereevent/download/review/" + reviewImg.img_path + "' alt='" + reviewImg.img_path + "'>" +
+                                    "<button type='button' class='delete-review-img' value='" + reviewImg.review_img_no + "'><i class='bi bi-trash'></i></button></div>"
+                            }
+                            $("#review-img").html(html);
+                        },
+                        error: function(obj, msg, statusMsg){
+                            console.log("요청 실패: " + obj + ", " + msg + ", " + statusMsg);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Page Title -->
+    <div class="page-title">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/hereevent">Home</a></li>
+                    <li class="current">마이페이지</li>
+                </ol>
+            </nav>
+            <h1>마이페이지</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Starter Section -->
+    <section id="starter-section" class="starter-section section">
+        <form method="post" action="/hereevent/myreview/update" enctype="multipart/form-data">
+            <div class="container section-title">
+                <h2>후기 수정</h2>
+            </div>
+
+            <div class="container">
+                <input type="hidden" class="review_no" name="review_no" th:value="${review.review_no}">
+                <input type="hidden" name="event_no" th:value="${review.event_no}">
+                <input type="hidden" name="member_no" th:value="${session.member.member_no}">
+                <div class="d-flex">
+                    <div class="col-md-2 align-self-center event-img">
+                        <img th:if="${review.img_path == null}"
+                             th:src="@{/images/profile/default_profile.svg}" alt="default_event">
+                        <img th:unless="${review.img_path == null}"
+                             th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
+                    </div>
+                    <div class="col-md-10">
+                        <h5>[[${review.name}]]</h5>
+
+                        <div class="rating">
+                            <label class="rating-label rating-label-half" for="starhalf">
+                                <input type="radio" id="starhalf" class="rating-input" name="star" value="0.5"
+                                       th:checked="${review.star == 0.5} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star1">
+                                <input type="radio" id="star1" class="rating-input" name="star" value="1.0"
+                                       th:checked="${review.star == 1.0} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star1half">
+                                <input type="radio" id="star1half" class="rating-input" name="star" value="1.5"
+                                       th:checked="${review.star == 1.5} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star2">
+                                <input type="radio" id="star2" class="rating-input" name="star" value="2.0"
+                                       th:checked="${review.star == 2.0} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star2half">
+                                <input type="radio" id="star2half" class="rating-input" name="star" value="2.5"
+                                       th:checked="${review.star == 2.5} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star3">
+                                <input type="radio" id="star3" class="rating-input" name="star" value="3.0"
+                                       th:checked="${review.star == 3.0} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star3half">
+                                <input type="radio" id="star3half" class="rating-input" name="star" value="3.5"
+                                       th:checked="${review.star == 3.5} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star4">
+                                <input type="radio" id="star4" class="rating-input" name="star" value="4.0"
+                                       th:checked="${review.star == 4.0} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-half" for="star4half">
+                                <input type="radio" id="star4half" class="rating-input" name="star" value="4.5"
+                                       th:checked="${review.star == 4.5} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                            <label class="rating-label rating-label-full" for="star5">
+                                <input type="radio" id="star5" class="rating-input" name="star" value="5.0"
+                                       th:checked="${review.star == 5.0} ? true : false">
+                                <span class="star-icon"></span>
+                            </label>
+                        </div>
+
+                        <span th:text="${review.write_date}"></span>
+
+                        <div class="review-img" id="review-img">
+                            <div class="review-img-container" th:each="review_img : ${review.review_imgs}">
+                                <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
+                                <button type="button" class="delete-review-img" th:value="${review_img.review_img_no}"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col form-group">
+                                <input type="file" name="files" placeholder="이미지 추가"
+                                       class="form-control edit-img" multiple="multiple">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col form-group">
+                                <textarea name="content" class="form-control edit-content"
+                                          placeholder="Your Review*">[[${review.content}]]</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">후기 수정하기</button>
+                    <button type="button" onclick="location.href='/hereevent/myreview'" class="btn btn-secondary">취소</button>
+                </div>
+            </div>
+
+        </form>
+    </section><!-- End Section -->
+
+</main>
+</body>
+</html>

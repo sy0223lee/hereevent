@@ -10,6 +10,25 @@
     <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
     <!-- js File -->
     <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".delete-review-btn").click(function () {
+                if (confirm("후기를 삭제하시겠습니까?") === true) {
+                    let form = document.createElement("form");
+                    let obj = document.createElement("input");
+                    obj.setAttribute("type", "hidden");
+                    obj.setAttribute("name", "review_no");
+                    obj.setAttribute("value", $(this).val());
+
+                    form.appendChild(obj);
+                    form.setAttribute("method", "post");
+                    form.setAttribute("action", "/hereevent/myreview/delete");
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        });
+    </script>
 
     <title>HereEvent-MyReview</title>
 </head>
@@ -52,15 +71,22 @@
             <div class="blog-comments">
                 <div th:id="|comment-${i.count}|" class="comment" th:each="review, i : ${reviewList}">
                     <div class="d-flex">
-                        <div class="comment-img">
+                        <div class="col-md-2 align-self-center event-img">
                             <img th:if="${review.img_path == null}"
-                                 th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
+                                 th:src="@{/images/profile/default_profile.svg}" alt="default_event">
                             <img th:unless="${review.img_path == null}"
-                                 th:src="|@{/download/event/}${review.img_path}|" alt="member_profile">
+                                 th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
                         </div>
-                        <div>
-                            <h5>[[${review.name}]]<a th:href="|@{/event/}${review.event_no}|" class="reply"><i class="bi bi-reply-fill"></i>
-                                팝업 상세보기</a></h5>
+                        <div class="col-md-10 row justify-content-between review-content">
+                            <h5 class="col">[[${review.name}]]</h5>
+                            <h5 class="col text-md-end buttons">
+                                <a th:href="|@{/event/}${review.event_no}|" class="reply">
+                                    <i class="bi bi-reply-fill"></i>팝업 상세보기</a>
+                                <button th:onclick="|location.href='@{/myreview/update(review_no=${review.review_no})}'|" class="reply edit-review-btn">
+                                    <i class="bi bi-pencil"></i>후기 수정하기</button>
+                                <button class="reply delete-review-btn" th:value="${review.review_no}">
+                                    <i class="bi bi-trash"></i>후기 삭제하기</button>
+                            </h5>
 
                             <div class="rating readonly">
                                 <label class="rating-label rating-label-half">
@@ -116,6 +142,13 @@
                             </div>
 
                             <span th:text="${review.write_date}"></span>
+
+                            <div class="review-img">
+                                <div th:each="review_img : ${review.review_imgs}">
+                                    <img th:src="|@{/download/review/}${review_img.img_path}|" th:alt="${review_img.img_path}">
+                                </div>
+                            </div>
+
                             <p class="comment-content" th:text="${review.content}"></p>
                         </div>
                     </div>
