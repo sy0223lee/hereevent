@@ -1,6 +1,11 @@
 package com.multi.hereevent.member;
 
+import com.multi.hereevent.category.CategoryService;
+import com.multi.hereevent.category.interest.CategoryInterestService;
+import com.multi.hereevent.dto.CategoryInterestDTO;
+import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,6 +22,7 @@ import java.io.IOException;
 public class MemberController {
     private final MemberService service;
     private final FileUploadService fileService;
+    private final CategoryInterestService categoryService;
 
     /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
@@ -26,19 +33,57 @@ public class MemberController {
     public String login(MemberDTO member, Model model) {
         MemberDTO loginMember = service.loginMember(member);
         model.addAttribute("member", loginMember);
-        return "redirect:/mypage";
+        return "redirect:/main";
     }
     @GetMapping("/register")
     public String register() {
         return "login/register";
     }
     @PostMapping("/insert")
-    public String register(MemberDTO member){
-        System.out.println(member);
+    public String register(MemberDTO member, Model model){
         service.insertMember(member);
+        MemberDTO findmem = service.findMemberByEmail(member.getEmail());
+        List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(findmem.getMember_no());
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("member",findmem);
+        return "login/interestCategory";
+    }
+    //관심 카테고리 설정
+    @GetMapping("/interestCategory")
+    public String interestCategoryPage(Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(member.getMember_no());
+        model.addAttribute("categoryList", categoryList);
+        return "login/interestCategory";
+    }
+    @PostMapping("/interestCategory")
+    public String setInterestCategory(CategoryInterestDTO ci){
         return "redirect:/login";
     }
-
+    // 관심 카테고리 추가
+    @GetMapping("/interestCategory/insert")
+    public String insertCategoryInterest(@RequestParam("category_no") int category_no, Model model) {
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        if(member != null) {
+            int result = categoryService.insertCategoryInterest(category_no, member.getMember_no());
+            if(result > 0) {
+                return "redirect:/interestCategory";
+            }
+        }
+        return "common/errorPage";
+    }
+    // 관심 카테고리 삭제
+    @GetMapping("/interestCategory/delete")
+    public String deleteCategoryInterest(@RequestParam("category_no") int category_no, Model model) {
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        if(member != null) {
+            int result = categoryService.deleteCategoryInterest(category_no, member.getMember_no());
+            if(result > 0) {
+                return "redirect:/interestCategory";
+            }
+        }
+        return "common/errorPage";
+    }
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {

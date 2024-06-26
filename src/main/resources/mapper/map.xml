@@ -1,64 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.hereevent.map">
-    <select id="select" parameterType="Map" resultType="event">
+    <select id="selectStill" resultType="event">
         SELECT *
         FROM event
-        <where>
-            <if test="state=='still' and type!=null">
-                <!--<![CDATA[ < ]]>-->
-                WHERE start_date &lt; now() and end_date > now() and type=#{type}
-                ORDER BY end_date
-            </if>
-            <if test="state=='open' and type!=null">
-                WHERE start_date > now() and type=#{type}
-                ORDER BY end_date
-            </if>
-            <if test="state=='end' and type!=null">
-                WHERE end_date &lt; now() and type=#{type}
-                ORDER BY end_date
-            </if>
-            <if test="state==null and type!=null">
-                WHERE type=#{type}
-            </if>
-        </where>
+        WHERE start_date &lt;= now() and end_date > now()
     </select>
+    <select id="select" parameterType="button" resultType="event">
+        SELECT *
+        FROM event
+        <if test="state==null and type!=null">
+            WHERE type=#{type}
+        </if>
+        <if test="state!=null and type==null">
+            <choose>
+                <when test="state.contains('still')">
+                    <if test="state.contains('open')">
+                        <if test="state.contains('end')">
 
-    <select id="stateStill" resultType="event">
-        SELECT *
-        FROM event
-        <![CDATA[
-         WHERE start_date < now() and end_date > now()
-        ]]>
-         ORDER BY end_date
-    </select>
-    <select id="stateOpen" resultType="event">
-        SELECT *
-        FROM event
-        WHERE start_date > now()
-        ORDER BY end_date
-    </select>
-    <select id="stateEnd" resultType="event">
-        SELECT *
-        FROM event
-        <![CDATA[
-        WHERE end_date < now()
-        ]]>
-        ORDER BY end_date
-    </select>
-    <select id="typeReserve" resultType="event">
-        SELECT *
-        FROM event
-        WHERE type = 'reserve'
-    </select>
-    <select id="typeWait" resultType="event">
-        SELECT *
-        FROM event
-        WHERE type = 'wait'
-    </select>
-    <select id="typeBoth" resultType="event">
-        SELECT *
-        FROM event
-        WHERE type = 'both'
+                        </if>
+                        <if test="!state.contains('end')">
+                            WHERE end_date > now()
+                        </if>
+                    </if>
+                    <if test="!state.contains('open')">
+                        <if test="state.contains('end')">
+                            WHERE start_date &lt;= now()
+                        </if>
+                        <if test="!state.contains('end')">
+                            WHERE start_date &lt;= now() and end_date > now()
+                        </if>
+                    </if>
+                </when>
+                <when test="state.contains('open')">
+                    <if test="state.contains('end')">
+                        WHERE start_date > now() or end_date &lt; now()
+                    </if>
+                    <if test="!state.contains('end')">
+                        WHERE start_date > now()
+                    </if>
+                </when>
+                <otherwise>
+                    WHERE end_date &lt; now()
+                </otherwise>
+            </choose>
+        </if>
+        <if test="state!=null and type!=null">
+            <choose>
+                <when test="state.contains('still')">
+                    <if test="state.contains('open')">
+                        <if test="state.contains('end')">
+                            WHERE type=#{type}
+                        </if>
+                        <if test="!state.contains('end')">
+                            WHERE end_date > now() and type=#{type}
+                        </if>
+                    </if>
+                    <if test="!state.contains('open')">
+                        <if test="state.contains('end')">
+                            WHERE start_date &lt;= now() and type=#{type}
+                        </if>
+                        <if test="!state.contains('end')">
+                            WHERE start_date &lt;= now() and end_date > now() and type=#{type}
+                        </if>
+                    </if>
+                </when>
+                <when test="state.contains('open')">
+                    <if test="state.contains('end')">
+                        WHERE (start_date > now() or end_date &lt; now()) and type=#{type}
+                    </if>
+                    <if test="!state.contains('end')">
+                        WHERE start_date > now() and type=#{type}
+                    </if>
+                </when>
+                <otherwise>
+                    WHERE end_date &lt; now() and type=#{type}
+                </otherwise>
+            </choose>
+        </if>
     </select>
 </mapper>

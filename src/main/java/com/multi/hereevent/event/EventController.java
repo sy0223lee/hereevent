@@ -1,12 +1,10 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.MemberDTO;
-import com.multi.hereevent.event.interest.EventInterestService;
-import com.multi.hereevent.fileupload.FileUploadService;
 import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.review.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,22 +17,13 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @SessionAttributes("member")
-@RequestMapping("/event")
 public class EventController {
     private final EventService eventService;
     private final ReviewService reviewService;
     private final EventInterestService interestService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "main/bootTest";
-    }
     @GetMapping("/main")
-    public String mainPage() {
-        return "main/mainPage";
-    }
-    @GetMapping("/test2")
-    public String test2(Model model) {
+    public String mainPage(Model model) {
         List<EventDTO> starlist = eventService.getListByStarRank();
         model.addAttribute("starlist",starlist);
         List<EventDTO> alleventlist = eventService.getAllEvent();
@@ -43,15 +32,15 @@ public class EventController {
         model.addAttribute("openlist",openlist);
         List<EventDTO> popularlist = eventService.getPopularEvent();
         model.addAttribute("popularlist",popularlist);
-        return "main/mainPage2";
+        return "main/mainPage";
     }
 
     //행사검색(프론트 아직)
-    @GetMapping("/searchlist")
+    @GetMapping("/event/searchlist")
     public String searchPage() {
         return "main/search";
     }
-    @PostMapping("/searchlist")
+    @PostMapping("/event/searchlist")
     public String searchlist(@RequestParam("keyword") String keyword, Model model) {
         List<EventDTO> searchlist = eventService.searchEvent(keyword);
         model.addAttribute("searchlist",searchlist);
@@ -59,7 +48,7 @@ public class EventController {
     }
 
     // 세부페이지
-    @GetMapping("/{event_no}")
+    @GetMapping("/event/{event_no}")
     public String getEventDetails(@PathVariable("event_no") int event_no, Model model) {
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         EventDTO eventDetails;
@@ -76,8 +65,23 @@ public class EventController {
         return "detailedPage/detailedPage";
     }
 
+    //예약기능
+    @PostMapping("/event/reservation")
+    public String reservation(ReserveDTO reserve){
+        if(eventService.checkReserveOrder(reserve.getEvent_no(),
+                reserve.getReserve_date(),reserve.getReserve_time())==null){
+            reserve.setReserve_order(1);
+        }else{
+            int order = reserve.getReserve_order();
+            order++;
+            reserve.setReserve_order(order);
+        };
+        eventService.insertReserve(reserve);
+        return "main/mainPage";
+    }
+
     //이벤트 사진 가져오기
-    @GetMapping("/image/{event_no}")
+    @GetMapping("/event/image/{event_no}")
     @ResponseBody
     public EventDTO getEventImage(@PathVariable("event_no") int event_no, Model model) {
         EventDTO eventDetails = eventService.getEventDetails(event_no);
@@ -86,7 +90,7 @@ public class EventController {
     }
 
     //카테고리별 리스트
-    @GetMapping("/list")
+    @GetMapping("/event/list")
     public String listCategory(@RequestParam("category_no") int category_no, Model model){
         List<EventDTO> eventlist = eventService.selectEventByCategoryNo(category_no);
         model.addAttribute("eventlist",eventlist);
@@ -94,7 +98,7 @@ public class EventController {
     }
 
     // 관심 이벤트 등록, 해제
-    @GetMapping("/interest/insert")
+    @GetMapping("/event/interest/insert")
     public String insertInterest(@RequestParam("event_no") int event_no, Model model){
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         assert member != null;
@@ -104,7 +108,7 @@ public class EventController {
         }
         return "common/errorPage";
     }
-    @GetMapping("/interest/delete")
+    @GetMapping("/event/interest/delete")
     public String deleteInterest(@RequestParam("event_no") int event_no, Model model){
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         assert member != null;
