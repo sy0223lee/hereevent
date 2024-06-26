@@ -21,7 +21,6 @@ public class MapController {
     }
 
     @GetMapping("/map/clicktest")
-    @GetMapping("/clicktest")
     public String clicktest(Model model){
         List<EventDTO> list = mapService.selectStill();
         model.addAttribute("list", list);

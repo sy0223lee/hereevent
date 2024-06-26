@@ -1,9 +1,8 @@
 package com.multi.hereevent.event;
 
-import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.MemberDTO;
+import com.multi.hereevent.category.CategoryService;
+import com.multi.hereevent.dto.*;
 import com.multi.hereevent.event.interest.EventInterestService;
-import com.multi.hereevent.dto.ReviewDTO;
 import com.multi.hereevent.review.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +30,8 @@ public class EventController {
     }
     @GetMapping("/test2")
     public String test2(Model model) {
+        List<FourEventByCategoryDTO> fourlist = eventService.selectFourEventByCategory();
+        model.addAttribute("fourlist",fourlist);
         List<EventDTO> starlist = eventService.getListByStarRank();
         model.addAttribute("starlist",starlist);
         List<EventDTO> alleventlist = eventService.getAllEvent();
@@ -95,12 +96,12 @@ public class EventController {
         model.addAttribute("event", eventDetails);
         return eventService.getEventImage(event_no);
     }
-
     //카테고리별 리스트
-    @GetMapping("/event/list")
-    public String listCategory(@RequestParam("category_no") int category_no, Model model){
+    @GetMapping("/event/list/{category_no}")
+    public String listCategory(@PathVariable("category_no") int category_no, Model model){
         List<EventDTO> eventlist = eventService.selectEventByCategoryNo(category_no);
         model.addAttribute("eventlist",eventlist);
+
         return "event/eventCategoryList";
     }
 

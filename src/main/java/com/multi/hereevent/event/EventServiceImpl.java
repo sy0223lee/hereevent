@@ -1,18 +1,23 @@
 package com.multi.hereevent.event;
 
+import com.multi.hereevent.category.CategoryDAO;
+import com.multi.hereevent.dto.CategoryDTO;
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.FourEventByCategoryDTO;
 import com.multi.hereevent.dto.ReserveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
     private final EventDAO dao;
+    private final CategoryDAO categoryDAO;
 
     @Override
     public int insertEvent(EventDTO event) {
@@ -44,9 +49,37 @@ public class EventServiceImpl implements EventService {
         return dao.getListStarRank();
     }
 
+
     @Override
     public List<EventDTO> selectEventByCategoryNo(int category_no) {
         return dao.selectEventByCategoryNo(category_no);
+    }
+
+
+    @Override
+    public List<FourEventByCategoryDTO> selectFourEventByCategory() {
+        // list로 카테고리번호를 가져옴
+        List<CategoryDTO> categoryList = categoryDAO.getListCategory();
+        System.out.println("catelist=====>"+categoryList);
+
+        List<FourEventByCategoryDTO> fourList = new ArrayList<>();
+
+        // 가져온 list를 for문 돌리면서
+        for(CategoryDTO category : categoryList){
+            FourEventByCategoryDTO fourEventDTO= new FourEventByCategoryDTO();
+            List<EventDTO> eventlist = new ArrayList<>();
+            // sql문으로 가져온 fourEventCategoryDTO를 저장
+            eventlist=dao.selectFourEventByCategory(category.getCategory_no());
+            //System.out.println("eventlist=====>"+eventlist.size());
+            // category_no로 event 4개 조회해서 fourEventCategoryDTO에 저장
+            fourEventDTO.setCategory_no(category.getCategory_no());
+            fourEventDTO.setName(category.getName());
+            fourEventDTO.setEventList(eventlist);
+            fourList.add(fourEventDTO);
+            //System.out.println("service::fourList=====>"+fourList);
+        }
+
+        return fourList;
     }
 
     @Override

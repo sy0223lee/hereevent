@@ -868,6 +868,7 @@ section,
 
 .clients .swiper-slide {
   height: 200px;
+
 }
 
 .clients .swiper-slide img {
@@ -877,11 +878,30 @@ section,
   height: 100%;
   object-fit: cover;
 }
-
+.clients .swiper-slide:hover .overlay {
+            opacity: 1;
+}
 .clients .swiper-slide img:hover {
   cursor: pointer;
 }
-
+.clients .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.5); /* 반투명 빨간색 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+}
+.clients .overlay h2 {
+            color: #2a2e44;
+            font-size: 24px;
+            margin: 0;
+}
 .clients .swiper-wrapper {
   height: auto;
 }

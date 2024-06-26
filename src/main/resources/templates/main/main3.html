@@ -31,7 +31,7 @@
     <!-- 카테고리 Section -->
     <section id="clients-category" class="clients section">
         <div class="container section-title">
-            <h2>카테고리, DB에서 불러오는 걸로 변경 필요</h2>
+            <h2>카테고리별 이미지 필요</h2>
         </div><!-- End Section Title -->
 
         <div class="container">
@@ -71,9 +71,14 @@
                     }
                 </script>
                 <div class="swiper-wrapper align-items-center">
-                    <div th:each="open : ${openlist}" class="swiper-slide">
-                        <img th:src="|@{/download/event/}${open.img_path}|" th:alt="${open.img_path}"
-                             th:onclick="|location.href='@{/event/}${open.event_no}'|">
+                    <div th:each="four:${fourlist}" class="swiper-slide">
+                            <div class="cate-screen1" th:each="event : ${four.eventList}">
+                                <img th:src="|@{/download/event/}${event.img_path}|" class="img-fluid"
+                                     th:onclick="|location.href='@{/event/list/}${four.category_no}'|">
+                            </div>
+                        <div class="overlay">
+                            <h2 th:text="${four.name}">Category Name</h2>
+                        </div>
                     </div>
                 </div>
             </div>
