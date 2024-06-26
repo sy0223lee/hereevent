@@ -20,24 +20,24 @@
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #111111; /* Color for headings, subheadings and title throughout the website */
+  --default-color: #3c4055; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #2A2E44; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #e14533; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #212529;  /* The default color of the main navmenu links */
+  --nav-color: #2A2E44;  /* The default color of the main navmenu links */
   --nav-hover-color: #e14533; /* Applied to main navmenu links when they are hovered over or active */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-color: #2A2E44; /* Used for navigation links of the dropdown items in the navigation menu. */
   --nav-dropdown-hover-color: #e14533; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Template Custom Colors */
 :root {
-  --alt-background-color: #1b1b1b;
+  --alt-background-color: #2A2E44;
 }
 
 /* Smooth scroll */
@@ -760,7 +760,7 @@ section,
 --------------------------------------------------------------*/
 .hero {
   --default-color: #ffffff;
-  --background-color: #000000;
+  --background-color: #2A2E44;
   --heading-color: #ffffff;
   width: 100%;
   min-height: calc(100vh - 100px);
