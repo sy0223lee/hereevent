@@ -11,24 +11,25 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/map")
 public class MapController {
     private final MapService mapService;
 
-    @GetMapping("/kakaomap.html")
+    @GetMapping("/map/kakaomap.html")
     public String address(){
         System.out.println("카카오지도");
         return "kakaomap/kakaomap";
     }
 
+    @GetMapping("/map/clicktest")
     @GetMapping("/clicktest")
     public String clicktest(Model model){
         List<EventDTO> list = mapService.selectStill();
         model.addAttribute("list", list);
+
         return "kakaomap/clicktest";
     }
 
-    @PostMapping("/clicktest/ajaxtest")
+    @PostMapping("/map/clicktest/ajaxtest")
     @ResponseBody
     public List<EventDTO> ajaxtest(ButtonDTO buttonDTO){
         List<EventDTO> list = mapService.button(buttonDTO);

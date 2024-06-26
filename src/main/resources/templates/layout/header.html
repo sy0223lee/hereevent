@@ -2,55 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/hereevent/common/css/header.css">
     <title>HereEvent - Header</title>
 </head>
 <body>
 <header th:fragment="header" id="header" class="header d-flex align-items-center sticky-top">
-    <script src="https://kit.fontawesome.com/5be7c6ff39.js" crossorigin="anonymous"></script>
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <a href="/hereevent" class="logo d-flex align-items-center me-auto">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <img src="/hereevent/images/logo/here-event_logo.png">
-            <!--<h1 class="sitename">HereEvent</h1>
-            <span>.</span>-->
+        <a href="/hereevent" class="logo d-flex align-items-center">
+            <img src="/hereevent/images/logo/here-event_logo.png" alt="HereEvent">
         </a>
-        <form action="/hereevent/search" method="post" class="search-form">
-            <input type="text" name="query" placeholder="검색어를 입력하세요" required>
-            <button type="submit">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
-        <div>
-            <!--위치기반검색?지도?-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
-                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-            </svg>
-            <!--알림-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
-            </svg>
-            <!--마이페이지-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-            </svg>
-            <!--로그아웃-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-            </svg>
+
+        <div class="search-widget flex-fill">
+            <form action="/hereevent/search" method="post">
+                <input type="text" name="query" placeholder="검색어를 입력하세요" required>
+                <button type="submit"><i class="bi bi-search"></i>
+                </button>
+            </form>
         </div>
-        <!--<form action="/hereevent/search" method="post" class="search-form">
-            <input type="text" name="query" placeholder="검색어를 입력하세요" required>
-            <button type="submit">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
-        <a class="btn-getstarted" href="index.html#about">Get Started</a>-->
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="/hereevent/map/clicktest"><i class="bi bi-geo-alt"></i></a></li> <!-- 지도 -->
+                <li th:unless="${session.member == null}"><a href="/hereevent/mypage"><i class="bi bi-person-circle"></i></a></li> <!-- 마이페이지 -->
+                <li th:unless="${session.member == null}"><a href="#"><i class="bi bi-box-arrow-right"></i></a></li> <!-- 로그아웃 -->
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a th:if="${session.member == null}" class="btn-getstarted" href="/hereevent/login">Login</a>
 
     </div>
+
 </header>
 </body>
 </html>

@@ -24,7 +24,7 @@
             });
             $(".interest-btn.picked").click(function () {
                 if(confirm("관심 팝업에서 삭제하시겠습니다까?") === true) {
-                    location.href = "/hereevent/event/myinterest/delete?event_no=" + $(this).val();
+                    location.href = "/hereevent/myinterest/delete?event_no=" + $(this).val();
                 }
             });
         });
