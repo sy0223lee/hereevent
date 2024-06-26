@@ -32,7 +32,7 @@ public class EventController {
         model.addAttribute("openlist",openlist);
         List<EventDTO> popularlist = eventService.getPopularEvent();
         model.addAttribute("popularlist",popularlist);
-        return "main/main3";
+        return "main/mainPage";
     }
 
     //행사검색(프론트 아직)
