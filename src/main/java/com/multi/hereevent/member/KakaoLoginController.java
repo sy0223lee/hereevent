@@ -69,7 +69,7 @@ public class KakaoLoginController {
         System.out.println("===카카오 토큰 발급==="+accessToken);
         getUserInfo(accessToken, model);
 
-        return "mypage/mypage"; // 나중에 메인 페이지로 갈 수 있도록 수정
+        return "main/mainPage";
     }
 
     public void getUserInfo(String accessToken, Model model) throws ParseException {

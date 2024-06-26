@@ -33,7 +33,7 @@ public class MemberController {
     public String login(MemberDTO member, Model model) {
         MemberDTO loginMember = service.loginMember(member);
         model.addAttribute("member", loginMember);
-        return "redirect:/mypage";
+        return "redirect:/main";
     }
     @GetMapping("/register")
     public String register() {

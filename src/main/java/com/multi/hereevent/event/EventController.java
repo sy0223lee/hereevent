@@ -22,16 +22,8 @@ public class EventController {
     private final ReviewService reviewService;
     private final EventInterestService interestService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "main/bootTest";
-    }
     @GetMapping("/main")
-    public String mainPage() {
-        return "main/mainPage";
-    }
-    @GetMapping("/test2")
-    public String test2(Model model) {
+    public String mainPage(Model model) {
         List<EventDTO> starlist = eventService.getListByStarRank();
         model.addAttribute("starlist",starlist);
         List<EventDTO> alleventlist = eventService.getAllEvent();
@@ -44,11 +36,11 @@ public class EventController {
     }
 
     //행사검색(프론트 아직)
-    @GetMapping("/searchlist")
+    @GetMapping("/event/searchlist")
     public String searchPage() {
         return "main/search";
     }
-    @PostMapping("/searchlist")
+    @PostMapping("/event/searchlist")
     public String searchlist(@RequestParam("keyword") String keyword, Model model) {
         List<EventDTO> searchlist = eventService.searchEvent(keyword);
         model.addAttribute("searchlist",searchlist);
@@ -85,7 +77,7 @@ public class EventController {
             reserve.setReserve_order(order);
         };
         eventService.insertReserve(reserve);
-        return "main/mainPage2";
+        return "main/mainPage";
     }
 
     //이벤트 사진 가져오기
