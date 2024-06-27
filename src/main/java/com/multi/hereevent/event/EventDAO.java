@@ -25,7 +25,8 @@ public interface EventDAO {
     List<EventDTO> getListStarRank();
     //카테고리별 조회
     List<EventDTO> selectEventByCategoryNo(int category_no);
-
+    //카테고리별로 4개씩 가져오기
+    List<EventDTO> selectFourEventByCategory(int category_no);
     //오픈예정 행사
     List<EventDTO> getOpenEvent();
     //예약,대기 높은순 10순위 리스트

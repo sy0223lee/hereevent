@@ -30,6 +30,13 @@
 		delete from review_img
 		where review_img_no = #{review_img_no}
 	</delete>
+	<select id="selectAll" resultType="review">
+		select r.*, e.img_path, e.name, m.nick
+		from review r
+			inner join member m on r.member_no = m.member_no
+			inner join event e on r.event_no = e.event_no
+		order by r.review_no desc
+	</select>
 	<select id="selectReviewWithEventImg" resultType="review">
 		select r.*, e.img_path, e.name
 		from review r inner join event e on r.event_no = e.event_no

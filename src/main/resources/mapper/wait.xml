@@ -34,7 +34,7 @@
         select * from wait
     </select>
     <!-- 삭제 -->
-    <delete id="delete" parameterType="String">
+    <delete id="delete" parameterType="Integer">
         delete from wait where wait_no = #{wait_no}
     </delete>
 
@@ -71,6 +71,14 @@
         where event_no = #{event_no} AND state = 'wait'
         order by wait_no
     </select>
+
+    <select id="getWaitingListByEventNo" parameterType="int" resultType="wait">
+        select *
+        from wait
+        where event_no = #{event_no}
+        order by wait_no
+    </select>
+
     <!--  event photo 가져오기  -->
     <select id="getEventImage" resultType="com.multi.hereevent.dto.EventDTO">
         SELECT event_no, image_path
@@ -80,7 +88,8 @@
     <!-- update State-->
     <update id="updateState" parameterType="wait">
         UPDATE wait
-        SET state = #{state}
+        SET state = #{state},
+        wait_date = #{wait_date}
         WHERE wait_no = #{wait_no}
     </update>
 </mapper>
