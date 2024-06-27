@@ -3,6 +3,8 @@ package com.multi.hereevent.wait;
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.WaitDTO;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface WaitService {
@@ -30,4 +32,7 @@ public interface WaitService {
     int getWaitingCount(int event_no);
     int updateStateToVisit(WaitDTO wait);
     boolean canInsert(String wait_tel);
+    //입장 가능시간
+    String getEntranceWaitTime(int event_no, int wait_no);
+
 }

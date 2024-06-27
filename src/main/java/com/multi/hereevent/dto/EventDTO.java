@@ -24,7 +24,7 @@ public class EventDTO {
     private String img_path; //저장한 이미지 경로
     private String type; //사전, 대기, 전체
     private int reserve_limit; //시간당 제한인원(예약)
-    private int wait_limit; //시간당 제한인원(대기)
+    private int wait_limit = 10; //시간당 제한인원(대기)
     private float avg_star;
 
     // 관심 이벤트 설정 여부 저장을 위한 멤버변수

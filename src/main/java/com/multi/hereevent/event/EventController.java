@@ -1,9 +1,6 @@
 package com.multi.hereevent.event;
 
-import com.multi.hereevent.dto.EventDTO;
-import com.multi.hereevent.dto.MemberDTO;
-import com.multi.hereevent.dto.ReserveDTO;
-import com.multi.hereevent.dto.ReviewDTO;
+import com.multi.hereevent.dto.*;
 import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.review.ReviewService;
 
@@ -25,6 +22,8 @@ public class EventController {
 
     @GetMapping("/main")
     public String mainPage(Model model) {
+        List<FourEventByCategoryDTO> fourlist = eventService.selectFourEventByCategory();
+        model.addAttribute("fourlist",fourlist);
         List<EventDTO> starlist = eventService.getListByStarRank();
         model.addAttribute("starlist",starlist);
         List<EventDTO> alleventlist = eventService.getAllEvent();
@@ -67,14 +66,8 @@ public class EventController {
     }
 
     //예약기능
-    @GetMapping("/event/reservation/{event_no}")
-    public String register(@PathVariable("event_no") int event_no, Model model) {
-        EventDTO eventDetails = eventService.getEventDetails(event_no);
-        model.addAttribute("event", eventDetails);
-        return "reservation/reservationRegister";
-    }
-    @PostMapping("/event/reservation/{event_no}")
-    public String reservation(ReserveDTO reserve){
+    @PostMapping("/event/reservation")
+    public String reservation(ReserveDTO reserve,Model model){
         if(eventService.checkReserveOrder(reserve.getEvent_no(),
                 reserve.getReserve_date(),reserve.getReserve_time())==null){
             reserve.setReserve_order(1);
@@ -83,8 +76,10 @@ public class EventController {
             order++;
             reserve.setReserve_order(order);
         };
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
-        return "reservation/reservationRegister";
+        return "redirect:/main";
     }
 
 
@@ -98,8 +93,8 @@ public class EventController {
     }
 
     //카테고리별 리스트
-    @GetMapping("/event/list")
-    public String listCategory(@RequestParam("category_no") int category_no, Model model){
+    @GetMapping("/event/list/{category_no}")
+    public String listCategory(@PathVariable("category_no") int category_no, Model model){
         List<EventDTO> eventlist = eventService.selectEventByCategoryNo(category_no);
         model.addAttribute("eventlist",eventlist);
         return "event/eventCategoryList";
