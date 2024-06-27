@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -66,7 +67,13 @@ public class EventController {
     }
 
     //예약기능
-    @PostMapping("/event/reservation")
+    @GetMapping("/event/reservation/{event_no}")
+    public String register(@PathVariable("event_no") int event_no, Model model) {
+        EventDTO eventDetails = eventService.getEventDetails(event_no);
+        model.addAttribute("event", eventDetails);
+        return "reservation/reservationRegister";
+    }
+    @PostMapping("/event/reservation/{event_no}")
     public String reservation(ReserveDTO reserve){
         if(eventService.checkReserveOrder(reserve.getEvent_no(),
                 reserve.getReserve_date(),reserve.getReserve_time())==null){
@@ -77,8 +84,9 @@ public class EventController {
             reserve.setReserve_order(order);
         };
         eventService.insertReserve(reserve);
-        return "main/mainPage";
+        return "reservation/reservationRegister";
     }
+
 
     //이벤트 사진 가져오기
     @GetMapping("/event/image/{event_no}")
