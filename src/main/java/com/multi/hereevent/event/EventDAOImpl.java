@@ -120,5 +120,8 @@ public class EventDAOImpl implements EventDAO{
     public String selectEventNoByEventName(String eventName) {
         return sqlSession.selectOne("com.multi.hereevent.event.selectEventNoByEventName", eventName);
     }
-
+    @Override
+    public List<EventDTO> selectFourEventByCategory(int category_no) {
+        return sqlSession.selectList("com.multi.hereevent.event.fourEventByCategory", category_no);
+    }
 }
