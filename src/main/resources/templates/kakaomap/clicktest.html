@@ -1,34 +1,143 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
     <head>
         <meta charset="utf-8">
         <title>지도 버튼클릭 테스트</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-            .wrap * {padding: 0;margin: 0;}
-            .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-            .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-            .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-            .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-            .info .close:hover {cursor: pointer;}
-            .info .body {position: relative;overflow: hidden;}
-            .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-            .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-            .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-            .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-            .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-            .info .link {color: #5085BB;}
+            #map {
+                width:70%;
+                height:600px;
+                margin: auto;
+                text-align: center;
+                box-shadow: 0 0 5px;
+            }
+            #listbox {
+               display: flex;
+               flex-wrap: wrap;
+               justify-content: center;
+               gap: 3rem; /* 카드 사이의 간격 */
+               justify-content: center; /* 카드들을 가운데 정렬 */
+           }
+           .card {
+               width: 18rem;
+               height: 25rem;
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between; /* 카드 내용 사이에 공간을 분배하여 균형을 맞춤 */
+               box-shadow: 2px 2px 3px;
+           }
+           .card img {
+               width: 100%;
+               height: 50%;
+           }
+           .card-body {
+               display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex-grow: 1; /* 카드 내용이 가변적으로 높이를 차지하도록 설정 */
+           }
+
+            #listbox .btn-primary {
+                background-color: #d0513d;
+                border-color: #d0513d;
+                color: #fff;
+                width: 50%; /* 버튼을 가득 채우도록 너비 설정 */
+                text-align: center;
+                transition: background-color 0.3s, border-color 0.3s; /* 색상 변경 시 부드러운 전환 효과 */
+            }
+           #listbox .btn-primary:hover {
+                background-color: #d76b5a; /* 호버 시 배경 색상 변경 */
+            }
+            #listbox .btn-primary:focus, #listbox .btn-primary:active {
+                background-color: #d76b5a; /* 클릭 시 배경 색상 변경 */
+                border-color: #d76b5a; /* 클릭 시 테두리 색상 변경 */
+                outline: none; /* 클릭 시 기본 포커스 테두리 제거 */
+                box-shadow: 0 0 0 0.1rem rgba(255, 99, 132, 0.5); /* 클릭 시 테두리 그림자 효과 */
+            }
+
+            #statebox{
+                width:70%;
+                justify-content: center;
+                display: flex;
+                justify-content: center;
+                gap: 10px; /* 버튼 사이의 간격 설정 */
+                margin: auto;
+                padding: 30px;
+            }
+            #placebox{
+                width:70%;
+                justify-content: center;
+                display: flex;
+                justify-content: center;
+                gap: 10px; /* 버튼 사이의 간격 설정 */
+                margin: auto;
+                padding: 30px;
+            }
+
+            /* 마커 css */
+           .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+           .wrap * {padding: 0;margin: 0;}
+           .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+           .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+           .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+           .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+           .info .close:hover {cursor: pointer;}
+           .info .body {position: relative;overflow: hidden;}
+           .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+           .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+           .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+           .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+           .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+           .info .link {color: #5085BB;}
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
     <body>
-        <div>
+    <main layout:fragment="main" class="main">
+        <div id="placebox">
+            <!--radio 버튼-->
+            <div id="hot">
+                핫플
+                <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off" checked>
+                <label class="btn btn-outline-danger" for="seongsu">성수</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="jamsil" autocomplete="off">
+                <label class="btn btn-outline-danger" for="jamsil">잠실</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="hongdae" autocomplete="off">
+                <label class="btn btn-outline-danger" for="hongdae">홍대</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="gangnam" autocomplete="off">
+                <label class="btn btn-outline-danger" for="gangnam">강남</label>
+            </div>
+            <div id="region">
+                지역
+                <input type="radio" class="btn-check" name="options-outlined" id="seoul" autocomplete="off">
+                <label class="btn btn-outline-danger" for="seoul">서울</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="around" autocomplete="off">
+                <label class="btn btn-outline-danger" for="around">경기</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="busan" autocomplete="off">
+                <label class="btn btn-outline-danger" for="busan">부산</label>
+            </div>
+            <div id="myloc">
+                내주변
+                <input type="radio" class="btn-check" name="options-outlined" id="mylocation" autocomplete="off">
+                <label class="btn btn-outline-success" for="mylocation">내위치</label>
+            </div>
+        </div>
+        <div id="mapbox">
+            <div id="map"></div>
+        </div>
+        <div id="statebox">
             <!--체크박스 버튼-->
-           <div id="state">
-               state
-                <input value="still" type="checkbox" class="btn-check" id="still" autocomplete="off" checked>
+            <div id="state">
+                state
+                <input value="still" type="checkbox" class="btn-check" id="still" autocomplete="off">
                 <label class="btn" for="still">still</label>
 
                 <input value="open" type="checkbox" class="btn-check" id="open" autocomplete="off">
@@ -48,63 +157,13 @@
                 <input value="both" type="radio" class="btn-check" name="options-base" id="both" autocomplete="off">
                 <label class="btn" for="both">both</label>
             </div>
-
-            <!--radio 버튼-->
-            <div>
-                <div>
-                    핫플
-                    <input type="radio" class="btn-check" name="options-outlined" id="seongsu" autocomplete="off" checked>
-                    <label class="btn btn-outline-danger" for="seongsu">성수</label>
-
-                    <input type="radio" class="btn-check" name="options-outlined" id="jamsil" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="jamsil">잠실</label>
-
-                    <input type="radio" class="btn-check" name="options-outlined" id="hongdae" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="hongdae">홍대</label>
-
-                    <input type="radio" class="btn-check" name="options-outlined" id="gangnam" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="gangnam">강남</label>
-                </div>
-                <div>
-                    지역
-                    <input type="radio" class="btn-check" name="options-outlined" id="seoul" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="seoul">서울</label>
-
-                    <input type="radio" class="btn-check" name="options-outlined" id="around" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="around">경기</label>
-
-                    <input type="radio" class="btn-check" name="options-outlined" id="busan" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="busan">부산</label>
-                </div>
-                <div>
-                    내주변
-                    <input type="radio" class="btn-check" name="options-outlined" id="mylocation" autocomplete="off">
-                    <label class="btn btn-outline-success" for="mylocation">내위치</label>
-                </div>
-            </div>
+        </div>
 
 
+
+        <div id="listbox" class="container">
 
         </div>
-        <div id="map" style="width:100%;height:350px;"></div>
-        <table id="eventlist" class="table">
-            <thead>
-                <tr>
-                    <th>이름</th>
-                    <th>시작날짜</th>
-                    <th>종료날짜</th>
-                    <th>위치</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="event:${list}">
-                    <td><span th:text="${event.name }"></span></td>
-                    <td><span th:text="${event.start_date }"></span></td>
-                    <td><span th:text="${event.end_date }"></span></td>
-                    <td><span th:text="${event.addr }"></span></td>
-                </tr>
-            </tbody>
-        </table>
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c7411c7e9cd13cdaac33d749ab11436&libraries=services"></script>
         <script th:inline="javascript">
@@ -135,15 +194,17 @@
                                 let printdata="";
                                 data.forEach(event =>{
                                     printdata = printdata
-                                    + "<tbody><tr>"
-                                    + "<td><span>"+event.name+"</span></td>"
-                                    + "<td><span>"+event.start_date+"</span></td>"
-                                    + "<td><span>"+event.end_date+"</span></td>"
-                                    + "<td><span>"+event.addr+"</span></td>"
-                                    + "</tr></tbody>"
+                                    + '<div class="card" style="width: 18rem;">'
+                                    + '  <img src="/hereevent/download/event/' + event.img_path + '"class="card-img-top">'
+                                    + '  <div class="card-body">'
+                                    + '     <h5 class="card-title">' + event.name + '</h5>'
+                                    + '     <p class="card-text">' + event.addr + '</p>'
+                                    + '     <a href="/hereevent/event/' + event.event_no + '" class="btn btn-primary">상세페이지</a>'
+                                    + '  </div>'
+                                    + '</div>'
                                 })
-                                $("#eventlist").empty();//<tr>태그 모두 지우기
-                                $("#eventlist").append(printdata)
+                                $("#listbox").empty();//<tr>태그 모두 지우기
+                                $("#listbox").append(printdata)
                             }
                         })
                     });
@@ -163,15 +224,17 @@
                                 let printdata="";
                                 data.forEach(event =>{
                                     printdata = printdata
-                                    + "<tbody><tr>"
-                                    + "<td><span>"+event.name+"</span></td>"
-                                    + "<td><span>"+event.start_date+"</span></td>"
-                                    + "<td><span>"+event.end_date+"</span></td>"
-                                    + "<td><span>"+event.addr+"</span></td>"
-                                    + "</tr></tbody>"
+                                    + '<div class="card" style="width: 18rem;">'
+                                    + '  <img src="/hereevent/download/event/' + event.img_path + '"class="card-img-top">'
+                                    + '  <div class="card-body">'
+                                    + '     <h5 class="card-title">' + event.name + '</h5>'
+                                    + '     <p class="card-text">' + event.addr + '</p>'
+                                    + '     <a href="/hereevent/event/' + event.event_no + '" class="btn btn-primary">상세페이지</a>'
+                                    + '  </div>'
+                                    + '</div>'
                                 })
-                                $("#eventlist").empty();//<tr>태그 모두 지우기
-                                $("#eventlist").append(printdata)
+                                $("#listbox").empty();//<tr>태그 모두 지우기
+                                $("#listbox").append(printdata)
                             }
                         })
                     });
@@ -216,12 +279,12 @@
                                                 '        </div>' +
                                                 '        <div class="body">' +
                                                 '            <div class="img">' +
-                                                '                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
+                                                '                <img src="/hereevent/download/event/' + event.img_path + '" width="73" height="70">' +
                                                 '           </div>' +
                                                 '            <div class="desc">' +
                                                 '                <div class="ellipsis">' + event.addr + '</div>' +
-                                                '                <div>'+ event.start_date +'</div>' +
-                                                '                <div>'+ event.end_date +'</div>' +
+                                                '                <div><a href="/hereevent/event/' + event.event_no + '" class="link"> 상세페이지 </a></div>' +
+                                                '                <div>'+ event.type +'</div>' +
                                                 '            </div>' +
                                                 '        </div>' +
                                                 '    </div>' +
@@ -317,134 +380,6 @@
 
 
 
-
-        <!--주소로 검색해서 마커-->
-
-        // 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        // 주소로 좌표를 검색합니다
-        geocoder.addressSearch('서울특별시 성동구 연무장 5길 9-13', function(result, status) {
-
-            // 정상적으로 검색이 완료됐으면
-             if (status === kakao.maps.services.Status.OK) {
-
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-
-                // 인포윈도우로 장소에 대한 설명을 표시합니다
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">행사이름, 주소, </div>'
-                });
-                infowindow.open(map, marker);
-
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                map.setCenter(coords);
-            }
-        });
-
-
-
-
-        <!--마커 여러개 표시하기-->
-        // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
-        var positions = [
-            {
-                content: '<div>카카오</div>',
-                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-            },
-            {
-                content: '<div>생태연못</div>',
-                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-            },
-            {
-                content: '<div>텃밭</div>',
-                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-            },
-            {
-                content: '<div>근린공원</div>',
-                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-            }
-        ];
-
-        for (var i = 0; i < positions.length; i ++) {
-            // 마커를 생성합니다
-            var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                position: positions[i].latlng // 마커의 위치
-            });
-
-            // 마커에 표시할 인포윈도우를 생성합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content: positions[i].content // 인포윈도우에 표시할 내용
-            });
-
-            // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-            // 이벤트 리스너로는 클로저를 만들어 등록합니다
-            // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        }
-
-        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-        function makeOverListener(map, marker, infowindow) {
-            return function() {
-                infowindow.open(map, marker);
-            };
-        }
-
-        // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-        function makeOutListener(infowindow) {
-            return function() {
-                infowindow.close();
-            };
-        }
-
-        /* 아래와 같이도 할 수 있습니다 */
-        /*
-        for (var i = 0; i < positions.length; i ++) {
-            // 마커를 생성합니다
-            var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                position: positions[i].latlng // 마커의 위치
-            });
-
-            // 마커에 표시할 인포윈도우를 생성합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content: positions[i].content // 인포윈도우에 표시할 내용
-            });
-
-            // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
-            // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-            (function(marker, infowindow) {
-                // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-                kakao.maps.event.addListener(marker, 'mouseover', function() {
-                    infowindow.open(map, marker);
-                });
-
-                // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-                kakao.maps.event.addListener(marker, 'mouseout', function() {
-                    infowindow.close();
-                });
-            })(marker, infowindow);
-        }
-        */
-
-
-
-
-
-
-
-
-
-
-
         function locationLoadSuccess(pos){
             // 현재 위치 받아오기
             var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
@@ -508,5 +443,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>
+    </main>
     </body>
 </html>
