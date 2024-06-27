@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HereEvent-EventDetail</title>    
+    <title>HereEvent-EventDetail</title>
 </head>
 <body>
 <div th:fragment="reservation" >
@@ -11,13 +11,13 @@
     <h2 class="title">이벤트 예약페이지</h2>
 <!--    <h3>[[${event.event_no}]]</h3>-->
     <div class="reservation">
-        <form action="/hereevent/event/reservation" method="post">
+        <form action="/hereevent/event/reservation/{event_no}" method="post">
 <!--            <h3>event_no</h3>-->
             <input type="hidden" name="event_no" th:value="${event.event_no}">
-
+            <input type="hidden" name="member_no" th:value="${session.member.member_no}">
 <!--            <h3>member_no</h3>-->
 
-            <input type="text" name="member_no" id="member_no" placeholder="insert member_no">
+
             <input type="date" id="reserve_date" name="reserve_date" placeholder="예약날짜를 입력하세요">
             <select name="reserve_time" >
                 <option th:each="times:${eventTime}">[[${times}]]</option>

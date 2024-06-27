@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +75,7 @@ public class EventController {
 
     //예약기능
     @PostMapping("/event/reservation")
-    public String reservation(ReserveDTO reserve){
+    public String reservation(ReserveDTO reserve,Model model){
         if(eventService.checkReserveOrder(reserve.getEvent_no(),
                 reserve.getReserve_date(),reserve.getReserve_time())==null){
             reserve.setReserve_order(1);
@@ -83,8 +84,10 @@ public class EventController {
             order++;
             reserve.setReserve_order(order);
         };
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
-        return "main/mainPage";
+        return "redirect:/main";
     }
     @PostMapping("/reservation/times")
     public ResponseEntity<Map<String, List<String>>> getEventTimes(@RequestBody Map<String, Object> request) {
@@ -98,6 +101,7 @@ public class EventController {
         response.put("times", times);
         return ResponseEntity.ok(response);
     }
+
     //이벤트 사진 가져오기
     @GetMapping("/event/image/{event_no}")
     @ResponseBody
