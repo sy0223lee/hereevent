@@ -6,6 +6,8 @@ import com.multi.hereevent.dto.WaitDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class WaitDAOImpl implements WaitDAO {
     }
 
     @Override
-    public int delete(String wait_no) {
+    public int delete(int wait_no) {
         return sqlSession.delete("com.multi.hereevent.wait.delete", wait_no);
     }
 
@@ -77,9 +79,12 @@ public class WaitDAOImpl implements WaitDAO {
 
 
     @Override
-    public List<WaitDTO> getWaitingListByEventNo(int event_no) {
+    public List<WaitDTO> whenIgetInNo(int event_no) {
         return sqlSession.selectList("com.multi.hereevent.wait.whenIgetInNo", event_no);
     }
-
+    @Override
+    public List<WaitDTO> getWaitingListByEventNo(int event_no) {
+        return sqlSession.selectList("com.multi.hereevent.wait.getWaitingListByEventNo", event_no);
+    }
 
 }
