@@ -184,6 +184,17 @@ public class MemberController {
         }
     }
 
+    /***** 관리자 페이지 이동 *****/
+    @GetMapping("/admin")
+    public String adminPage(Model model){
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        if(member != null && member.getMgr() == 1){
+            return "admin/home";
+        }else{
+            return "common/errorPage";
+        }
+    }
+
     /***** 행사 내역 *****/
     @GetMapping("/myevent")
     public String myevent() {

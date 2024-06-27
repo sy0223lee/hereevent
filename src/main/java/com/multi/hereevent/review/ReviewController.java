@@ -1,11 +1,8 @@
 package com.multi.hereevent.review;
 
-import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
 import com.multi.hereevent.dto.ReviewDTO;
-
 import com.multi.hereevent.dto.ReviewImgDTO;
-import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,6 @@ import java.util.List;
 @SessionAttributes("member")
 public class ReviewController {
     private final ReviewService reviewService;
-    private final EventService eventService;
     private final FileUploadService fileUploadService;
 
     // 이벤트 상세페이지에서 리뷰 조회
@@ -86,13 +82,24 @@ public class ReviewController {
             return "common/errorPage";
         }
     }
-    @GetMapping("/myreview/delete/img")
+    @PostMapping("/myreview/delete/img")
     @ResponseBody
     public List<ReviewImgDTO> deleteReviewImg(@RequestParam("review_img_no") String review_img_no,
-                                    @RequestParam("review_no") String review_no){
+                                                @RequestParam("review_no") String review_no){
         // 리뷰 이미지 삭제
         reviewService.deleteReviewImg(Integer.parseInt(review_img_no));
         // 리뷰 이미지 정보 다시 받아서 전송
         return reviewService.selectReviewImgs(Integer.parseInt(review_no));
+    }
+
+    /***** 관리자 페이지 *****/
+    @GetMapping("/admin/review")
+    public String adminReviewPage(Model model){
+        List<ReviewDTO> reviewList = reviewService.selectAll();
+        for(ReviewDTO review : reviewList){
+            review.setReview_imgs(reviewService.selectReviewImgs(review.getReview_no()));
+        }
+        model.addAttribute("reviewList", reviewList);
+        return "admin/review";
     }
 }
