@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<ReviewImgDTO> selectAll() {
+    public List<ReviewDTO> selectAll() {
         return dao.selectAll();
     }
 

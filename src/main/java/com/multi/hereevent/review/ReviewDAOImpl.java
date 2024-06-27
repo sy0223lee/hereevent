@@ -49,7 +49,7 @@ public  class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public List<ReviewImgDTO> selectAll() {
+    public List<ReviewDTO> selectAll() {
         return sqlSession.selectList("com.multi.hereevent.review.selectAll");
     }
 
