@@ -20,12 +20,12 @@
 
                         </if>
                         <if test="!state.contains('end')">
-                            WHERE end_date > now()
+                            WHERE (start_date &lt;= now() and end_date > now()) or start_date > now()
                         </if>
                     </if>
                     <if test="!state.contains('open')">
                         <if test="state.contains('end')">
-                            WHERE start_date &lt;= now()
+                            WHERE (start_date &lt;= now() and end_date > now()) or end_date &lt; now()
                         </if>
                         <if test="!state.contains('end')">
                             WHERE start_date &lt;= now() and end_date > now()
@@ -53,12 +53,12 @@
                             WHERE type=#{type}
                         </if>
                         <if test="!state.contains('end')">
-                            WHERE end_date > now() and type=#{type}
+                            WHERE ((start_date &lt;= now() and end_date > now()) or start_date > now()) and type=#{type}
                         </if>
                     </if>
                     <if test="!state.contains('open')">
                         <if test="state.contains('end')">
-                            WHERE start_date &lt;= now() and type=#{type}
+                            WHERE ((start_date &lt;= now() and end_date > now()) or end_date &lt; now()) and type=#{type}
                         </if>
                         <if test="!state.contains('end')">
                             WHERE start_date &lt;= now() and end_date > now() and type=#{type}
