@@ -24,7 +24,7 @@
             <ul>
                 <li><a href="/hereevent/map/clicktest"><i class="bi bi-geo-alt"></i></a></li> <!-- 지도 -->
                 <li th:unless="${session.member == null}"><a href="/hereevent/mypage"><i class="bi bi-person-circle"></i></a></li> <!-- 마이페이지 -->
-                <li th:unless="${session.member == null}"><a href="#"><i class="bi bi-box-arrow-right"></i></a></li> <!-- 로그아웃 -->
+                <li th:unless="${session.member == null}"><a href="/hereevent/logout"><i class="bi bi-box-arrow-right"></i></a></li> <!-- 로그아웃 -->
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
