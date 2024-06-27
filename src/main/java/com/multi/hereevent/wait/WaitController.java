@@ -3,11 +3,15 @@ package com.multi.hereevent.wait;
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.WaitDTO;
 import com.multi.hereevent.event.EventService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,42 +45,54 @@ public class WaitController {
     @PostMapping("/wait/login")
     public String login(WaitDTO wait, Model model, RedirectAttributes redirectAttributes) {
         WaitDTO loginMyWait = service.waitLogin(wait);
-        System.out.println(loginMyWait);
         WaitDTO waitDetailTel = service.waitDetailTel(wait.getWait_tel());
-        System.out.println(waitDetailTel);
         model.addAttribute("wait", loginMyWait);
+        if (loginMyWait == null) {
+            redirectAttributes.addFlashAttribute("error", "등록되지 않은 번호입니다.");
+            return "redirect:/wait/login";
+        }
         redirectAttributes.addAttribute("wait_no", waitDetailTel.getWait_no());
-        return "redirect:/wait/mywait/{wait_no}";
+        redirectAttributes.addAttribute("event_no", waitDetailTel.getEvent_no());
+        return "redirect:/wait/mywait/{event_no}/{wait_no}";
+
+
     }
 
-    @GetMapping("/wait/mywait/{wait_no}")
-    public String mywait(@PathVariable("wait_no") int wait_no, Model model) {
+    @GetMapping("/wait/mywait/{event_no}/{wait_no}")
+    public String mywait(@PathVariable("wait_no") int wait_no,@PathVariable("event_no") int event_no, Model model) {
         WaitDTO eventDetail = service.EventDetail(wait_no);
-        System.out.println(eventDetail);
         model.addAttribute("event", eventDetail);
-        return "waitPage/mywait";
-    }
-    @PostMapping("/wait/updateState")
-    @ResponseBody
-    public String updateState(WaitDTO wait) {
-        service.updateStateToVisit(wait);
-        return "redirect:/wait/mywait/" + wait.getWait_no();
-    }
-    @PostMapping("/wait/position")
-
-    public String getWaitingPosition(@RequestParam("event_no") int event_no, @RequestParam("wait_no") int wait_no, Model model) {
+        System.out.println(eventDetail);
         int position = service.getWaitingPosition(event_no, wait_no);
         int waitingCount = service.getWaitingCount(event_no);
+        String waitTime = service.getEntranceWaitTime(event_no, wait_no);
+
+        model.addAttribute("waitTime", waitTime);
         model.addAttribute("position", position);
         model.addAttribute("waitingCount", waitingCount);
         return "waitPage/mywait";
     }
+    @PostMapping("/wait/updateState")
+    public String updateState(@RequestParam("wait_no") String wait_no, Model model) {
+
+        WaitDTO eventDetail = service.EventDetail(Integer.parseInt(wait_no));
+        eventDetail.setState("visit");
+        eventDetail.setWait_date(LocalDateTime.now());
+        model.addAttribute("event_no", eventDetail.getEvent_no());
+
+        service.updateStateToVisit(eventDetail);
+        System.out.println(eventDetail);
+
+        return "redirect:/main";
+    }
 
     @GetMapping("/wait/delete")
     public String delete(@RequestParam("wait_no") int wait_no) {
+        System.out.println(wait_no);
         service.waitDelete(wait_no);
-        return "redirect:/event/main";
+        return "redirect:/main";
     }
+
 
 
 
