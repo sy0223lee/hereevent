@@ -19,9 +19,9 @@
 
 
             <input type="date" id="reserve_date" name="reserve_date" placeholder="예약날짜를 입력하세요">
-            <input type="radio" name="reserve_time" value="10:00:00">10:00
-            <input type="radio" name="reserve_time" value="10:00:00">11:00
-            <input type="radio" name="reserve_time" value="10:00:00">12:00
+            <select name="reserve_time" >
+                <option th:each="times:${eventTime}">[[${times}]]</option>
+            </select>
             <button type="submit">예약</button>
             <button type="button">대기</button>
         </form>
@@ -56,66 +56,107 @@
             let date = today.getDate();
             let selectedDate = null;
 
-            <!--이벤트 날짜 가져오기-->
+            <!--이벤트 시작일과 종료일 가져오기-->
             let eventStartDate = new Date(/*[[${event.start_date}]]*/);
             let eventEndDate = new Date(/*[[${event.end_date}]]*/);
+            <!--달력 렌더링 함수-->
             function renderCalendar(year, month) {
-        if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
-            lastDate[1] = 29;
-        } else {
-            lastDate[1] = 28;
-        }
-
-        document.getElementById("yearmonth").innerText = `${year}년 ${month + 1}월`;
-
-        const calBody = document.getElementById("calBody");
-        calBody.innerHTML = "";
-
-        let firstDay = new Date(year, month, 1).getDay();
-        let i = 1;
-
-        while (i <= lastDate[month]) {
-            let newTr = document.createElement("tr");
-            calBody.appendChild(newTr);
-
-            for (let j = 0; j < 7; j++) {
-                if (i === 1 && j < firstDay) {
-                    let newTd = document.createElement("td");
-                    newTr.appendChild(newTd);
+                <!--윤년 계산-->
+                if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+                    lastDate[1] = 29;
                 } else {
-                    if (i > lastDate[month]) break;
-                    (function(d) {
-                        let newTd = document.createElement("td");
-                        let currentDate = new Date(year, month, d);
-                        if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
-                            newTd.classList.add("within-event");
-                            newTd.addEventListener("click", function() {
-                                selectDate(this, d);
-                            });
+                    lastDate[1] = 28;
+                }
+                <!--연도와 월을 표시-->
+                document.getElementById("yearmonth").innerText = `${year}년 ${month + 1}월`;
+
+                const calBody = document.getElementById("calBody");
+                calBody.innerHTML = "";
+
+                <!--해당 월의 첫번째 날짜의 요일을 계산-->
+                let firstDay = new Date(year, month, 1).getDay();
+                let i = 1;
+
+                <!--날짜 렌더링-->
+                while (i <= lastDate[month]) {
+                    let newTr = document.createElement("tr");
+                    calBody.appendChild(newTr);
+
+                    for (let j = 0; j < 7; j++) {
+                        if (i === 1 && j < firstDay) {
+                            let newTd = document.createElement("td");
+                            newTr.appendChild(newTd);
                         } else {
-                            newTd.classList.add("disabled");
-                        }
-                        if (d === date && month === today.getMonth() && year === today.getFullYear()) {
-                            newTd.classList.add("today");
-                        }
-                        newTd.innerHTML = d;
-                        newTr.appendChild(newTd);
-                    })(i);
-                    i++;
+                            if (i > lastDate[month]) break;
+                            (function(d) {
+                                let newTd = document.createElement("td");
+                                let currentDate = new Date(year, month, d);
+                                if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
+                                    newTd.classList.add("within-event");
+                                    newTd.addEventListener("click", function() {
+                                        selectDate(this, d);
+                                    });
+                                } else {
+                                    newTd.classList.add("disabled");
+                                }
+                                if (d === date && month === today.getMonth() && year === today.getFullYear()) {
+                                    newTd.classList.add("today");
+                                }
+                                newTd.innerHTML = d;
+                                newTr.appendChild(newTd);
+                            })(i);
+                            i++;
+                    }
                 }
             }
         }
-    }
-
+    <!--날짜 선택했을때 호출-->
     function selectDate(td, d) {
         if (selectedDate) {
             selectedDate.classList.remove("selected");
         }
         selectedDate = td;
         selectedDate.classList.add("selected");
-        document.getElementById('reserve_date').value = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    }
 
+        let selectedDateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        document.getElementById('reserve_date').value = selectedDateString;
+
+        let selectedDayOfWeek = new Date(year, month, d).getDay(); <!--요일 계산 (0: 일요일, 1: 월요일, ..., 6: 토요일)-->
+
+        <!--요일과 날짜를 서버로 전송 (AJAX 요청)-->
+        fetch('/reservation/times', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                eventNo: eventNo,
+                date: selectedDateString,
+                day: selectedDay
+            })
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        }).then(data => {
+            updateTimeOptions(data.times);
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    <!--운영 시간 업데이트 -->
+     function updateTimeOptions(times) {
+            const select = document.querySelector('select[name="reserve_time"]');
+            select.innerHTML = ''; // 기존 옵션을 비움
+            times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.text = time;
+                select.appendChild(option);
+            });
+        }
+    <!--이전 달로 이동-->
     function prevMonth() {
         if (month === 0) {
             month = 11;
@@ -125,7 +166,7 @@
         }
         renderCalendar(year, month);
     }
-
+    <!--다음 달로 이동-->
     function nextMonth() {
         if (month === 11) {
             month = 0;
@@ -135,7 +176,7 @@
         }
         renderCalendar(year, month);
     }
-
+    <!--초기 달력 렌더링-->
     renderCalendar(year, month);
         </script>
 
