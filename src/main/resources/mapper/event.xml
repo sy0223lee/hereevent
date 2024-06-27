@@ -84,6 +84,13 @@
         from event
         where category_no=#{category_no}
     </select>
+    <!--카테고리별 이벤트 4개씩 조회-->
+    <select id="fourEventByCategory" resultType="event">
+        SELECT *
+        FROM event
+        WHERE category_no =#{category_no} AND end_date > NOW()
+        LIMIT 4
+    </select>
     <!--별점순 이벤트 조회-->
     <select id="getEventByStarRank" resultType="event">
         SELECT e.event_no, e.name, e.img_path, AVG(r.star) AS avg_star

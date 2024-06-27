@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.FourEventByCategoryDTO;
 import com.multi.hereevent.dto.ReserveDTO;
 
 import java.sql.Date;
@@ -25,7 +26,8 @@ public interface EventService {
     List<EventDTO> getListByStarRank();
     //카테고리별 조회
     List<EventDTO> selectEventByCategoryNo(int category_no);
-
+    //카테고리별 4개씩 조회
+    List<FourEventByCategoryDTO> selectFourEventByCategory();
     //오픈예정 행사
     List<EventDTO> getOpenEvent();
     //예약,대기 높은순 10순위 리스트
