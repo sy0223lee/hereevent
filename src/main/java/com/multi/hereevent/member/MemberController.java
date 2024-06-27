@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -33,6 +34,12 @@ public class MemberController {
     public String login(MemberDTO member, Model model) {
         MemberDTO loginMember = service.loginMember(member);
         model.addAttribute("member", loginMember);
+        return "redirect:/main";
+    }
+    @GetMapping("/logout")
+    public String logout(SessionStatus status) {
+        System.out.println("스프링이 제공하는 @SessionAttribute를 이용해서 로그아웃");
+        status.setComplete();//세션에 있는 객체를 제거
         return "redirect:/main";
     }
     @GetMapping("/register")

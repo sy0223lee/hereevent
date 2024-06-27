@@ -66,7 +66,7 @@ public class EventController {
 
     //예약기능
     @PostMapping("/event/reservation")
-    public String reservation(ReserveDTO reserve){
+    public String reservation(ReserveDTO reserve,Model model){
         if(eventService.checkReserveOrder(reserve.getEvent_no(),
                 reserve.getReserve_date(),reserve.getReserve_time())==null){
             reserve.setReserve_order(1);
@@ -75,8 +75,10 @@ public class EventController {
             order++;
             reserve.setReserve_order(order);
         };
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
-        return "main/mainPage";
+        return "redirect:/main";
     }
 
     //이벤트 사진 가져오기
