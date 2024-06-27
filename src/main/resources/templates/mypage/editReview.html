@@ -10,12 +10,6 @@
     <link href="/hereevent/common/css/starRate.css" rel="stylesheet">
     <!-- js File -->
     <script type="text/javascript" src="/hereevent/common/js/starRate.js"></script>
-
-    <title>HereEvent-MyPage</title>
-</head>
-<body>
-<main layout:fragment="main" class="main">
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('.review-img').on('click', '.delete-review-img', function(){
@@ -23,13 +17,10 @@
                     let data = {"review_img_no": $(this).val(), "review_no": $(".review_no").val()};
                     $.ajax({
                         url: "/hereevent/myreview/delete/img",
-                        type: "get",
+                        type: "post",
                         data: data,
                         dataType: "json",
                         success: function(result){
-                            console.log(result);
-                            alert(result.length);
-
                             let html = "";
                             for(let reviewImg of result){
                                 html += "<div class='review-img-container'><img src='/hereevent/download/review/" + reviewImg.img_path + "' alt='" + reviewImg.img_path + "'>" +
@@ -45,6 +36,11 @@
             });
         });
     </script>
+
+    <title>HereEvent-MyPage</title>
+</head>
+<body>
+<main layout:fragment="main" class="main">
 
     <!-- Page Title -->
     <div class="page-title">

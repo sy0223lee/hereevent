@@ -1,0 +1,52 @@
+/* 후기 관리 페이지 */
+.review-container .event-image img{
+    width: 80px;
+    height: 80px;
+}
+
+.review-table .table-title{
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--default-color);
+}
+.review-table .table-row{
+    padding: 10px 0;
+    border-bottom: 1px solid var(--default-color);
+}
+
+.review-table a {
+    color: var(--default-color);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.review-table a:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.review-table .choose{
+    width: 5%;
+}
+.review-table .event-img{
+    width: 8%;
+}
+.review-table .event-name{
+    width: 32%;
+}
+.review-table .writer{
+    width: 10%;
+}
+.review-table .star{
+    width: 10%;
+}
+.review-table .write-date{
+    width: 12%;
+}
+.review-table .update-date{
+    width: 12%;
+}
+.review-table .show-detail{
+    width: 10%;
+}
