@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -80,6 +81,7 @@ public class EventController {
         eventService.insertReserve(reserve);
         return "redirect:/main";
     }
+
 
     //이벤트 사진 가져오기
     @GetMapping("/event/image/{event_no}")
