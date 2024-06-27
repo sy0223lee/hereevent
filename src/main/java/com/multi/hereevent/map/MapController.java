@@ -22,6 +22,9 @@ public class MapController {
 
     @GetMapping("/map/clicktest")
     public String clicktest(Model model,ButtonDTO buttonDTO){
+        List<EventDTO> list = mapService.selectStill();
+        model.addAttribute("list", list);
+        
         return "kakaomap/clicktest";
     }
 
