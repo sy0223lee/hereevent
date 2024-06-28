@@ -5,10 +5,13 @@ import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.review.ReviewService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -127,5 +130,39 @@ public class EventController {
         }
         return "common/errorPage";
     }
+
+    /***** 관리자 페이지 *****/
+    @GetMapping("/admin/event")
+    public String adminEventPage(Model model){
+        List<EventDTO> eventList = eventService.selectAll();
+        for(EventDTO event : eventList){
+            EventDTO eventDetails = eventService.getEventDetails(event.getEvent_no());
+            event.setImg_path(eventDetails.getImg_path());
+        }
+        model.addAttribute("event", eventList);
+        return "admin/event";
+    }
+    // insert, update, delete 만들어 놨는데 수정해서 쓰시면 될거같습니다.
+//    @PostMapping("/admin/event")
+//    public String createEvent(EventDTO eventDTO) {
+//        eventService.insertEvent(eventDTO);
+//        return "redirect:/admin/event";
+//    }
+//
+//    @PostMapping("/admin/event/update/{event_no}")
+//    public String updateEvent(@PathVariable("event_no") int event_no, @RequestBody EventDTO eventDTO) {
+//        eventDTO.setEvent_no(event_no);
+//        eventService.updateEvent(eventDTO);
+//        return "redirect:/admin/event";
+//    }
+//
+//    @GetMapping("/admin/event/delete/")
+//    public String deleteEvent(@RequestParam("event_no") int event_no) {
+//        eventService.deleteEvent(event_no);
+//        return "redirect:/admin/event";
+//    }
+
+
+
 }
 
