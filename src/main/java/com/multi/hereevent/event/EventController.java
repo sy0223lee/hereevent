@@ -150,5 +150,13 @@ public class EventController {
         }
         return "common/errorPage";
     }
+    //검색
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model) {
+        List<EventDTO> searchlist = eventService.search(keyword);
+        model.addAttribute("events", searchlist);
+        model.addAttribute("keyword", keyword);
+        return "search/searchResults";
+    }
 }
 

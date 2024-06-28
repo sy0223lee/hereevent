@@ -75,11 +75,11 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${event.name}">Event Name</h5>
                     <p class="card-text" th:text="${event.addr}">Event Address</p>
-                    <a th:href="@{/event/{event_no}(event_no=${event.id})}" class="btn btn-primary">상세페이지</a>
+                    <a th:href="@{/event/{event_no}(event_no=${event.event_no})}" class="btn btn-primary">상세페이지</a>
                 </div>
             </div>
         </div>
     </main>
-    <a href="/search">Back to search</a>
+<!--    <a href="/search">Back to search</a>-->
 </body>
 </html>

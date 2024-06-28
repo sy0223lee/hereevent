@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.ibatis.type.Alias;
 
 @Getter
 @Setter
@@ -11,8 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SearchDTO{
 
-    private Long id;
+    private Long event_no;
     private String name;
-    private String description;
+    private String addr;
+    private String img_path;
 
 }
