@@ -64,7 +64,6 @@ public class EventController {
             // 로그인이 안 되어 있는 경우 이벤트 정보만 넘겨주기
             eventDetails = eventService.getEventDetails(event_no);
         }
-        System.out.println(eventDetails);
         List<ReviewDTO> reviewList = reviewService.selectReviewByEventNo(event_no);
         List<String> eventTimeList = eventTimeService.getOperTime(event_no,"월");
         model.addAttribute("event", eventDetails);
