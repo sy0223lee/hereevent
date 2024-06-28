@@ -22,76 +22,96 @@ function selectAll(selectAll)  {
     });
 }
 
-// 페이지 버튼
-const PAGE = {
-    paging: function(totalPageCount, pageNo, totalElementCount, fn) {
+// 페이지네이션 버튼(전체 페이지 수, 현재 페이지 번호, 전체 조회된 요소의 개수)
+function pageBtn(totalPages, pageNumber, totalElements) {
+    // 보여줄 리스트가 없으면 페이지 버튼 출력 X
+    if (totalElements === 0) {
+        document.querySelector(".pagination").innerHTML = "";
+        return false;
+    }
 
-        if (totalElementCount == 0) {
-            document.querySelector("#pagingArea").innerHTML = "";
-            return false;
-        }
+    let pageBlock = 5; // 페이지 번호 5개씩 보여주기
+    let blockNo = toInt(pageNumber / pageBlock) + 1; // 5개씩 보여줄 페이지 블럭 번호 계산
+    let startPageNumber = (blockNo - 1) * pageBlock; // 페이지 시작 번호
+    let endPageNumber = blockNo * pageBlock - 1; // 페이지 종료 번호
 
-        let pageBlock = 10;
-        let blockNo = PAGE.toInt(pageNo / pageBlock) + 1;
-        let startPageNo = (blockNo - 1) * pageBlock;
-        let endPageNo = blockNo * pageBlock - 1;
+    // 마지막 페이지 버튼 번호가 전체 페이지 수보다 작은 경우
+    if (endPageNumber > totalPages - 1) {
+        endPageNumber = totalPages - 1;
+    }
 
-        if (endPageNo > totalPageCount - 1) {
-            endPageNo = totalPageCount - 1;
-        }
+    let prevBlockPageNumber = (blockNo - 1) * pageBlock - 1; // 이전 페이지 블럭
+    let nextBlockPageNumber = blockNo * pageBlock; // 다음 페이지 블럭
 
-        let prevBlockPageNo = (blockNo - 1) * pageBlock - 1;
-        let nextBlockPageNo = blockNo * pageBlock;
+    let strHTML = "";
 
-        let strHTML = "";
+    // <, << 활성화/비활성화 처리
+    if (prevBlockPageNumber >= 0) {
+        // <, << 활성화
+        strHTML += "<li><button onclick='moveToStartPage()' class='page-prev on'><i class='bi bi-chevron-double-left'></i></button></li>";
+        strHTML += "<li><button class='page-left on'><i class='bi bi-chevron-left'></i></button></li>";
+    } else {
+        // <, << 비활성화
+        strHTML += "<li><button class='page-prev off'><i class='bi bi-chevron-double-left'></i></button></li>";
+        strHTML += "<li><button class='page-left off'><i class='bi bi-chevron-left'></i></button></li>";
+    }
 
-        // <, << 활성화/비활성화 처리
-        if (prevBlockPageNo >= 0) {
-            // <, << 활성화
-            strHTML += "<li><a href='javascript:" + fn + "(" + 0 + ");' ><span class='icon page_prev_on'></span></a></li>";
-            strHTML += "<li><a href='javascript:" + fn + "(" + prevBlockPageNo + ");' ><span class='icon page_left_on'></span></a></li>";
+    // 페이징 번호 생성
+    for (let i = startPageNumber; i <= endPageNumber; i++) {
+        if (i === pageNumber) {
+            strHTML += "<li class='active'><button>" + (i+1) + "</button></li>";
         } else {
-            // <, << 비활성화
-            strHTML += "<li><a><span class='icon page_prev_off'></span></a></li>";
-            strHTML += "<li><a><span class='icon page_left_off'></span></a></li>";
-        }
-
-        // 페이징 번호 생성
-        for (let i = startPageNo; i <= endPageNo; i++) {
-            if (i == pageNo) {
-                strHTML += "<li class='active'><a>" + (i + 1) + "</a></li>";
-            } else {
-                strHTML += "<li><a href='javascript:" + fn + "(" + i + ");' >" + (i + 1) + "</a></li>";
-            }
-        }
-
-        // >, >> 활성화/비활성화 처리
-        if (nextBlockPageNo < totalPageCount) {
-            // >, >> 활성화
-            strHTML += "<li><a href='javascript:" + fn + "(" + nextBlockPageNo + ");' ><span class='icon page_right_on'></span></a></li>";
-            strHTML += "<li><a href='javascript:" + fn + "(" + (totalPageCount - 1) + ");' ><span class='icon page_next_on'></span></a></li>";
-        } else {
-            // >, >> 비활성화
-            strHTML += "<li><a><span class='icon page_right_off'></span></a></li>";
-            strHTML += "<li><a><span class='icon page_next_off'></span></a></li>";
-        }
-
-        let element = document.querySelector("#pagingArea");
-        element.innerHTML = strHTML;
-    },
-
-    toInt: function(value) {
-        if (value != null) {
-            return parseInt(value, 10);
-        }
-    },
-
-    pageRowNumber: function(pageNo, pageSize, index, totalCount) {
-        debugger;
-        if (totalCount) {
-            return totalCount - ((pageNo) * pageSize + index);
-        } else {
-            return (pageNo) * pageSize + (index + 1);
+            strHTML += "<li><button onclick='movePage(" + i + ")' class='page-number'>" + (i+1) + "</button></li>";
         }
     }
+
+    // >, >> 활성화/비활성화 처리
+    if (nextBlockPageNumber < totalPages) {
+        // >, >> 활성화
+        strHTML += "<li><button onclick='moveToEndPage(" + totalPages + ")' class='page-right on'><i class='bi bi-chevron-right'></i></button></li>";
+        strHTML += "<li><button class='page-next on'><i class='bi bi-chevron-double-right'></i></button></li>";
+    } else {
+        // >, >> 비활성화
+        strHTML += "<li><button class='page-right off'><i class='bi bi-chevron-right'></i></button></li>";
+        strHTML += "<li><button class='page-next off'><i class='bi bi-chevron-double-right'></i></button></li>";
+    }
+
+    $(".pagination").append(strHTML);
+}
+
+// 페이지 블럭 번호 int 변환
+function toInt(value){
+    if(value != null){
+        return parseInt(value, 10);
+    }
+}
+
+// 페이지 번호 버튼 - 전달 받은 페이지 번호로 이동
+function movePage(pageNumber){
+    // 컨트롤러에게 전해줄 파라미터
+    let type = $("select[name='type']").val();
+    let keyword = $('input[name="keyword"]').val();
+
+    // 경로 이동
+    location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=" + pageNumber;
+}
+
+// 첫 페이지 이동 버튼 - page-prev
+function moveToStartPage(){
+    // 컨트롤러에게 전해줄 파라미터
+    let type = $("select[name='type']").val();
+    let keyword = $('input[name="keyword"]').val();
+
+    // 경로 이동
+    location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=0";
+}
+
+// 마지막 페이지 이동 버튼 - page-next
+function moveToEndPage(totalPages){
+    // 컨트롤러에게 전해줄 파라미터
+    let type = $("select[name='type']").val();
+    let keyword = $('input[name="keyword"]').val();
+
+    // 경로 이동
+    location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=" + (totalPages-1);
 }

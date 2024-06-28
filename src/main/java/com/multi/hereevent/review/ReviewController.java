@@ -103,8 +103,11 @@ public class ReviewController {
     public String selectReviewWithPage(@RequestParam Map<String, Object> params,
                                        @PageableDefault(value = 10) Pageable page, Model model){
         Page<ReviewDTO> result = reviewService.selectReviewWithPage(params, page);
+        model.addAttribute("type", params.get("type"));
+        model.addAttribute("keyword", params.get("keyword"));
         model.addAttribute("reviewList", result.getContent());
         model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("totalElements", result.getTotalElements());
         model.addAttribute("pageNumber", page.getPageNumber());
         return "admin/review";
     }
