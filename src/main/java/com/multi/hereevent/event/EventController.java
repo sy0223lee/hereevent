@@ -2,17 +2,21 @@ package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.*;
 import com.multi.hereevent.event.interest.EventInterestService;
+import com.multi.hereevent.event.time.EventTimeService;
 import com.multi.hereevent.review.ReviewService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ public class EventController {
     private final EventService eventService;
     private final ReviewService reviewService;
     private final EventInterestService interestService;
+    private final EventTimeService eventTimeService;
 
     @GetMapping("/main")
     public String mainPage(Model model) {
@@ -61,15 +66,18 @@ public class EventController {
             // 로그인이 안 되어 있는 경우 이벤트 정보만 넘겨주기
             eventDetails = eventService.getEventDetails(event_no);
         }
+        System.out.println(eventDetails);
         List<ReviewDTO> reviewList = reviewService.selectReviewByEventNo(event_no);
+        List<String> eventTimeList = eventTimeService.getOperTime(event_no,"월");
         model.addAttribute("event", eventDetails);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("eventTime",eventTimeList);
         return "detailedPage/detailedPage";
     }
 
     //예약기능
     @PostMapping("/event/reservation")
-    public String reservation(ReserveDTO reserve){
+    public String reservation(ReserveDTO reserve,Model model){
         if(eventService.checkReserveOrder(reserve.getEvent_no(),
                 reserve.getReserve_date(),reserve.getReserve_time())==null){
             reserve.setReserve_order(1);
@@ -78,8 +86,22 @@ public class EventController {
             order++;
             reserve.setReserve_order(order);
         };
+        MemberDTO member = (MemberDTO) model.getAttribute("member");
+        reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
-        return "main/mainPage";
+        return "redirect:/main";
+    }
+    @PostMapping("/reservation/times")
+    public ResponseEntity<Map<String, List<String>>> getEventTimes(@RequestBody Map<String, Object> request) {
+        int event_no = (Integer) request.get("eventNo");
+        String day = (String) request.get("day");
+
+        // 행사 번호와 요일에 따른 운영 시간을 가져오는 로직 (예시)
+        List<String> times = eventTimeService.getOperTime(event_no,day);
+
+        Map<String, List<String>> response = new HashMap<>();
+        response.put("times", times);
+        return ResponseEntity.ok(response);
     }
 
     //이벤트 사진 가져오기
