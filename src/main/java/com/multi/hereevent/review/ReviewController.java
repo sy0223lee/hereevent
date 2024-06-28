@@ -111,4 +111,13 @@ public class ReviewController {
         model.addAttribute("pageNumber", page.getPageNumber());
         return "admin/review";
     }
+    @PostMapping("/admin/review/delete")
+    public String deleteAdminReview(@RequestParam("review_no") String review_no){
+        int result = reviewService.deleteReview(Integer.parseInt(review_no));
+        if(result > 0){
+            return "redirect:/admin/review";
+        }else {
+            return "common/errorPage";
+        }
+    }
 }
