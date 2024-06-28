@@ -30,7 +30,7 @@ function pageBtn(totalPages, pageNumber, totalElements) {
         return false;
     }
 
-    let pageBlock = 5; // 페이지 번호 5개씩 보여주기
+    let pageBlock = 3; // 페이지 번호 5개씩 보여주기
     let blockNo = toInt(pageNumber / pageBlock) + 1; // 5개씩 보여줄 페이지 블럭 번호 계산
     let startPageNumber = (blockNo - 1) * pageBlock; // 페이지 시작 번호
     let endPageNumber = blockNo * pageBlock - 1; // 페이지 종료 번호
@@ -48,32 +48,32 @@ function pageBtn(totalPages, pageNumber, totalElements) {
     // <, << 활성화/비활성화 처리
     if (prevBlockPageNumber >= 0) {
         // <, << 활성화
-        strHTML += "<li><button onclick='moveToStartPage()' class='page-prev on'><i class='bi bi-chevron-double-left'></i></button></li>";
-        strHTML += "<li><button class='page-left on'><i class='bi bi-chevron-left'></i></button></li>";
+        strHTML += "<li class='page-item'><button onclick='movePage(0)' class='page-btn'><i class='bi bi-chevron-double-left'></i></button></li>";
+        strHTML += "<li class='page-item'><button onclick='movePage(" + prevBlockPageNumber + ")' class='page-btn'><i class='bi bi-chevron-left'></i></button></li>";
     } else {
         // <, << 비활성화
-        strHTML += "<li><button class='page-prev off'><i class='bi bi-chevron-double-left'></i></button></li>";
-        strHTML += "<li><button class='page-left off'><i class='bi bi-chevron-left'></i></button></li>";
+        strHTML += "<li class='page-item disabled'><button class='page-btn'><i class='bi bi-chevron-double-left'></button></i></li>";
+        strHTML += "<li class='page-item disabled'><button class='page-btn'><i class='bi bi-chevron-left'></i></button></li>";
     }
 
     // 페이징 번호 생성
     for (let i = startPageNumber; i <= endPageNumber; i++) {
         if (i === pageNumber) {
-            strHTML += "<li class='active'><button>" + (i+1) + "</button></li>";
+            strHTML += "<li class='page-item active'><button class='page-btn'>" + (i+1) + "</button></li>";
         } else {
-            strHTML += "<li><button onclick='movePage(" + i + ")' class='page-number'>" + (i+1) + "</button></li>";
+            strHTML += "<li class='page-item'><button onclick='movePage(" + i + ")' class='page-btn'>" + (i+1) + "</button></li>";
         }
     }
 
     // >, >> 활성화/비활성화 처리
     if (nextBlockPageNumber < totalPages) {
         // >, >> 활성화
-        strHTML += "<li><button onclick='moveToEndPage(" + totalPages + ")' class='page-right on'><i class='bi bi-chevron-right'></i></button></li>";
-        strHTML += "<li><button class='page-next on'><i class='bi bi-chevron-double-right'></i></button></li>";
+        strHTML += "<li class='page-item'><button onclick='movePage(" + nextBlockPageNumber + ")' class='page-btn'><i class='bi bi-chevron-right'></i></button></li>";
+        strHTML += "<li class='page-item'><button onclick='movePage(" + (totalPages-1) + ")' class='page-btn'><i class='bi bi-chevron-double-right'></i></button></li>";
     } else {
         // >, >> 비활성화
-        strHTML += "<li><button class='page-right off'><i class='bi bi-chevron-right'></i></button></li>";
-        strHTML += "<li><button class='page-next off'><i class='bi bi-chevron-double-right'></i></button></li>";
+        strHTML += "<li class='page-item disabled'><button class='page-btn'><i class='bi bi-chevron-right'></i></button></li>";
+        strHTML += "<li class='page-item disabled'><button class='page-btn'><i class='bi bi-chevron-double-right'></i></button></li>";
     }
 
     $(".pagination").append(strHTML);
@@ -86,7 +86,7 @@ function toInt(value){
     }
 }
 
-// 페이지 번호 버튼 - 전달 받은 페이지 번호로 이동
+// 페이지 이동 버튼 - 전달 받은 페이지 번호로 이동
 function movePage(pageNumber){
     // 컨트롤러에게 전해줄 파라미터
     let type = $("select[name='type']").val();
@@ -94,24 +94,4 @@ function movePage(pageNumber){
 
     // 경로 이동
     location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=" + pageNumber;
-}
-
-// 첫 페이지 이동 버튼 - page-prev
-function moveToStartPage(){
-    // 컨트롤러에게 전해줄 파라미터
-    let type = $("select[name='type']").val();
-    let keyword = $('input[name="keyword"]').val();
-
-    // 경로 이동
-    location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=0";
-}
-
-// 마지막 페이지 이동 버튼 - page-next
-function moveToEndPage(totalPages){
-    // 컨트롤러에게 전해줄 파라미터
-    let type = $("select[name='type']").val();
-    let keyword = $('input[name="keyword"]').val();
-
-    // 경로 이동
-    location.href = "/hereevent/admin/review?type=" + type + "&keyword=" + keyword + "&page=" + (totalPages-1);
 }

@@ -61,7 +61,7 @@
             <div class="d-flex align-items-center justify-content-between review-search">
                 <button type="button" class="btn btn-primary">선택 삭제</button>
                 <div class="search-widget">
-                    <form action="#" method="post" class="d-flex justify-content-start">
+                    <form action="/hereevent/admin/review" method="get" class="d-flex justify-content-start">
                         <select name="type">
                             <option value="all" th:selected="${type == 'all'}">--</option>
                             <option value="event" th:selected="${type == 'event'}">이벤트</option>
@@ -191,9 +191,11 @@
             </div>
 
             <!-- 페이지네이션-->
-            <div class="pagination">
+            <nav>
+                <ul class="pagination justify-content-center">
 
-            </div>
+                </ul>
+            </nav>
 
         </div>
 
