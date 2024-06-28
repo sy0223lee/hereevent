@@ -92,6 +92,9 @@
             <div id="blog-details" class="col-lg-8 blog-details section">
                 <div class="container">
                     <article class="article">
+
+
+
                         <div class="post-img">
                             <div th:each="imgPath : ${event.img_path}" class="image-container">
                                 <img th:src="|@{/download/event/}${imgPath}|" th:alt="${imgPath}" alt="Event Image" />
@@ -100,7 +103,11 @@
                                 <button class="default interest-btn" th:if="${event.event_interest_no == 0}" th:value="${event.event_no}">♡</button>
                                 <button class="picked interest-btn" th:unless="${event.event_interest_no == 0}" th:value="${event.event_no}">♥</button>
                             </div>
+
                         </div>
+
+
+
 
                         <h2 class="title"><span th:text="${event.name}"></span></h2>
                         <div class="container">

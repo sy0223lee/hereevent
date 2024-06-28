@@ -3,7 +3,7 @@ package com.multi.hereevent.event;
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.FourEventByCategoryDTO;
 import com.multi.hereevent.dto.ReserveDTO;
-import com.multi.hereevent.dto.ReviewDTO;
+
 
 import java.sql.Date;
 import java.sql.Time;
