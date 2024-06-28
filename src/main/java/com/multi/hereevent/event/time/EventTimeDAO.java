@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface EventTimeDAO {
     int insertEventTimeList(List<EventTimeDTO> eventTimeList);
+    EventTimeDTO getEventTimeByEventNoAndDay(int event_no,String day);
 }
