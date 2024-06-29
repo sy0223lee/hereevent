@@ -69,7 +69,7 @@
                 <div class="d-flex">
                     <div class="col-md-2 align-self-center event-img">
                         <img th:if="${review.img_path == null}"
-                             th:src="@{/images/profile/default_profile.svg}" alt="default_event">
+                             th:src="@{/images/default_img.png}" alt="default_event">
                         <img th:unless="${review.img_path == null}"
                              th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
                     </div>

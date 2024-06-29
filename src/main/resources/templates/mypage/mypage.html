@@ -31,20 +31,20 @@
 
         <div class="container">
             <div class="submenu">
-                <a class="on" href="/hereevent/mypage"><h2>내 정보</h2></a>
-                <a href="/hereevent/myinterest"><h2>관심 내역</h2></a>
-                <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
-                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
+                <a class="on" href="/hereevent/mypage"><h2>프로필</h2></a>
+                <a href="/hereevent/myinterest"><h2>관심</h2></a>
+                <a href="/hereevent/myreview"><h2>후기</h2></a>
+                <a href="/hereevent/myevent"><h2>이벤트</h2></a>
             </div>
         </div>
 
         <!-- Section Title -->
         <div class="container section-title">
-            <h2>Starter Section</h2>
+            <h2>프로필 수정</h2>
             <div class="profile-img-area">
                 <div id="profile-img">
                     <img th:if="${session.member.img_path == null}"
-                         th:src="@{/images/profile/default_profile.svg}" alt="default_profile">
+                         th:src="@{/images/default_img.png}" alt="default_profile">
                     <img th:unless="${session.member.img_path == null}"
                          th:src="|@{/download/profile/}${session.member.img_path}|" alt="member_profile">
                 </div>

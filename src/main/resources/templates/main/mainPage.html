@@ -73,8 +73,10 @@
                 <div class="swiper-wrapper align-items-center">
                     <div th:each="four:${fourlist}" class="swiper-slide">
                         <div class="cate-screen1" th:each="event : ${four.eventList}">
-                            <img th:src="|@{/download/event/}${event.img_path}|" class="img-fluid"
-                                 th:onclick="|location.href='@{/event/list/}${four.category_no}'|">
+                            <img class="img-fluid" th:onclick="|location.href='@{/event/list/}${four.category_no}'|"
+                                 th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" alt="${event.img_path}">
+                            <img class="img-fluid" th:onclick="|location.href='@{/event/list/}${four.category_no}'|"
+                                 th:unless="${event.img_path != null}" th:src="@{/images/default_img.png}" alt="default_img">
                         </div>
                 </div>
             </div>

@@ -51,24 +51,22 @@
 
         <div class="container">
             <div class="submenu">
-                <a href="/hereevent/mypage"><h2>내 정보</h2></a>
-                <a class="on" href="/hereevent/myinterest"><h2>관심 내역</h2></a>
-                <a href="/hereevent/myreview"><h2>후기 관리</h2></a>
-                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
+                <a href="/hereevent/mypage"><h2>프로필</h2></a>
+                <a class="on" href="/hereevent/myinterest"><h2>관심</h2></a>
+                <a href="/hereevent/myreview"><h2>후기</h2></a>
+                <a href="/hereevent/myevent"><h2>이벤트</h2></a>
             </div>
         </div>
 
-        <!-- Section Title -->
-        <div class="container section-title">
-            <h2>관심 있는 카테고리와 팝업 스토어</h2>
-            <p>관심 있는 카테고리와 팝업 스토어를 추가해보세요.<br>
-                저희가 그에 맞게 추천 해드릴게요.</p>
-        </div><!-- End Section Title -->
-
         <div class="container">
 
+            <!-- Section Title -->
+            <div class="container section-title">
+                <h2>관심 카테고리 선택/해제</h2>
+            </div><!-- End Section Title -->
+
             <div class="interest-category">
-                <h3>관심 카테고리</h3>
+
                 <div class="MuiStack-root category-select css-13mr7ti-MuiStack-root">
                     <button type="button" class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0"
                             th:each="category, i : ${categoryList}" th:value="${category.category_no}"
@@ -79,16 +77,18 @@
                 </div>
             </div>
 
+            <!-- Section Title -->
+            <div class="container section-title">
+                <h2>관심 이벤트 [[${eventList.size()}]]개</h2>
+            </div><!-- End Section Title -->
+
             <div class="interest-event">
-                <h3>관심 팝업</h3>
                 <div class="blog-comments row">
                     <div th:id="|comment-${i.count}|" class="comment col-md-6" th:each="event, i : ${eventList}">
                         <div class="d-flex">
                             <div class="col-md-3 align-self-center interest-event-img">
-                                <img th:if="${event.img_path == null}"
-                                     th:src="@{/images/event/default_profile.svg}" alt="default_profile">
-                                <img th:unless="${event.img_path == null}"
-                                     th:src="|@{/download/event/}${event.img_path}|" alt="member_profile">
+                                <img th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" alt="${event.img_path}">
+                                <img th:unless="${event.img_path != null}" th:src="@{/images/default_img.png}" alt="default_img">
                             </div>
                             <div class="col-md-9">
                                 <h5>[[${event.name}]]</h5>

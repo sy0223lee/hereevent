@@ -53,17 +53,16 @@
 
         <div class="container">
             <div class="submenu">
-                <a href="/hereevent/mypage"><h2>내 정보</h2></a>
-                <a href="/hereevent/myinterest"><h2>관심 내역</h2></a>
-                <a class="on" href="/hereevent/myreview"><h2>후기 관리</h2></a>
-                <a href="/hereevent/myevent"><h2>행사 내역</h2></a>
+                <a href="/hereevent/mypage"><h2>프로필</h2></a>
+                <a href="/hereevent/myinterest"><h2>관심</h2></a>
+                <a class="on" href="/hereevent/myreview"><h2>후기</h2></a>
+                <a href="/hereevent/myevent"><h2>이벤트</h2></a>
             </div>
         </div>
 
         <!-- Section Title -->
         <div class="container section-title">
-            <h2>[[${reviewList.size()}]] Reviews</h2>
-            <p>작성한 리뷰 확인, 수정, 삭제</p>
+            <h2>작성한 후기 [[${reviewList.size()}]] 개</h2>
         </div><!-- End Section Title -->
 
         <div class="container">
@@ -71,9 +70,9 @@
             <div class="blog-comments">
                 <div th:id="|comment-${i.count}|" class="comment" th:each="review, i : ${reviewList}">
                     <div class="d-flex">
-                        <div class="col-md-2 align-self-center event-img">
+                        <div class="col-md-2 align-self-center review-event-img">
                             <img th:if="${review.img_path == null}"
-                                 th:src="@{/images/profile/default_profile.svg}" alt="default_event">
+                                 th:src="@{/images/default_img.png}" alt="default_event">
                             <img th:unless="${review.img_path == null}"
                                  th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
                         </div>
