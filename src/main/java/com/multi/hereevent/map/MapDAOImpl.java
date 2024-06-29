@@ -20,9 +20,4 @@ public class MapDAOImpl implements MapDAO{
     public List<EventDTO> button(ButtonDTO buttonDTO) {
         return sqlSession.selectList("com.multi.hereevent.map.select",buttonDTO);
     }
-
-    @Override
-    public List<EventDTO> selectStill() {
-        return sqlSession.selectList("com.multi.hereevent.map.selectStill");
-    }
 }
