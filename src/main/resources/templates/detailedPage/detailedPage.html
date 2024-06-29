@@ -111,14 +111,14 @@
 
 
                         <h2 class="title"><span th:text="${event.name}"></span></h2>
-                        <div class="container">
+
                             <div class="submenu">
                                 <a href="javascript:void(0);" onclick="scrollToSection('content-section')" class="nav-item" th:classappend="${tab == 'content'} ? 'active' : ''" data-tab="content">상세정보</a>
                                 <a href="javascript:void(0);" onclick="scrollToSection('navigation-section')" class="nav-item" th:classappend="${tab == 'map'} ? 'active' : ''" data-tab="map">길찾기</a>
                                 <a href="javascript:void(0);" onclick="scrollToSection('reservation-section')" class="nav-item" th:classappend="${tab == 'reservation'} ? 'active' : ''" data-tab="reservation">예약</a>
                                 <a href="javascript:void(0);" onclick="scrollToSection('reviews-section')" class="nav-item" th:classappend="${tab == 'reviews'} ? 'active' : ''" data-tab="reviews">후기</a>
                             </div>
-                        </div>
+
                         <article id="content-section" class="article">
                             <!-- 상세 정보 -->
                             <th:block th:replace="~{detailedPage/content :: content}"></th:block>
@@ -145,16 +145,19 @@
 
             <div class="col-lg-4 sidebar">
 
-                <div class="widgets-container">
+                <div class="widgets-container fixed">
 
                     <!-- Search Widget -->
                     <div class="search-widget widget-item">
 
-                        <h3 class="widget-title">Search</h3>
-                        <form action="">
-                            <input type="text">
-                            <button type="submit"><i class="bi bi-search"></i></button>
-                        </form>
+                        <h3 class="widget-title">현재 대기 현황</h3>
+
+
+                        <button type="submit" class="widget-button"
+                                th:onclick="|location.href='@{/event/waitSituation(event_no=${event_no})}'|">
+                            대기 현황 click
+                        </button>
+
 
                     </div><!--/Search Widget -->
 
@@ -195,7 +198,7 @@
 
                 </div><!-- /widget container-->
             </div><!-- sidebar-->
-            
+
         </div>
     </div>
 

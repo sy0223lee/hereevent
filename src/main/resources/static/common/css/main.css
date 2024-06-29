@@ -2421,6 +2421,17 @@ section,
   margin: 0 0 20px 0;
 }
 
+.widget-button[type="submit"], button[type="button"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 .widget-item {
   margin-bottom: 40px;
 }

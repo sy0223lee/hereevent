@@ -5,6 +5,7 @@ import com.multi.hereevent.event.interest.EventInterestService;
 import com.multi.hereevent.event.time.EventTimeService;
 import com.multi.hereevent.review.ReviewService;
 
+import com.multi.hereevent.wait.WaitService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class EventController {
     private final ReviewService reviewService;
     private final EventInterestService interestService;
     private final EventTimeService eventTimeService;
-
+    private  final WaitService WaitService;
     @GetMapping("/main")
     public String mainPage(Model model) {
         List<FourEventByCategoryDTO> fourlist = eventService.selectFourEventByCategory();
@@ -73,6 +74,16 @@ public class EventController {
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("eventTime",eventTimeList);
         return "detailedPage/detailedPage";
+    }
+    //대기 현황 확인 페이지
+    @GetMapping("/event/waitSituation")
+    public String waitSituation(@RequestParam("event_no") int event_no, Model model) {
+
+        int waitingCount = WaitService.getWaitingCount(event_no);
+        EventDTO eventDetails = eventService.getEventDetails(event_no);
+        model.addAttribute("waitingCount", waitingCount);
+        model.addAttribute("event", eventDetails);
+        return "detailedPage/waitDetailedPage";
     }
 
     //예약기능
