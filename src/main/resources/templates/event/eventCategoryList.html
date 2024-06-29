@@ -36,7 +36,7 @@
         <div class="row" th:each="event, iterStat : ${eventlist}">
             <div class="col-md-3 event-card">
                 <a th:href="@{/event/{eventNo}(eventNo=${event.event_no})}">
-                    <img th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" alt="${event.img_path}">
+                    <img th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" th:alt="${event.img_path}">
                     <img th:unless="${event.img_path != null}" th:src="@{/images/default_img.png}" alt="default_img">
                 </a>
                 <h5 th:text="${event.name}">Event Name</h5>

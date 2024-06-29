@@ -114,7 +114,9 @@
                         </div>
                         <div class="event-img text-center event-image">
                             <a href="#">
-                                <img th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}"></a>
+                                <img th:if="${review.img_path != null}" th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
+                                <img th:unless="${review.img_path != null}" th:src="@{/images/default_img.png}" th:alt="default_img">
+                            </a>
                         </div>
                         <div class="event-name">
                             <a href="#">

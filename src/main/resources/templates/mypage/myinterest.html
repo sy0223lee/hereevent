@@ -87,7 +87,7 @@
                     <div th:id="|comment-${i.count}|" class="comment col-md-6" th:each="event, i : ${eventList}">
                         <div class="d-flex">
                             <div class="col-md-3 align-self-center interest-event-img">
-                                <img th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" alt="${event.img_path}">
+                                <img th:if="${event.img_path != null}" th:src="|@{/download/event/}${event.img_path}|" th:alt="${event.img_path}">
                                 <img th:unless="${event.img_path != null}" th:src="@{/images/default_img.png}" alt="default_img">
                             </div>
                             <div class="col-md-9">
