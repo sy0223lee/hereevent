@@ -44,17 +44,14 @@ public class EventController {
     }
 
     //행사검색(프론트 아직)
-    @GetMapping("/event/searchlist")
-    public String searchPage() {
-        return "main/search";
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model) {
+        List<EventDTO> searchlist = eventService.search(keyword);
+        model.addAttribute("events", searchlist);
+        model.addAttribute("keyword", keyword);
+        return "search/searchResults";
     }
-    @PostMapping("/event/searchlist")
-    public String searchlist(@RequestParam("keyword") String keyword, Model model) {
-        List<EventDTO> searchlist = eventService.searchEvent(keyword);
-        model.addAttribute("searchlist",searchlist);
-        return "main/search";
-    }
-
+  
     // 세부페이지
     @GetMapping("/event/{event_no}")
     public String getEventDetails(@PathVariable("event_no") int event_no, Model model) {
@@ -67,12 +64,10 @@ public class EventController {
             // 로그인이 안 되어 있는 경우 이벤트 정보만 넘겨주기
             eventDetails = eventService.getEventDetails(event_no);
         }
-        System.out.println(eventDetails);
+        System.out.println("시작일===>"+eventDetails.getStart_date());
         List<ReviewDTO> reviewList = reviewService.selectReviewByEventNo(event_no);
-        List<String> eventTimeList = eventTimeService.getOperTime(event_no,"월");
         model.addAttribute("event", eventDetails);
         model.addAttribute("reviewList", reviewList);
-        model.addAttribute("eventTime",eventTimeList);
         return "detailedPage/detailedPage";
     }
     //대기 현황 확인 페이지
@@ -96,7 +91,7 @@ public class EventController {
             int order = reserve.getReserve_order();
             order++;
             reserve.setReserve_order(order);
-        };
+        }
         MemberDTO member = (MemberDTO) model.getAttribute("member");
         reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
@@ -106,10 +101,9 @@ public class EventController {
     public ResponseEntity<Map<String, List<String>>> getEventTimes(@RequestBody Map<String, Object> request) {
         int event_no = (Integer) request.get("eventNo");
         String day = (String) request.get("day");
-
+        System.out.println(event_no+":"+day);
         // 행사 번호와 요일에 따른 운영 시간을 가져오는 로직 (예시)
         List<String> times = eventTimeService.getOperTime(event_no,day);
-
         Map<String, List<String>> response = new HashMap<>();
         response.put("times", times);
         return ResponseEntity.ok(response);
@@ -194,8 +188,5 @@ public class EventController {
 //        eventService.deleteEvent(event_no);
 //        return "redirect:/admin/event";
 //    }
-
-
-
 }
 
