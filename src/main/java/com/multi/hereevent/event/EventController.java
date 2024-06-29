@@ -43,10 +43,10 @@ public class EventController {
         return "main/mainPage";
     }
 
-    //행사검색(프론트 아직)
+    //행사검색
     @GetMapping("/search")
     public String search(@RequestParam("keyword") String keyword, Model model) {
-        List<EventDTO> searchlist = eventService.search(keyword);
+        List<EventDTO> searchlist = eventService.searchEvent(keyword);
         model.addAttribute("events", searchlist);
         model.addAttribute("keyword", keyword);
         return "search/searchResults";

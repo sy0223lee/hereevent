@@ -13,11 +13,10 @@
     <select id="deleteEvent" parameterType="int">
         delete from event where event_no = #{event_no}
     </select>
-
     <select id="searchEvent" parameterType="String" resultType="event">
         SELECT *
         FROM event
-        WHERE name Like CONCAT('%' , #{name} , '%')
+        WHERE name Like CONCAT('%', #{keyword} ,'%')
     </select>
     <select id="getAllEvent" resultType="event">
         SELECT *
@@ -102,8 +101,8 @@
     </select>
     <!--예약하기-->
     <insert id="insertReserve" parameterType="reserve">
-        insert into reserve (event_no,member_no, reserve_date, reserve_time,state,reserve_order)
-        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},"예약완료",#{reserve_order})
+        insert into reserve (event_no, member_no, reserve_date, reserve_time, reserve_order)
+        values(#{event_no},#{member_no},#{reserve_date},#{reserve_time},#{reserve_order})
     </insert>
     <!--예약 순서 체크-->
     <select id="checkReserve" parameterType="Map" resultType="reserve">

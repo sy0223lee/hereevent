@@ -50,6 +50,4 @@ public interface EventService {
     int insertCrawlingEvent(EventDTO event);
     int updateEventImg(int event_no, String img_path);
     int selectEventNoByEventName(String eventName);
-    //검색
-    List<EventDTO> search(String keyword);
 }

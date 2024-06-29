@@ -23,7 +23,6 @@ public class EventDAOImpl implements EventDAO{
     public int insertEvent(EventDTO event) {
         return sqlSession.insert("com.multi.hereevent.event.insertEvent",event);
     }
-
     @Override
     public int updateEvent(EventDTO event) {
         return sqlSession.update("com.multi.hereevent.event.updateEvent", event);
@@ -127,11 +126,5 @@ public class EventDAOImpl implements EventDAO{
     @Override
     public List<EventDTO> selectFourEventByCategory(int category_no) {
         return sqlSession.selectList("com.multi.hereevent.event.fourEventByCategory", category_no);
-    }
-
-    //검색
-    @Override
-    public List<EventDTO> search(String keyword) {
-        return sqlSession.selectList("com.multi.hereevent.event.search", keyword);
     }
 }

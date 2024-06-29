@@ -19,7 +19,7 @@ public interface EventDAO {
     //이벤트 전체조회
     List<EventDTO> selectAll();
 
-    //행사이름 검색
+    //행사 이름 검색
     List<EventDTO> searchEvent(String keyword);
     //전체 팝업 조회
     List<EventDTO> getAllEvent();
@@ -53,7 +53,4 @@ public interface EventDAO {
     int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
     int updateEventImg(int event_no, String img_path);
     String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
-
-    //검색
-    List<EventDTO> search(String keyword);
 }
