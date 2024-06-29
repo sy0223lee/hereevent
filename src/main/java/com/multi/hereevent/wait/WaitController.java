@@ -48,7 +48,7 @@ public class WaitController {
         WaitDTO waitDetailTel = service.waitDetailTel(wait.getWait_tel());
         model.addAttribute("wait", loginMyWait);
         if (loginMyWait == null) {
-            redirectAttributes.addFlashAttribute("error", "등록되지 않은 번호입니다.");
+            redirectAttributes.addAttribute("errorMessage", "등록되지 않은 번호입니다.");
             return "redirect:/wait/login";
         }
         redirectAttributes.addAttribute("wait_no", waitDetailTel.getWait_no());
