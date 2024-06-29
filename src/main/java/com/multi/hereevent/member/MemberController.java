@@ -58,13 +58,10 @@ public class MemberController {
     @GetMapping("/interestCategory")
     public String interestCategoryPage(Model model){
         MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
         List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(member.getMember_no());
         model.addAttribute("categoryList", categoryList);
         return "login/interestCategory";
-    }
-    @PostMapping("/interestCategory")
-    public String setInterestCategory(CategoryInterestDTO ci){
-        return "redirect:/login";
     }
     // 관심 카테고리 추가
     @GetMapping("/interestCategory/insert")
