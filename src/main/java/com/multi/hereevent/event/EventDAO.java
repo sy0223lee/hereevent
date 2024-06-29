@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.MemberEventDTO;
 import com.multi.hereevent.dto.ReserveDTO;
 
 
@@ -42,6 +43,7 @@ public interface EventDAO {
     EventDTO getEventDetails(int event_no, int category_no); // 이벤트 상세 정보 + 회원 관심 여부 조회
     //사진 가져오기
     EventDTO getEventImage(int event_no);
+
     //예약하기
     int insertReserve(ReserveDTO reservation);
     //예약 순서 체크
@@ -53,4 +55,7 @@ public interface EventDAO {
     int insertCrawlingEvent(EventDTO event); // 크롤링한 이벤트 등록
     int updateEventImg(int event_no, String img_path);
     String selectEventNoByEventName(String eventName); // 이벤트 이름으로 이벤트 번호 조회
+
+    // 특정 멤버 이벤트 내역 조회
+    List<MemberEventDTO> selectMemberEvent(int member_no);
 }

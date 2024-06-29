@@ -68,7 +68,7 @@ public class EventServiceImpl implements EventService {
             FourEventByCategoryDTO fourEventDTO= new FourEventByCategoryDTO();
             List<EventDTO> eventlist = new ArrayList<>();
             // sql문으로 가져온 fourEventCategoryDTO를 저장
-            eventlist=dao.selectFourEventByCategory(category.getCategory_no());
+            eventlist = dao.selectFourEventByCategory(category.getCategory_no());
             //System.out.println("eventlist=====>"+eventlist.size());
             // category_no로 event 4개 조회해서 fourEventCategoryDTO에 저장
             fourEventDTO.setCategory_no(category.getCategory_no());
@@ -137,6 +137,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public int selectEventNoByEventName(String eventName) {
         return Integer.parseInt(dao.selectEventNoByEventName(eventName));
+    }
+
+    @Override
+    public List<MemberEventDTO> selectMemberEvent(int member_no) {
+        return dao.selectMemberEvent(member_no);
     }
 
 }

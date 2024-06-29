@@ -87,6 +87,7 @@ public class MemberController {
         }
         return "common/errorPage";
     }
+
     /***** 마이페이지 *****/
     @GetMapping("/mypage")
     public String mypage() {
@@ -189,11 +190,5 @@ public class MemberController {
         }else{
             return "common/errorPage";
         }
-    }
-
-    /***** 행사 내역 *****/
-    @GetMapping("/myevent")
-    public String myevent() {
-        return "mypage/myevent";
     }
 }

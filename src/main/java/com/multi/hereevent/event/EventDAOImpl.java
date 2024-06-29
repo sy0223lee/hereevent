@@ -1,6 +1,7 @@
 package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
+import com.multi.hereevent.dto.MemberEventDTO;
 import com.multi.hereevent.dto.ReserveDTO;
 import com.multi.hereevent.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
@@ -123,6 +124,12 @@ public class EventDAOImpl implements EventDAO{
     public String selectEventNoByEventName(String eventName) {
         return sqlSession.selectOne("com.multi.hereevent.event.selectEventNoByEventName", eventName);
     }
+
+    @Override
+    public List<MemberEventDTO> selectMemberEvent(int member_no) {
+        return sqlSession.selectList("com.multi.hereevent.event.selectMemberEvent", member_no);
+    }
+
     @Override
     public List<EventDTO> selectFourEventByCategory(int category_no) {
         return sqlSession.selectList("com.multi.hereevent.event.fourEventByCategory", category_no);
