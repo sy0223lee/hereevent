@@ -93,6 +93,7 @@ public class EventController {
             reserve.setReserve_order(order);
         }
         MemberDTO member = (MemberDTO) model.getAttribute("member");
+        assert member != null;
         reserve.setReserve_no(member.getMember_no());
         eventService.insertReserve(reserve);
         return "redirect:/main";
@@ -158,7 +159,7 @@ public class EventController {
         return "common/errorPage";
     }
 
-    /***** 이벤트 내역 *****/
+    /***** 마이페이지 이벤트 내역 *****/
     @GetMapping("/myevent")
     public String myevent(Model model) {
         MemberDTO member = (MemberDTO) model.getAttribute("member");
@@ -166,6 +167,7 @@ public class EventController {
         List<MemberEventDTO> eventList = eventService.selectMemberEvent(member.getMember_no());
         model.addAttribute("eventList", eventList);
         return "mypage/myevent";
+
     }
 
     /***** 관리자 페이지 *****/

@@ -36,7 +36,7 @@
 }
 .profile-text-area {
     display: flex;
-    width: 100%;
+    width: 60%;
     margin: 10px auto 50px;
     padding: 0 20px;
     flex-direction: row;
@@ -84,11 +84,8 @@
 }
 
 /* myinterest.html 관심 내역 */
-.interest-category h3 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+.interest-category {
+    padding-bottom: 20px;
 }
 .category-select {
     width: 100%;
@@ -139,13 +136,13 @@
 }
 
 /* myreview.html 후기 내역 */
-.event-img {
+.review-event-img {
     position: relative;
     width: 16%;
     padding-bottom: 16%;
     margin-right: 20px;
 }
-.event-img img {
+.review-event-img img {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -162,15 +159,37 @@
     object-fit: cover;
     margin: 5px;
 }
-.blog-comments .comment h5 .edit-review-btn,
-.blog-comments .comment h5 .delete-review-btn {
+.review-comments .comment{
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--default-color);
+}
+.review-comments .comment:last-child{
+    border: none;
+}
+
+.comment h6 a {
+    padding: 1px 6px;
+    font-weight: bold;
+    color: var(--default-color);
+    transition: 0.3s;
+}
+.comment h6 a:hover {
+    color: var(--accent-color);
+}
+
+
+.review-comments .comment h6 .edit-review-btn,
+.review-comments .comment h6 .delete-review-btn {
     background: none;
     border: none;
     font-weight: bold;
     transition: 0.3s;
 }
-.blog-comments .comment h5 .edit-review-btn:hover,
-.blog-comments .comment h5 .delete-review-btn:hover {
+
+.review-comments .comment h6 .edit-review-btn:hover,
+.review-comments .comment h6 .delete-review-btn:hover {
     color: var(--accent-color);
 }
 
@@ -213,4 +232,50 @@ input.edit-img{
 textarea.edit-content:focus, input.edit-img:focus{
     box-shadow: none;
     border-color: var(--accent-color);
+}
+
+/* myevent.html 이벤트 내역 */
+.event-container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--default-color);
+}
+.event-container:last-child{
+    border: none;
+}
+.event-img{
+    padding-left: 12px;
+    padding-bottom: 25%;
+    position: relative;
+}
+.event-img img{
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+.event-info.title{
+    font-weight: bold;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+.enter-date{
+    margin-right: 10px;
+}
+.event-state div{
+    border: 2px solid var(--default-color);
+    border-radius: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+.event-btn button {
+    margin: 10px;
+}
+
+.event-name, .event-addr{
+    /* 글자가 넘어가면 숨기고 말줄임표 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
