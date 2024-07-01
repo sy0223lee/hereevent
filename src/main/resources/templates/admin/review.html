@@ -113,13 +113,13 @@
                             <input type="checkbox" name="select" th:value="${review.review_no}" onclick="checkSelectAll()">
                         </div>
                         <div class="event-img text-center event-image">
-                            <a href="#">
+                            <a th:href="|@{/event/}${review.event_no}|">
                                 <img th:if="${review.img_path != null}" th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
                                 <img th:unless="${review.img_path != null}" th:src="@{/images/default_img.png}" th:alt="default_img">
                             </a>
                         </div>
                         <div class="event-name">
-                            <a href="#">
+                            <a th:href="|@{/event/}${review.event_no}|">
                                 [[${review.name}]]</a>
                         </div>
                         <div class="writer text-center" th:text="${review.nick}"></div>
