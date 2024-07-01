@@ -2,6 +2,7 @@ package com.multi.hereevent.event;
 
 import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.FourEventByCategoryDTO;
+import com.multi.hereevent.dto.MemberEventDTO;
 import com.multi.hereevent.dto.ReserveDTO;
 
 
@@ -46,10 +47,12 @@ public interface EventService {
     ReserveDTO checkReserveOrder(int event_no, Date reserve_date, Time reserve_time);
     //예약 인원 체크
     int checkReserveLimit(int event_no);
+
     // 크롤링
     int insertCrawlingEvent(EventDTO event);
     int updateEventImg(int event_no, String img_path);
     int selectEventNoByEventName(String eventName);
-    //검색
-    List<EventDTO> search(String keyword);
+
+    // 특정 멤버 이벤트 내역 조회
+    List<MemberEventDTO> selectMemberEvent(int member_no);
 }
