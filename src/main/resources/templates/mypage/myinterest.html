@@ -69,7 +69,7 @@
 
                 <div class="category-select text-center">
                     <button type="button" class="category-btn"
-                            th:each="category, i : ${categoryList}" th:value="${category.category_no}"
+                            th:each="category : ${categoryList}" th:value="${category.category_no}"
                             th:classappend="${category.member_no == 0} ? 'default' : 'picked'">
                         <span th:text="${category.name}"></span>
                     </button>

@@ -144,4 +144,9 @@ public class EventServiceImpl implements EventService {
         return dao.selectMemberEvent(member_no);
     }
 
+    @Override
+    public List<EventDTO> selectNewEvent(int member_no) {
+        return dao.selectNewEvent(member_no);
+    }
+
 }

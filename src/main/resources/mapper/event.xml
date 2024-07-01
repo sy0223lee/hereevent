@@ -169,4 +169,15 @@
         SELECT * FROM event
     </select>
 
+    <select id="selectNewEvent" resultType="event">
+        select * from event e
+        where start_date &lt; date_add(curdate(), interval 2 week) and
+                start_date >= curdate() and
+                e.category_no in (
+                    select ci.category_no
+                    from category_interest ci
+                    where ci.member_no = #{member_no})
+        order by start_date
+    </select>
+
 </mapper>
