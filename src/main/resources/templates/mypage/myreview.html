@@ -53,10 +53,10 @@
 
         <div class="container">
             <div class="submenu">
-                <a href="/hereevent/mypage"><h2>프로필</h2></a>
-                <a href="/hereevent/myinterest"><h2>관심</h2></a>
-                <a class="on" href="/hereevent/myreview"><h2>후기</h2></a>
-                <a href="/hereevent/myevent"><h2>이벤트</h2></a>
+                <a href="/hereevent/mypage"><h5>프로필</h5></a>
+                <a href="/hereevent/myinterest"><h5>관심</h5></a>
+                <a class="on" href="/hereevent/myreview"><h5>후기</h5></a>
+                <a href="/hereevent/myevent"><h5>이벤트</h5></a>
             </div>
         </div>
 
@@ -77,7 +77,7 @@
                                  th:src="|@{/download/event/}${review.img_path}|" th:alt="${review.img_path}">
                         </div>
                         <div class="col-md-10 row justify-content-between review-content">
-                            <h5 class="col">[[${review.name}]]</h5>
+                            <h5 class="col event-name">[[${review.name}]]</h5>
                             <h6 class="col text-md-end buttons">
                                 <a th:href="|@{/event/}${review.event_no}|" class="reply">
                                     <i class="bi bi-reply-fill"></i>팝업 상세보기</a>
@@ -140,7 +140,7 @@
                                 </label>
                             </div>
 
-                            <span th:text="${review.write_date}"></span>
+                            <span class="review-date" th:text="${review.write_date}"></span>
 
                             <div class="review-img">
                                 <div th:each="review_img : ${review.review_imgs}">

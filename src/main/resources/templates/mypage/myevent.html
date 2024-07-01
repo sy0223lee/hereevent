@@ -12,9 +12,11 @@
 
     <script>
         $(document).ready(function() {
+            // 예약 취소 버튼
             $('.cancel-btn').click(function () {
                 confirm("정말 예약을 취소하시겠습니까?")
             });
+            // 예약 입장 버튼
             $('.visit-btn').click(function () {
                confirm("직원의 안내에 따라 입장 버튼을 눌러주시기 바랍니다.\n방문 완료 처리가 되면 다시 입장하실 수 없습니다.\n그래도 진행 하시겠습니까?")
             });
@@ -42,10 +44,10 @@
 
         <div class="container">
             <div class="submenu">
-                <a href="/hereevent/mypage"><h2>프로필</h2></a>
-                <a href="/hereevent/myinterest"><h2>관심</h2></a>
-                <a href="/hereevent/myreview"><h2>후기</h2></a>
-                <a class="on" href="/hereevent/myevent"><h2>이벤트</h2></a>
+                <a href="/hereevent/mypage"><h5>프로필</h5></a>
+                <a href="/hereevent/myinterest"><h5>관심</h5></a>
+                <a href="/hereevent/myreview"><h5>후기</h5></a>
+                <a class="on" href="/hereevent/myevent"><h5>이벤트</h5></a>
             </div>
         </div>
 
