@@ -40,7 +40,7 @@ public interface EventService {
     EventDTO getEventDetails(int event_no, int category_no); // 이벤트 상세 정보 + 회원 관심 여부 조회
     //event image
     EventDTO getEventImage(int event_no);
-  
+
     //예약하기
     int insertReserve(ReserveDTO reservation);
     //예약 순서 체크
@@ -55,4 +55,6 @@ public interface EventService {
 
     // 특정 멤버 이벤트 내역 조회
     List<MemberEventDTO> selectMemberEvent(int member_no);
+    // 오늘로부터 2주 내에 오픈 예정인 관심 카테고리 이벤트 조회
+    List<EventDTO> selectNewEvent(int member_no);
 }

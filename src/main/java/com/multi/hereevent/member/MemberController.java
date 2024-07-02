@@ -1,11 +1,8 @@
 package com.multi.hereevent.member;
 
-import com.multi.hereevent.category.CategoryService;
 import com.multi.hereevent.category.interest.CategoryInterestService;
 import com.multi.hereevent.dto.CategoryInterestDTO;
-import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
-import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.fileupload.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @SessionAttributes("member")
 public class MemberController {
-    private final MemberService service;
+    private final MemberService memberService;
     private final FileUploadService fileService;
     private final CategoryInterestService categoryService;
 
@@ -32,7 +29,7 @@ public class MemberController {
     }
     @PostMapping("/login")
     public String login(MemberDTO member, Model model) {
-        MemberDTO loginMember = service.loginMember(member);
+        MemberDTO loginMember = memberService.loginMember(member);
         model.addAttribute("member", loginMember);
         return "redirect:/main";
     }
@@ -47,8 +44,8 @@ public class MemberController {
     }
     @PostMapping("/insert")
     public String register(MemberDTO member, Model model){
-        service.insertMember(member);
-        MemberDTO findmem = service.findMemberByEmail(member.getEmail());
+        memberService.insertMember(member);
+        MemberDTO findmem = memberService.findMemberByEmail(member.getEmail());
         List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(findmem.getMember_no());
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("member",findmem);
@@ -101,9 +98,9 @@ public class MemberController {
     // 닉네임 수정
     @PostMapping("/mypage/edit-nick")
     public String editNick(MemberDTO member, Model model) {
-        int result = service.updateMemberNick(member);
+        int result = memberService.updateMemberNick(member);
         if(result > 0) {
-            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
+            model.addAttribute("member", memberService.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         }else{
             return "common/errorPage";
@@ -113,7 +110,7 @@ public class MemberController {
     @PostMapping(value = "/mypage/check-nick", produces = "application/text; charset=utf-8")
     @ResponseBody
     public String checkNick(@RequestParam("nick") String nick) {
-        boolean available = service.checkMemberNick(nick);
+        boolean available = memberService.checkMemberNick(nick);
         if (available) {
             return "사용 가능한 닉네임";
         }else {
@@ -124,7 +121,7 @@ public class MemberController {
     @PostMapping(value = "/check-nick", produces = "application/text; charset=utf-8")
     @ResponseBody
     public String checkNickRegister(@RequestParam("nick") String nick) {
-        boolean available = service.checkMemberNick(nick);
+        boolean available = memberService.checkMemberNick(nick);
         if (available) {
             return "사용 가능한 닉네임";
         }else {
@@ -135,7 +132,7 @@ public class MemberController {
     @PostMapping(value = "/check-email", produces = "application/text; charset=utf-8")
     @ResponseBody
     public String checkEmail(@RequestParam("email") String email) {
-        boolean available = service.checkMemberEmail(email);
+        boolean available = memberService.checkMemberEmail(email);
         if (available) {
             return "사용 가능한 이메일";
         }else {
@@ -150,9 +147,9 @@ public class MemberController {
     // 생일 수정
     @PostMapping("/mypage/edit-birth")
     public String editBirth(MemberDTO member, Model model) {
-        int result = service.updateMemberBirth(member);
+        int result = memberService.updateMemberBirth(member);
         if(result > 0) {
-            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
+            model.addAttribute("member", memberService.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         }else {
             return "common/errorPage";
@@ -172,8 +169,8 @@ public class MemberController {
         try {
             storeFilename = fileService.uploadProfileImg(profileImg);
             member.setImg_path(storeFilename);
-            service.updateMemberProfileImg(member);
-            model.addAttribute("member", service.selectMemberDetail(member.getMember_no()));
+            memberService.updateMemberProfileImg(member);
+            model.addAttribute("member", memberService.selectMemberDetail(member.getMember_no()));
             return "redirect:/mypage";
         } catch (IOException e) {
             e.printStackTrace();

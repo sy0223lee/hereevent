@@ -25,7 +25,7 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public List<MemberDTO> selectAllMember() {
-        return List.of();
+        return sqlSession.selectList("com.multi.hereevent.member.selectAllMember");
     }
 
     @Override
