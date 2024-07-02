@@ -6,7 +6,6 @@ import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.member.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,23 +20,25 @@ public class MailService {
     public final MemberService memberService;
     public final EventService eventService;
 
-    public void sendMail() throws MessagingException {
+    public void sendRecommendEmail() throws MessagingException {
         List<MemberDTO> memberList = memberService.selectAllMember(); // 모든 멤버 조회
         for (MemberDTO member : memberList) {
             List<EventDTO> eventList = eventService.selectNewEvent(member.getMember_no()); // 관심 카테고리 중 오픈 예정인 이벤트 조회
 
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+            if(!eventList.isEmpty()) { // 이벤트 리스트가 비어있지 않은 경우만 이메일 전송
+                MimeMessage message = mailSender.createMimeMessage();
+                MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-            messageHelper.setFrom("sy0223lee@gmail.com");
-            messageHelper.setTo(member.getEmail());
-            messageHelper.setSubject("[HereEvent] " + member.getNick() + "님이 관심 있어 하실만한 오픈 예정 이벤트 안내");
-            messageHelper.setText(makeMessage(eventList), true);
-            mailSender.send(message);
+                messageHelper.setFrom("sy0223lee@gmail.com");
+                messageHelper.setTo(member.getEmail());
+                messageHelper.setSubject("[HereEvent] " + member.getNick() + "님이 관심 있어 하실만한 오픈 예정 이벤트 안내");
+                messageHelper.setText(recommendHtml(eventList), true);
+                mailSender.send(message);
+            }
         }
     }
 
-    public String makeMessage(List<EventDTO> eventList) {
+    public String recommendHtml(List<EventDTO> eventList) {
         StringBuilder sb = new StringBuilder();
         sb.append("<html><body>");
         sb.append("<meta http-equiv='Content-Type' content='text/html; charset=euc-kr'>");

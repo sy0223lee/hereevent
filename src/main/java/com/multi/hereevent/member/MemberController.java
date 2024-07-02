@@ -1,14 +1,9 @@
 package com.multi.hereevent.member;
 
-import com.multi.hereevent.category.CategoryService;
 import com.multi.hereevent.category.interest.CategoryInterestService;
 import com.multi.hereevent.dto.CategoryInterestDTO;
-import com.multi.hereevent.dto.EventDTO;
 import com.multi.hereevent.dto.MemberDTO;
-import com.multi.hereevent.event.EventService;
 import com.multi.hereevent.fileupload.FileUploadService;
-import com.multi.hereevent.mail.MailService;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +21,7 @@ public class MemberController {
     private final MemberService service;
     private final FileUploadService fileService;
     private final CategoryInterestService categoryService;
-    private final MailService mailService;
+//    private final MailService mailService;
 
     /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
@@ -193,12 +188,5 @@ public class MemberController {
         }else{
             return "common/errorPage";
         }
-    }
-
-    // 메일 전송 테스트
-    @GetMapping("/send-mail")
-    public String sendMail() throws MessagingException {
-        mailService.sendMail();
-        return "mypage/mypage";
     }
 }
