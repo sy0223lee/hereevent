@@ -21,8 +21,7 @@ public class MemberController {
     private final MemberService service;
     private final FileUploadService fileService;
     private final CategoryInterestService categoryService;
-//    private final MailService mailService;
-
+    
     /***** 로그인, 회원가입 *****/
     @GetMapping("/login")
     public String loginPage(){
