@@ -48,7 +48,6 @@ public class MemberController {
     @PostMapping("/insert")
     public String register(MemberDTO member, Model model){
         service.insertMember(member);
-        System.out.println(member);
         MemberDTO findmem = service.findMemberByEmail(member.getEmail());
         List<CategoryInterestDTO> categoryList = categoryService.selectCategoryInterestByMemberNo(findmem.getMember_no());
         model.addAttribute("categoryList", categoryList);
